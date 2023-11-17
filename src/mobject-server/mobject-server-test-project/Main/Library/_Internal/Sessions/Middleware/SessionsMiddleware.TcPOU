@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="SessionsMiddleware" Id="{d93490f3-dd35-4e22-a3f9-48c0397af766}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'linkalways'} 
+{attribute 'no_explicit_call' := 'This FB is a CLASS and must be accessed using methods or properties'}
+{attribute 'enable_dynamic_creation'}
+FUNCTION_BLOCK SessionsMiddleware EXTENDS Middleware
+VAR
+	sessionManager: I_SessionManager;
+	config : I_SessionMiddlewareConfig;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Constructor" Id="{05de603a-654d-42ee-aa4a-a59f76429878}" />
+    <Method Name="FB_init" Id="{70964f61-6718-48b9-b225-f89a36eb1cd6}" FolderPath="Constructor\">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	SessionManager : I_SessionManager;
+	Config : I_SessionMiddlewareConfig;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.sessionManager := SessionManager;
+THIS^.config := Config;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Handle" Id="{d2badea3-44aa-48aa-87d1-835b91359ac5}">
+      <Declaration><![CDATA[METHOD PUBLIC Handle
+VAR_INPUT
+	Request : I_Request;
+	Response : I_ServerResponse;
+END_VAR
+VAR
+	sessionId : T_MAXSTRING;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (NOT config.TryGetSessionIdFromRequest(Request, sessionId)) OR_ELSE (NOT sessionManager.IsValidSession(sessionId)) THEN
+	sessionId := sessionManager.CreateSession();
+	config.UpdateRequestWithSessionId(Request,sessionId);
+END_IF
+
+config.UpdateResponseWithSessionId(Response, sessionId);
+Next(Request, Response);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="UpdateConfig" Id="{da59716b-bc1b-4897-9c08-9434007abde6}">
+      <Declaration><![CDATA[METHOD PUBLIC UpdateConfig
+VAR_INPUT
+	Config : I_SessionMiddlewareConfig;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[this^.config := Config;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="SessionsMiddleware">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="SessionsMiddleware.FB_init">
+      <LineId Id="26" Count="0" />
+      <LineId Id="18" Count="0" />
+    </LineIds>
+    <LineIds Name="SessionsMiddleware.Handle">
+      <LineId Id="72" Count="0" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="94" Count="0" />
+      <LineId Id="75" Count="0" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="64" Count="0" />
+    </LineIds>
+    <LineIds Name="SessionsMiddleware.UpdateConfig">
+      <LineId Id="7" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

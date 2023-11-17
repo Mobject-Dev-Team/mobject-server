@@ -1,0 +1,91 @@
+<div id="Desktop" data-tchmi-type="TcHmi.Controls.System.TcHmiView" data-tchmi-top="0" data-tchmi-left="0" data-tchmi-width-mode="Content" data-tchmi-min-width="100" data-tchmi-min-width-unit="%" data-tchmi-height-mode="Content" data-tchmi-min-height="100" data-tchmi-min-height-unit="%">
+  <div id="ViewDesktopBeckhoffLogo" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiImage" data-tchmi-src="Images/Beckhoff_Logo.svg" data-tchmi-left="20" data-tchmi-top="20" data-tchmi-width="194" data-tchmi-height="57">
+
+  </div>
+  <div id="TcHmiHtmlHost" data-tchmi-type="TcHmi.Controls.System.TcHmiHtmlHost" data-tchmi-height="300" data-tchmi-height-unit="px" data-tchmi-left="20" data-tchmi-left-unit="px" data-tchmi-top="87" data-tchmi-top-unit="px" data-tchmi-width="300" data-tchmi-width-unit="px">
+
+    <script>
+        // this is an async iife, just so I can used the async await in the code below
+        //(async () => {
+
+        //    const client = new TcHmiAsyncClient('%s%PLC1.MAIN.api.HandleClientRequest%/s%');
+            
+        //    try {
+
+        //        // used for performance check
+        //        console.warn('Start of successTest');
+        //        console.time('successTest');
+        //        const response1 = await client.rpcCall('successTest',{ foo : 'bar' });
+        //        console.timeEnd('successTest');
+        //        console.log(response1);
+
+        //        console.warn('Start of pendingTest');
+        //        console.time('pendingTest');
+        //        const response2 = await client.rpcCall('pendingTest',{ foo : 'bar' });
+        //        console.log(response2);
+        //        console.timeEnd('pendingTest');
+
+        //        console.warn('Start of busyTest');
+        //        console.time('busyTest');
+        //        const response3 = await client.rpcCall('busyTest',{ foo : 'bar' });
+        //        console.log(response3);
+
+        //    } catch (error) {
+        //        console.timeEnd('busyTest');
+        //        console.error(`Error: ${error}`);
+        //    } finally {
+
+        //    }
+
+        //})();
+
+        //async function callApi(apiName, client) {
+        //    try {
+        //        console.warn(`Start of ${apiName}`);
+        //        console.time(apiName);
+        //        const response = await client.rpcCall(apiName, {foo:'bar1',hello:'world1'});
+        //        console.timeEnd(apiName);
+        //        console.log(response);
+        //    } catch (error) {
+        //        console.timeEnd(apiName);
+        //        console.error(`Error in ${apiName}: ${error}`);
+        //    }
+        //}
+
+        //const client = new TcHmiAsyncClient('%s%PLC1.MAIN.server.HandleRequest%/s%');
+
+        //setInterval(async () => {
+        //    console.clear(); // Clears the console
+        //    await callApi('successTest', client);
+        //    //await callApi('pendingTest', client);
+        //    //await callApi('busyTest', client);
+        //}, 7000);
+
+
+
+        const client = new TcHmiAsyncClient('%s%PLC1.MAIN.server.HandleRequest%/s%');
+
+        setInterval(async () => {
+            apiTest();
+        }, 40);
+
+        async function apiTest(){
+            console.time('test');
+            client.rpcCall('successTest', {foo: 'bar', hello: 'woooooooooooooooooooorld'})
+              .then(response => {
+                  console.log('Response:', response);
+                  console.timeEnd('test');
+                  //apiTest();
+              })
+              .catch(error => {
+                  console.error('Error:', error);
+                  console.timeEnd('test');
+              });
+        }
+
+        apiTest();
+
+
+    </script>
+  </div>
+</div>

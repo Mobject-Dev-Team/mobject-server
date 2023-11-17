@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="I_SessionManager" Id="{4165cfd1-a2ae-417f-affc-56dd24540fd3}">
+    <Declaration><![CDATA[INTERFACE I_SessionManager
+]]></Declaration>
+    <Method Name="CreateSession" Id="{fed8429b-f1e9-425f-9d52-c3bfdab16c2e}">
+      <Declaration><![CDATA[METHOD PUBLIC CreateSession : T_MAXSTRING]]></Declaration>
+    </Method>
+    <Method Name="DisposeAllSessions" Id="{e99c1bc0-52ee-4ebf-9f0d-c300e9daf045}">
+      <Declaration><![CDATA[METHOD PUBLIC DisposeAllSessions
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="IsValidSession" Id="{69f48a35-99ca-4305-9239-5bbb4b6b7d0b}">
+      <Declaration><![CDATA[METHOD PUBLIC IsValidSession : BOOL
+VAR_INPUT
+	Id : T_MAXSTRING;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

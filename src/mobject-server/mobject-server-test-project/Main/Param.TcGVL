@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <GVL Name="Param" Id="{270cee16-a6a4-46f1-a94a-b1b8e1a788dd}" ParameterList="True">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL CONSTANT
+	test : BOOL := true;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

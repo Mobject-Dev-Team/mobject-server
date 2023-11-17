@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="I_RpcHandler" Id="{443f7afb-60e8-4caf-9dc0-bacc792c6826}">
+    <Declaration><![CDATA[INTERFACE I_RpcHandler
+]]></Declaration>
+    <Method Name="Handle" Id="{4ab0dfeb-bf05-4348-9808-69f446eb5d69}">
+      <Declaration><![CDATA[METHOD Handle
+VAR_INPUT
+	Parameters : I_RpcParameters;
+	Response : I_RpcResponse;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

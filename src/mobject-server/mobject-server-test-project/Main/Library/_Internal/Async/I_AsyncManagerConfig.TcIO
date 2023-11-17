@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="I_AsyncManagerConfig" Id="{4a4f0798-ed83-499b-b5a8-20a54d5c473a}">
+    <Declaration><![CDATA[INTERFACE I_AsyncManagerConfig
+]]></Declaration>
+    <Method Name="TryGetSessionIdFromResponse" Id="{86bdc0c7-ab84-4ab2-b087-c91b835ef3a4}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetSessionIdFromResponse : BOOL
+VAR_INPUT
+	Response : I_ServerResponse;
+	Destination : ANY;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

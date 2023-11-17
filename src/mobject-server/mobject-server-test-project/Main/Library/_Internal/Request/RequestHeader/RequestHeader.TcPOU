@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="RequestHeader" Id="{8d69c8e1-decd-4b22-9de9-a4ba754f7325}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'linkalways'} 
+{attribute 'no_explicit_call' := 'This FB is a CLASS and must be accessed using methods or properties'}
+{attribute 'enable_dynamic_creation'}
+FUNCTION_BLOCK RequestHeader IMPLEMENTS I_RequestHeader
+VAR
+	jsonParser : JsonDomParser;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Constructor" Id="{cc4a3ba7-965e-4282-81ab-36b2ed895992}" />
+    <Folder Name="Destructor" Id="{5c78209c-aa88-423e-96b7-f8a1414646fc}" />
+    <Method Name="FB_exit" Id="{bc6ef725-d1f7-4708-9f92-681cd2a73139}" FolderPath="Destructor\">
+      <Declaration><![CDATA[METHOD FB_exit : BOOL
+VAR_INPUT
+	bInCopyCode : BOOL; // if TRUE, the exit method is called for exiting an instance that is copied afterwards (online change).
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF bInCopyCode THEN
+	RETURN;
+END_IF
+
+jsonParser.NewDocument();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{0a459966-9da2-4332-ba27-7b1f3a14c1df}" FolderPath="Constructor\">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	RequestHeader : REFERENCE TO STRING(Constants.RESPONSE_HEADER_STRING_SIZE);
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonParser.ParseDocument(RequestHeader);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TryGetField" Id="{39acf657-3d19-4c1f-adf1-d768257badfe}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetField : BOOL;
+VAR_INPUT
+	Key : STRING;
+	Destination : ANY;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF Key = '' THEN
+	RETURN;
+END_IF
+
+TryGetField := jsonParser.TryRead(Key, Destination);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TryWriteField" Id="{2b50f7e6-bcd9-455a-8405-17205cee2947}">
+      <Declaration><![CDATA[METHOD PUBLIC TryWriteField : BOOL;
+VAR_INPUT
+	Key : STRING;
+	Source : ANY;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF Key = '' THEN
+	RETURN;
+END_IF
+
+TryWriteField := jsonParser.TryWrite(Key, Source);]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="RequestHeader">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="RequestHeader.FB_exit">
+      <LineId Id="6" Count="2" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="RequestHeader.FB_init">
+      <LineId Id="7" Count="0" />
+    </LineIds>
+    <LineIds Name="RequestHeader.TryGetField">
+      <LineId Id="27" Count="2" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="RequestHeader.TryWriteField">
+      <LineId Id="27" Count="2" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

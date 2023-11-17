@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="Request" Id="{fe8d1271-b89c-443b-acb5-f1079db0b02c}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'linkalways'} 
+{attribute 'no_explicit_call' := 'This FB is a CLASS and must be accessed using methods or properties'}
+{attribute 'enable_dynamic_creation'}
+FUNCTION_BLOCK Request Extends Disposable IMPLEMENTS I_Request
+VAR
+	_header : I_RequestHeader;
+	payloadReference : REFERENCE TO STRING(Constants.REQUEST_PAYLOAD_STRING_SIZE);	
+	_createdTimestamp : SystemTimestamp;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Constructor" Id="{95a0e3ae-dd45-462a-9708-2e65702f3dd7}" />
+    <Property Name="CreatedTimestamp" Id="{8a87e1de-154b-449b-9811-0a6a7a8f869b}">
+      <Declaration><![CDATA[PROPERTY PUBLIC CreatedTimestamp : I_Timestamp]]></Declaration>
+      <Get Name="Get" Id="{bc29144f-0233-4cef-9539-dab75d6c36ed}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[CreatedTimestamp := _createdTimestamp;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="FB_init" Id="{e7905d1f-7f35-4563-be90-2f62b8ee30c1}" FolderPath="Constructor\">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	Header : I_RequestHeader;
+	SerializedPayload : REFERENCE TO STRING(Constants.REQUEST_PAYLOAD_STRING_SIZE);
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_header := Header;
+payloadReference REF= SerializedPayload;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Header" Id="{6a8dfce7-c2ed-466c-92a4-c26060597052}">
+      <Declaration><![CDATA[PROPERTY PUBLIC Header : I_RequestHeader]]></Declaration>
+      <Get Name="Get" Id="{6327bb93-0998-42e1-b954-4d57a26abf80}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Header := _header;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Payload" Id="{f482bf7c-0b59-4c01-ac97-7684aeb1d288}">
+      <Declaration><![CDATA[PROPERTY PUBLIC Payload : REFERENCE TO STRING(Constants.REQUEST_PAYLOAD_STRING_SIZE);]]></Declaration>
+      <Get Name="Get" Id="{dda62759-91b8-4519-9336-d3e6211ee967}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Payload ref= payloadReference;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <LineIds Name="Request">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="Request.CreatedTimestamp.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Request.FB_init">
+      <LineId Id="16" Count="0" />
+      <LineId Id="15" Count="0" />
+    </LineIds>
+    <LineIds Name="Request.Header.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Request.Payload.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

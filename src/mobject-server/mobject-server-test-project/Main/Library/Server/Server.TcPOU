@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="Server" Id="{a9bdf641-1b78-46c5-a9de-de65caee5d86}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'linkalways'} 
+{attribute 'no_explicit_call' := 'This FB is a CLASS and must be accessed using methods or properties'}
+{attribute 'enable_dynamic_creation'}
+{attribute 'TcRpcEnable'}
+FUNCTION_BLOCK Server
+VAR
+	// header constants can be swapped out later if new versions are used. 
+	// for now, v1 is used in the server.  call UpdateConfig to change.
+	defaultServerConfig : ServerConfigV1;
+	serverConfig : I_ServerConfig := defaultServerConfig;
+	
+	// the middleware stack allows us to construct our server in any way needed.
+	// by default we will support sessions, async polling and chunked requests/
+	middlewareStack : MiddlewareStack;
+	
+	// responseId generation required for pending or chunked data
+	sequentialResponseIdGenerator : SequentialResponseIdGenerator;
+	
+	// ability to support sessions...
+	sessionIdGenerator : SequentialSessionIdGenerator;
+	sessionManager : SessionManager(sessionIdGenerator, T#10S);
+	sessionsMiddleware : SessionsMiddleware(sessionManager, serverConfig);
+	
+	// ability to suppoort chunked requests
+	chunkedRequestsMiddleware : ChunkedRequestsMiddleware(serverConfig);
+	
+	// ability to support chunked responses
+	chunkedResponseManager : ChunkedResponseManager(Constants.RESPONSE_PAYLOAD_STRING_SIZE, sessionManager, sequentialResponseIdGenerator, serverConfig);
+	chunkedResponsesMiddleware : ChunkedResponsesMiddleware(chunkedResponseManager, serverConfig);
+	
+	// ability to support pending responses
+	pendingResponseMiddleware : PendingResponseMiddleware(serverConfig);
+	
+	// ability to handle rpc
+	rpcHandlers : RpcHandlers;
+	rpcMiddleware : RpcMiddleware(rpcHandlers,serverConfig);
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Constructor" Id="{98b65c28-1f8a-4826-823a-2d7bc5de7419}" />
+    <Method Name="CyclicCall" Id="{f678d030-3853-4688-aa7c-a36bbb09245a}">
+      <Declaration><![CDATA[METHOD PUBLIC CyclicCall
+VAR_INPUT
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[sessionManager.CyclicCall();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{6778fec2-a051-4db8-b54a-bd35cdd17727}" FolderPath="Constructor\">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[MiddlewareStack.Use(sessionsMiddleware);
+MiddlewareStack.Use(chunkedRequestsMiddleware);
+MiddlewareStack.Use(chunkedResponsesMiddleware);
+MiddlewareStack.Use(pendingResponseMiddleware);
+MiddlewareStack.Use(rpcMiddleware);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="HandleRequest" Id="{7b13833b-f9b3-4890-a277-3064b3265ee1}">
+      <Declaration><![CDATA[{attribute 'TcRpcEnable'}
+METHOD PUBLIC HandleRequest : ResponseData;
+VAR_INPUT
+	SerializedHeader : STRING(Constants.REQUEST_HEADER_STRING_SIZE);
+	SerializedPayload : STRING(Constants.REQUEST_PAYLOAD_STRING_SIZE);
+END_VAR
+VAR
+	header : RequestHeader(SerializedHeader);
+	request : Request(header, SerializedPayload);
+	serverResponse : ServerResponse(HandleRequest, serverConfig);
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[memset(ADR(HandleRequest),0,SIZEOF(HandleRequest));
+
+middlewareStack.Handle(request, serverResponse);
+
+IF NOT serverResponse.HeadersSent THEN
+	serverResponse.Error('Unhandled Request');
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Rpc" Id="{faf99840-17b0-43b6-8c58-1f09336d1276}">
+      <Declaration><![CDATA[PROPERTY PUBLIC Rpc : I_RpcHandlers]]></Declaration>
+      <Get Name="Get" Id="{d6af4457-81bc-4edb-8c8a-4cf4799cd9a1}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Rpc := rpcHandlers;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="SessionCount" Id="{b31046af-fafb-43a3-bc84-b1db49953a24}">
+      <Declaration><![CDATA[PROPERTY PUBLIC SessionCount : DINT]]></Declaration>
+      <Get Name="Get" Id="{07052640-8365-468c-a63a-a3825c975c42}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[SessionCount := sessionManager.SessionCount;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="UpdateConfig" Id="{137c2786-6c3e-4f8d-b9ea-cea6d61ea378}">
+      <Declaration><![CDATA[METHOD PUBLIC UpdateConfig
+VAR_INPUT
+	Config : I_ServerConfig;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF Config = 0 THEN
+	RETURN;
+END_IF
+
+serverConfig := Config;
+sessionsMiddleware.UpdateConfig(Config);
+chunkedRequestsMiddleware.UpdateConfig(Config);
+chunkedResponsesMiddleware.UpdateConfig(Config);
+pendingResponseMiddleware.UpdateConfig(Config);
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Use" Id="{6e5ea3d5-bee9-4d79-bfef-f3e289ac77c8}">
+      <Declaration><![CDATA[METHOD PUBLIC Use
+VAR_INPUT
+	Middleware : I_Middleware;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[middlewareStack.Use(Middleware);]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="Server">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="Server.CyclicCall">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="Server.FB_init">
+      <LineId Id="7" Count="0" />
+      <LineId Id="20" Count="2" />
+      <LineId Id="13" Count="0" />
+    </LineIds>
+    <LineIds Name="Server.HandleRequest">
+      <LineId Id="1330" Count="1" />
+      <LineId Id="1316" Count="3" />
+      <LineId Id="1305" Count="0" />
+    </LineIds>
+    <LineIds Name="Server.Rpc.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Server.SessionCount.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Server.UpdateConfig">
+      <LineId Id="8" Count="3" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="18" Count="1" />
+      <LineId Id="17" Count="0" />
+    </LineIds>
+    <LineIds Name="Server.Use">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

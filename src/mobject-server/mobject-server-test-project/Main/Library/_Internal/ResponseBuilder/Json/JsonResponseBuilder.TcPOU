@@ -1,0 +1,529 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="JsonResponseBuilder" Id="{46cc23c7-d1fb-4fb5-8a1e-bbd7224f0de7}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'linkalways'} 
+{attribute 'no_explicit_call' := 'This FB is a CLASS and must be accessed using methods or properties'}
+{attribute 'enable_dynamic_creation'}
+FUNCTION_BLOCK ABSTRACT JsonResponseBuilder IMPLEMENTS I_ResponseBuilder;
+VAR
+	jsonSaxWriter : FB_JsonSaxWriter;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="AddBase64" Id="{4b3e748d-ba85-417a-b7ff-fd40641ee2be}">
+      <Declaration><![CDATA[METHOD PUBLIC AddBase64 : I_ResponseBuilder
+VAR_INPUT
+	pBytes : POINTER TO BYTE;
+	nBytes : DINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonSaxWriter.AddBase64(pBytes, nBytes);
+AddBase64 := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddBool" Id="{8b244953-2331-4c14-b4c2-233f180c4ce7}">
+      <Declaration><![CDATA[METHOD PUBLIC AddBool : I_ResponseBuilder
+VAR_INPUT
+	Value : BOOL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonSaxWriter.AddBool(Value);
+AddBool := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddDateTime" Id="{6aca5ea1-1b71-4b05-b884-e40f2cf67420}">
+      <Declaration><![CDATA[METHOD PUBLIC AddDateTime : I_ResponseBuilder
+VAR_INPUT
+	Value : DATE_AND_TIME;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonSaxWriter.AddDateTime(Value);
+AddDateTime := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddDcTime" Id="{2c3a3a8f-50d1-4f5e-8a3e-00539497354d}">
+      <Declaration><![CDATA[METHOD PUBLIC AddDcTime : I_ResponseBuilder
+VAR_INPUT
+	Value : DCTIME;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonSaxWriter.AddDcTime(Value);
+AddDcTime := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddDint" Id="{fb3bcfb0-fff8-4535-a858-bd0091d4b81b}">
+      <Declaration><![CDATA[METHOD PUBLIC AddDint : I_ResponseBuilder
+VAR_INPUT
+	Value : DINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonSaxWriter.AddDint(Value);
+AddDint := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddFileTime" Id="{60184c56-6254-4513-b3f3-997cb41909f7}">
+      <Declaration><![CDATA[METHOD PUBLIC AddFileTime : I_ResponseBuilder
+VAR_INPUT
+	Value : FILETIME;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonSaxWriter.AddFileTime(Value);
+AddFileTime := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddHexBinary" Id="{e0b47f84-cf3f-488a-9506-ae3941c2a9a3}">
+      <Declaration><![CDATA[METHOD PUBLIC AddHexBinary : I_ResponseBuilder
+VAR_INPUT
+	pBytes : POINTER TO BYTE;
+	nBytes : DINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonSaxWriter.AddHexBinary(pBytes, nBytes);
+AddHexBinary := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddKey" Id="{24dc1d31-a7a8-4dc3-8da7-f8f5cd3985a2}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKey : I_ResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonSaxWriter.AddKey(Key);
+AddKey := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddKeyBase64" Id="{c4d939b1-c920-4641-af1d-f65649d7fd9d}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyBase64 : I_ResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	pBytes : POINTER TO BYTE;
+	nBytes : DINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonSaxWriter.AddKey(Key);
+jsonSaxWriter.AddBase64(pBytes, nBytes);
+AddKeyBase64 := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddKeyBool" Id="{00a154c6-524a-4773-9a58-30760eb3d2c0}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyBool : I_ResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	Value : BOOL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonSaxWriter.AddKeyBool(Key,Value);
+AddKeyBool := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddKeyDateTime" Id="{bf2bfd6d-9d27-4c53-9aba-89e8ca075a9c}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyDateTime : I_ResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	Value : DATE_AND_TIME;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonSaxWriter.AddKeyDateTime(Key,Value);
+AddKeyDateTime := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddKeyDcTime" Id="{fac6a6f5-4f68-4f56-b2ac-af0f461e69ad}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyDcTime : I_ResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	Value : DCTIME;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonSaxWriter.AddKeyDcTime(Key,Value);
+AddKeyDcTime := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddKeyDint" Id="{11d73372-5471-4a6a-8228-9565c11f52e7}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyDint : I_ResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	Value : DINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonSaxWriter.AddKeyNumber(Key,Value);
+AddKeyDint := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddKeyFileTime" Id="{f838397a-d634-4482-858d-33db9270e820}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyFileTime : I_ResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	Value : FILETIME;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonSaxWriter.AddKeyFileTime(Key,Value);
+AddKeyFileTime := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddKeyHexBinary" Id="{f180dc6f-65b3-4919-8463-568db3df92ac}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyHexBinary : I_ResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	pBytes : POINTER TO BYTE;
+	nBytes : DINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonSaxWriter.AddKey(Key);
+jsonSaxWriter.AddHexBinary(pBytes, nBytes);
+AddKeyHexBinary := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddKeyLint" Id="{7510350b-852d-41b5-bdca-f4972876f237}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyLint : I_ResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	Value : LINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonSaxWriter.AddKey(Key);
+jsonSaxWriter.AddLreal(Value);
+AddKeyLint := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddKeyLreal" Id="{db5cb8c2-80dd-4ac7-887d-71a29376b468}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyLreal : I_ResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	Value : LREAL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonSaxWriter.AddKeyLreal(Key,Value);
+AddKeyLreal := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddKeyNull" Id="{d4bf33e8-1a26-4e80-901e-836f2b241c70}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyNull : I_ResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonSaxWriter.AddKeyNull(Key);
+AddKeyNull := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddKeyReal" Id="{7634e453-7f61-4154-b659-fc54aca8a5b3}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyReal : I_ResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	Value : REAL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonSaxWriter.AddKey(Key);
+jsonSaxWriter.AddReal(Value);
+AddKeyReal := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddKeyString" Id="{ccda3039-b2dc-4653-b178-fc8f42288703}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyString : I_ResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	Value : T_MAXSTRING;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonSaxWriter.AddKeyString(Key,Value);
+AddKeyString := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddKeyUdint" Id="{f9533667-b6a3-45d4-a337-25c097ab37f9}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyUdint : I_ResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	Value : UDINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonSaxWriter.AddKey(Key);
+jsonSaxWriter.AddUdint(Value);
+AddKeyUdint := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddKeyUlint" Id="{d789a0dd-877b-4c08-9923-d9a12da62ebb}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyUlint : I_ResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	Value : ULINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonSaxWriter.AddKey(Key);
+jsonSaxWriter.AddUlint(Value);
+AddKeyUlint := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddLint" Id="{10b3f128-d63d-4a94-b1aa-25b1f8cf8fb9}">
+      <Declaration><![CDATA[METHOD PUBLIC AddLint : I_ResponseBuilder
+VAR_INPUT
+	Value : LINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonSaxWriter.AddLint(Value);
+AddLint := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddLreal" Id="{2dff83a0-f1cc-4d83-95a1-fedd5627639b}">
+      <Declaration><![CDATA[METHOD PUBLIC AddLreal : I_ResponseBuilder
+VAR_INPUT
+	Value : LREAL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonSaxWriter.AddLreal(Value);
+AddLreal := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddNull" Id="{c3420488-53d6-417e-8c45-bec5a71424ae}">
+      <Declaration><![CDATA[METHOD PUBLIC AddNull : I_ResponseBuilder
+VAR_INPUT
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonSaxWriter.AddNull();
+AddNull := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddReal" Id="{3ea261da-db98-448f-a044-3fd5a7f35f4c}">
+      <Declaration><![CDATA[METHOD PUBLIC AddReal : I_ResponseBuilder
+VAR_INPUT
+	Value : REAL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonSaxWriter.AddReal(Value);
+AddReal := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddString" Id="{89d00345-cd84-41ec-aa6f-c9c2159f1ec5}">
+      <Declaration><![CDATA[METHOD PUBLIC AddString : I_ResponseBuilder
+VAR_INPUT
+	Value : T_MAXSTRING;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonSaxWriter.AddString(Value);
+AddString := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddUdint" Id="{db681cb1-dddd-4d5d-8cca-7bd9f8dec874}">
+      <Declaration><![CDATA[METHOD PUBLIC AddUdint : I_ResponseBuilder
+VAR_INPUT
+	Value : UDINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonSaxWriter.AddUdint(Value);
+AddUdint := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddUlint" Id="{e1eb61e2-dad9-4232-8345-32512b02b58d}">
+      <Declaration><![CDATA[METHOD PUBLIC AddUlint : I_ResponseBuilder
+VAR_INPUT
+	Value : ULINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonSaxWriter.AddUlint(Value);
+AddUlint := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="EndArray" Id="{e73f4dd1-792c-48c5-abdf-8804f39eddf6}">
+      <Declaration><![CDATA[METHOD PUBLIC EndArray : I_ResponseBuilder
+VAR_INPUT
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonSaxWriter.EndArray();
+EndArray := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="EndObject" Id="{7e3158a9-6b16-430a-9b41-3fb97e862e95}">
+      <Declaration><![CDATA[METHOD PUBLIC EndObject : I_ResponseBuilder
+VAR_INPUT
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonSaxWriter.EndObject();
+EndObject := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Finalize" Id="{04ec01a6-4cfb-4172-9918-54074f56a0e9}">
+      <Declaration><![CDATA[METHOD PUBLIC ABSTRACT Finalize
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Reset" Id="{23d5e104-dbce-49af-bb35-899d780a7ae0}">
+      <Declaration><![CDATA[METHOD PUBLIC Reset
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonSaxWriter.ResetDocument();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="StartArray" Id="{b28a9414-dcdf-426b-8e69-52abb1e27053}">
+      <Declaration><![CDATA[METHOD PUBLIC StartArray : I_ResponseBuilder
+VAR_INPUT
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonSaxWriter.StartArray();
+StartArray := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="StartObject" Id="{00981cef-94d7-4475-9700-7e680248306e}">
+      <Declaration><![CDATA[METHOD PUBLIC StartObject : I_ResponseBuilder
+VAR_INPUT
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonSaxWriter.StartObject();
+StartObject := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="JsonResponseBuilder">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="JsonResponseBuilder.AddBase64">
+      <LineId Id="5" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="JsonResponseBuilder.AddBool">
+      <LineId Id="5" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="JsonResponseBuilder.AddDateTime">
+      <LineId Id="5" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="JsonResponseBuilder.AddDcTime">
+      <LineId Id="5" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="JsonResponseBuilder.AddDint">
+      <LineId Id="5" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="JsonResponseBuilder.AddFileTime">
+      <LineId Id="5" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="JsonResponseBuilder.AddHexBinary">
+      <LineId Id="5" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="JsonResponseBuilder.AddKey">
+      <LineId Id="5" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="JsonResponseBuilder.AddKeyBase64">
+      <LineId Id="21" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="JsonResponseBuilder.AddKeyBool">
+      <LineId Id="5" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="JsonResponseBuilder.AddKeyDateTime">
+      <LineId Id="5" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="JsonResponseBuilder.AddKeyDcTime">
+      <LineId Id="5" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="JsonResponseBuilder.AddKeyDint">
+      <LineId Id="5" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="JsonResponseBuilder.AddKeyFileTime">
+      <LineId Id="5" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="JsonResponseBuilder.AddKeyHexBinary">
+      <LineId Id="34" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="JsonResponseBuilder.AddKeyLint">
+      <LineId Id="5" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="JsonResponseBuilder.AddKeyLreal">
+      <LineId Id="5" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="JsonResponseBuilder.AddKeyNull">
+      <LineId Id="5" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="JsonResponseBuilder.AddKeyReal">
+      <LineId Id="5" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="JsonResponseBuilder.AddKeyString">
+      <LineId Id="5" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="JsonResponseBuilder.AddKeyUdint">
+      <LineId Id="5" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="JsonResponseBuilder.AddKeyUlint">
+      <LineId Id="5" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="JsonResponseBuilder.AddLint">
+      <LineId Id="5" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="JsonResponseBuilder.AddLreal">
+      <LineId Id="5" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="JsonResponseBuilder.AddNull">
+      <LineId Id="5" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="JsonResponseBuilder.AddReal">
+      <LineId Id="5" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="JsonResponseBuilder.AddString">
+      <LineId Id="5" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="JsonResponseBuilder.AddUdint">
+      <LineId Id="5" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="JsonResponseBuilder.AddUlint">
+      <LineId Id="5" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="JsonResponseBuilder.EndArray">
+      <LineId Id="5" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="JsonResponseBuilder.EndObject">
+      <LineId Id="5" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="JsonResponseBuilder.Finalize">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="JsonResponseBuilder.Reset">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="JsonResponseBuilder.StartArray">
+      <LineId Id="5" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="JsonResponseBuilder.StartObject">
+      <LineId Id="5" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,229 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="I_ResponseBuilder" Id="{1915cd37-a63c-497b-b451-ce60404fe3d9}">
+    <Declaration><![CDATA[INTERFACE I_ResponseBuilder
+]]></Declaration>
+    <Method Name="AddBase64" Id="{7df22772-ab58-49d2-81ef-ad4bd2c69bdf}">
+      <Declaration><![CDATA[METHOD PUBLIC AddBase64 : I_ResponseBuilder
+VAR_INPUT
+	pBytes : POINTER TO BYTE;
+	nBytes : DINT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddBool" Id="{b3ca70d4-83a4-4dce-b85c-51bb5f4d83d7}">
+      <Declaration><![CDATA[METHOD PUBLIC AddBool : I_ResponseBuilder
+VAR_INPUT
+	Value : BOOL;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddDateTime" Id="{4a484f59-2ea1-4989-906e-ff1ff0e17c03}">
+      <Declaration><![CDATA[METHOD PUBLIC AddDateTime : I_ResponseBuilder
+VAR_INPUT
+	Value : DATE_AND_TIME;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddDcTime" Id="{cdaee64a-0846-41a7-b742-0e820097d068}">
+      <Declaration><![CDATA[METHOD PUBLIC AddDcTime : I_ResponseBuilder
+VAR_INPUT
+	Value : DCTIME;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddDint" Id="{d9893037-773d-4a1c-a0dc-2b6aab86d89b}">
+      <Declaration><![CDATA[METHOD PUBLIC AddDint : I_ResponseBuilder
+VAR_INPUT
+	Value : DINT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddFileTime" Id="{b357fc91-7700-441d-af3d-1c1ad06adcf4}">
+      <Declaration><![CDATA[METHOD PUBLIC AddFileTime : I_ResponseBuilder
+VAR_INPUT
+	Value : FILETIME;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddHexBinary" Id="{84100303-551e-4f66-a4e7-1d9ff4a1895e}">
+      <Declaration><![CDATA[METHOD PUBLIC AddHexBinary : I_ResponseBuilder
+VAR_INPUT
+	pBytes : POINTER TO BYTE;
+	nBytes : DINT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddKey" Id="{374299fb-d7f5-461b-945f-f8f683fd2e34}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKey : I_ResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddKeyBase64" Id="{ceeb9893-62fe-4840-9e2d-dad0bed7bd11}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyBase64 : I_ResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	pBytes : POINTER TO BYTE;
+	nBytes : DINT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddKeyBool" Id="{52f2b0db-fb23-4fc5-ba55-ab28bc861a09}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyBool : I_ResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	Value : BOOL;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddKeyDateTime" Id="{3937e414-6c3c-488f-ab0f-82f4f8735e9e}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyDateTime : I_ResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	Value : DATE_AND_TIME;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddKeyDcTime" Id="{4f90bf6a-186f-4ec7-8003-7639d117250c}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyDcTime : I_ResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	Value : DCTIME;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddKeyDint" Id="{0dc278a0-55f1-428c-bb10-65f2faa3da30}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyDint : I_ResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	Value : DINT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddKeyFileTime" Id="{59b8f0b1-9a5c-4ab2-a61a-f92da621df1d}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyFileTime : I_ResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	Value : FILETIME;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddKeyHexBinary" Id="{ec9db1b0-eb55-4301-927d-be7694dd8a52}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyHexBinary : I_ResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	pBytes : POINTER TO BYTE;
+	nBytes : DINT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddKeyLint" Id="{b0abaf9b-828d-4036-a097-7c28ecad6557}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyLint : I_ResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	Value : LINT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddKeyLreal" Id="{009273bb-4f8a-4f2e-9559-cb45c4605e68}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyLreal : I_ResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	Value : LREAL;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddKeyNull" Id="{86818c19-13a1-4ca0-9401-e07ad24628fc}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyNull : I_ResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddKeyReal" Id="{3027b230-6f7b-445e-b69e-7cdeed6abd3c}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyReal : I_ResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	Value : REAL;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddKeyString" Id="{9b0f5c0b-d4ca-4a27-92c1-dea5239cca64}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyString : I_ResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	Value : T_MAXSTRING;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddKeyUdint" Id="{14f89c47-5435-40a1-9924-549671d64565}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyUdint : I_ResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	Value : UDINT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddKeyUlint" Id="{d2c5cb61-0d69-42a1-aba9-84ee7c8de3b1}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyUlint : I_ResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	Value : ULINT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddLint" Id="{f8ddcc27-01e3-4441-8cd2-294c28864001}">
+      <Declaration><![CDATA[METHOD PUBLIC AddLint : I_ResponseBuilder
+VAR_INPUT
+	Value : LINT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddLreal" Id="{60fa6133-b455-44b7-ae50-e382eceada68}">
+      <Declaration><![CDATA[METHOD PUBLIC AddLreal : I_ResponseBuilder
+VAR_INPUT
+	Value : LREAL;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddNull" Id="{cd095d32-ff3f-442e-b2a6-98ab1ca90cd4}">
+      <Declaration><![CDATA[METHOD PUBLIC AddNull : I_ResponseBuilder
+VAR_INPUT
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddReal" Id="{7affca9d-0576-49ec-bdfd-e8aad3705580}">
+      <Declaration><![CDATA[METHOD PUBLIC AddReal : I_ResponseBuilder
+VAR_INPUT
+	Value : REAL;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddString" Id="{bc8b9675-968b-4893-9946-ca2c506b027f}">
+      <Declaration><![CDATA[METHOD PUBLIC AddString : I_ResponseBuilder
+VAR_INPUT
+	Value : T_MAXSTRING;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddUdint" Id="{8257ed1e-2ed0-4a8e-a3e6-9a15e94ee664}">
+      <Declaration><![CDATA[METHOD PUBLIC AddUdint : I_ResponseBuilder
+VAR_INPUT
+	Value : UDINT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddUlint" Id="{a6813b0e-caed-4d75-9430-d1b1284ab796}">
+      <Declaration><![CDATA[METHOD PUBLIC AddUlint : I_ResponseBuilder
+VAR_INPUT
+	Value : ULINT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="EndArray" Id="{6f172c45-8a7c-4825-b0f9-4845a70b975f}">
+      <Declaration><![CDATA[METHOD PUBLIC EndArray : I_ResponseBuilder
+VAR_INPUT
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="EndObject" Id="{26bf7eb2-a929-44aa-aca1-373c6895c593}">
+      <Declaration><![CDATA[METHOD PUBLIC EndObject : I_ResponseBuilder
+VAR_INPUT
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="Finalize" Id="{303f6b8c-6754-46f7-8d24-2f0b2889c397}">
+      <Declaration><![CDATA[METHOD PUBLIC Finalize
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Reset" Id="{03e18f09-1739-4bb1-8c50-ea7283cc166e}">
+      <Declaration><![CDATA[METHOD PUBLIC Reset
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="StartArray" Id="{8a39838d-ad49-4ec9-a5ce-e5b6d0221f32}">
+      <Declaration><![CDATA[METHOD PUBLIC StartArray : I_ResponseBuilder
+VAR_INPUT
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="StartObject" Id="{1452bfd9-9f5a-4867-9d6a-9739f4dcca30}">
+      <Declaration><![CDATA[METHOD PUBLIC StartObject : I_ResponseBuilder
+VAR_INPUT
+END_VAR]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

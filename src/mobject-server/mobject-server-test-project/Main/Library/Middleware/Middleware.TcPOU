@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="Middleware" Id="{af066795-5139-47ab-af4d-eab87d77ce03}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'linkalways'} 
+{attribute 'no_explicit_call' := 'This FB is a CLASS and must be accessed using methods or properties'}
+{attribute 'enable_dynamic_creation'}
+FUNCTION_BLOCK ABSTRACT Middleware implements I_Middleware
+VAR
+	_next : I_Middleware;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Protected" Id="{8176d192-b96d-4c65-b3f4-90e3ed32eac3}" />
+    <Method Name="Handle" Id="{069e2687-0b1c-48a5-ae7d-c4f3322e6443}">
+      <Declaration><![CDATA[METHOD PUBLIC ABSTRACT Handle
+VAR_INPUT
+	Request : I_Request;
+	Response : I_ServerResponse;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// Call next to pass the request and response to the next handler
+// Next(Request, Response);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Next" Id="{c88c5869-feda-47f4-9f7a-877e6399c98f}" FolderPath="Protected\">
+      <Declaration><![CDATA[METHOD PROTECTED Next
+VAR_INPUT
+	Request : I_Request;
+	Response : I_ServerResponse;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _next = 0 THEN
+	RETURN;
+END_IF
+
+_next.Handle(Request, Response);]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="NextMiddleware" Id="{ccb192db-e3b8-4503-8eb3-1e0abedb5db0}">
+      <Declaration><![CDATA[PROPERTY PUBLIC NextMiddleware : I_Middleware]]></Declaration>
+      <Get Name="Get" Id="{4d98b946-e60e-4f0d-a625-243010104109}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[NextMiddleware := _next;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{623f2f3f-2b07-459b-b91e-a072961318ea}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_next := NextMiddleware;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <LineIds Name="Middleware">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="Middleware.Handle">
+      <LineId Id="11" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="Middleware.Next">
+      <LineId Id="5" Count="2" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="8" Count="0" />
+    </LineIds>
+    <LineIds Name="Middleware.NextMiddleware.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Middleware.NextMiddleware.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

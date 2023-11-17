@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <FileVersion>1.0.0.0</FileVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{037ac361-2411-432d-8c0d-7903bde0eef8}</ProjectGuid>
+    <SubObjectsSortedByName>True</SubObjectsSortedByName>
+    <DownloadApplicationInfo>true</DownloadApplicationInfo>
+    <WriteProductVersion>true</WriteProductVersion>
+    <GenerateTpy>false</GenerateTpy>
+    <Name>Main</Name>
+    <ProgramVersion>3.1.4024.0</ProgramVersion>
+    <Application>{dc9c6d1b-aebc-4c8e-b662-9fe84486407b}</Application>
+    <TypeSystem>{381eb040-6e7d-4ef4-b122-80236cc72f3f}</TypeSystem>
+    <Implicit_Task_Info>{75794d49-5390-422d-86fa-2b78cb615ef1}</Implicit_Task_Info>
+    <Implicit_KindOfTask>{4c0505b3-6b37-48d0-b80e-487b7bf0ccbf}</Implicit_KindOfTask>
+    <Implicit_Jitter_Distribution>{966adae0-a857-4c3d-b5b8-6753d8f7937b}</Implicit_Jitter_Distribution>
+    <LibraryReferences>{0f5be524-e5b7-43ae-a4e5-6ef152efef78}</LibraryReferences>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="GVLs\Constants.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Library\Server\Server.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\Middleware\Middleware.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\RpcHandler\I_RpcHandler.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\ServerConfig\I_ServerConfig.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\Async\AsyncManager.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\Async\I_AsyncManagerConfig.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\ChunkedResponses\ChunkableServerResponse.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\ChunkedResponses\ChunkedResponseData.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\ChunkedResponses\ChunkedResponsesMiddleware.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\ChunkedResponses\ChunkedResponseManager.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\ChunkedResponses\I_ChunkedResponseData.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\ChunkedResponses\I_ChunkedResponsesMiddlewareConfig.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\ChunkedRequests\ChunkedRequestsMiddleware.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\ChunkedRequests\I_ChunkedRequestsMiddlewareConfig.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\ChunkedResponses\I_ChunkedResponseManager.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\ChunkedResponses\I_ChunkedResponseManagerConfig.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\Middleware\Interface\I_Middleware.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\Pending\I_PendingResponseMiddlewareConfig.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\Pending\PendingResponseMiddleware.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\Request\RequestHeader\I_RequestHeader.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\Request\RequestHeader\RequestHeader.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\ResponseBuilder\I_ResponseBuilder.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\ResponseBuilder\Json\JsonResponseBuilder.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\ResponseId\I_ResponseIdGenerator.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\ResponseId\SequentialResponseIdGenerator.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\RPC\I_RpcHandlers.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\RPC\I_RpcParameters.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\RPC\I_RpcResponse.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\RPC\Json\JsonRpcResponseBuilder.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\RPC\Json\JsonRpcParameters.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\RPC\Middleware\I_RpcMiddlewareConfig.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\RPC\Middleware\RpcMiddleware.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\RPC\RpcHandlers.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\RPC\RpcResponse.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\ServerConfig\ServerConfigV1.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\Middleware\Stack\MiddlewareStack.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\Request\I_Request.TcIO">
+      <SubType>Code</SubType>
+      <ExcludeFromBuild>false</ExcludeFromBuild>
+    </Compile>
+    <Compile Include="Library\_Internal\Request\Request.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\ServerResponse\I_ServerResponse.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\ServerResponse\I_ServerResponseConfig.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\ServerResponse\ResponseData.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\ServerResponse\ServerResponse.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\ServerResponse\ServerResponseHeader\I_ServerResponseHeader.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\ServerResponse\ServerResponseHeader\ServerResponseHeader.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\Sessions\Data\I_SessionData.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\Sessions\SessionId\I_SessionIdGenerator.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\Sessions\SessionId\SequentialSessionIdGenerator.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\Sessions\Manager\I_SessionManager.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\Sessions\Manager\SessionManager.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\Sessions\Middleware\I_SessionMiddlewareConfig.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\Sessions\Middleware\SessionsMiddleware.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\Sessions\Session\I_Session.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\Sessions\Session\Session.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\Sessions\Storage\I_SessionStorage.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\TimeStamp\I_Timestamp.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\TimeStamp\SystemTimestamp.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Param.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="PlcTask.TcTTO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\MAIN.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\SuccessTestFunction.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\SuccessTestRpcHandler.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="GVLs" />
+    <Folder Include="Library" />
+    <Folder Include="Library\Server" />
+    <Folder Include="Library\Middleware" />
+    <Folder Include="Library\ServerConfig" />
+    <Folder Include="Library\RpcHandler" />
+    <Folder Include="Library\_Internal" />
+    <Folder Include="Library\_Internal\ChunkedRequests" />
+    <Folder Include="Library\_Internal\Middleware\Interface" />
+    <Folder Include="Library\_Internal\Middleware\Stack" />
+    <Folder Include="Library\_Internal\Async" />
+    <Folder Include="Library\_Internal\ChunkedResponses" />
+    <Folder Include="Library\_Internal\Request\RequestHeader" />
+    <Folder Include="Library\_Internal\Pending" />
+    <Folder Include="Library\_Internal\ResponseBuilder\Json" />
+    <Folder Include="Library\_Internal\ResponseId" />
+    <Folder Include="Library\_Internal\ServerResponse\ServerResponseHeader" />
+    <Folder Include="Library\_Internal\Sessions" />
+    <Folder Include="Library\_Internal\ResponseBuilder" />
+    <Folder Include="Library\_Internal\RPC" />
+    <Folder Include="Library\_Internal\RPC\Json" />
+    <Folder Include="Library\_Internal\RPC\Middleware" />
+    <Folder Include="Library\_Internal\ServerConfig" />
+    <Folder Include="Library\_Internal\Sessions\Data" />
+    <Folder Include="Library\_Internal\Sessions\Storage" />
+    <Folder Include="Library\_Internal\Sessions\Session" />
+    <Folder Include="Library\_Internal\Sessions\SessionId" />
+    <Folder Include="Library\_Internal\Sessions\Manager" />
+    <Folder Include="Library\_Internal\Sessions\Middleware" />
+    <Folder Include="Library\_Internal\TimeStamp" />
+    <Folder Include="Library\_Internal\Middleware" />
+    <Folder Include="Library\_Internal\Request" />
+    <Folder Include="Library\_Internal\ServerResponse" />
+    <Folder Include="VISUs" />
+    <Folder Include="POUs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PlaceholderReference Include="mobject-collections">
+      <DefaultResolution>mobject-collections, * (mobject)</DefaultResolution>
+      <Namespace>mobject_collections</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="mobject-disposable">
+      <DefaultResolution>mobject-disposable, * (mobject)</DefaultResolution>
+      <Namespace>mobject_disposable</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="mobject-enumerable">
+      <DefaultResolution>mobject-enumerable, * (mobject)</DefaultResolution>
+      <Namespace>mobject_enumerable</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="mobject-events">
+      <DefaultResolution>mobject-events, * (mobject)</DefaultResolution>
+      <Namespace>mobject_events</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc2_Standard">
+      <DefaultResolution>Tc2_Standard, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_Standard</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc2_System">
+      <DefaultResolution>Tc2_System, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_System</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc2_Utilities">
+      <DefaultResolution>Tc2_Utilities, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_Utilities</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc3_JsonXml">
+      <DefaultResolution>Tc3_JsonXml, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc3_JsonXml</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc3_Module">
+      <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc3_Module</Namespace>
+    </PlaceholderReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Main.tmc">
+      <SubType>Content</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <LibraryReference Include="mobject-json,newest,mobject">
+      <Namespace>mobject_json</Namespace>
+    </LibraryReference>
+  </ItemGroup>
+  <ProjectExtensions>
+    <PlcProjectOptions>
+      <XmlArchive>
+        <Data>
+          <o xml:space="preserve" t="OptionKey">
+      <v n="Name">"&lt;ProjectRoot&gt;"</v>
+      <d n="SubKeys" t="Hashtable" ckt="String" cvt="OptionKey">
+        <v>{40450F57-0AA3-4216-96F3-5444ECB29763}</v>
+        <o>
+          <v n="Name">"{40450F57-0AA3-4216-96F3-5444ECB29763}"</v>
+          <d n="SubKeys" t="Hashtable" />
+          <d n="Values" t="Hashtable" ckt="String" cvt="String">
+            <v>ActiveVisuProfile</v>
+            <v>IR0whWr8bwfwBwAAiD2qpQAAAABVAgAA37x72QAAAAABAAAAAAAAAAEaUwB5AHMAdABlAG0ALgBTAHQAcgBpAG4AZwACTHsAZgA5ADUAYgBiADQAMgA2AC0ANQA1ADIANAAtADQAYgA0ADUALQA5ADQAMAAwAC0AZgBiADAAZgAyAGUANwA3AGUANQAxAGIAfQADCE4AYQBtAGUABDBUAHcAaQBuAEMAQQBUACAAMwAuADEAIABCAHUAaQBsAGQAIAA0ADAAMgA0AC4ANwAFFlAAcgBvAGYAaQBsAGUARABhAHQAYQAGTHsAMQA2AGUANQA1AGIANgAwAC0ANwAwADQAMwAtADQAYQA2ADMALQBiADYANQBiAC0ANgAxADQANwAxADMAOAA3ADgAZAA0ADIAfQAHEkwAaQBiAHIAYQByAGkAZQBzAAhMewAzAGIAZgBkADUANAA1ADkALQBiADAANwBmAC0ANABkADYAZQAtAGEAZQAxAGEALQBhADgAMwAzADUANgBhADUANQAxADQAMgB9AAlMewA5AGMAOQA1ADgAOQA2ADgALQAyAGMAOAA1AC0ANAAxAGIAYgAtADgAOAA3ADEALQA4ADkANQBmAGYAMQBmAGUAZABlADEAYQB9AAoOVgBlAHIAcwBpAG8AbgALBmkAbgB0AAwKVQBzAGEAZwBlAA0KVABpAHQAbABlAA4aVgBpAHMAdQBFAGwAZQBtAE0AZQB0AGUAcgAPDkMAbwBtAHAAYQBuAHkAEAxTAHkAcwB0AGUAbQARElYAaQBzAHUARQBsAGUAbQBzABIwVgBpAHMAdQBFAGwAZQBtAHMAUwBwAGUAYwBpAGEAbABDAG8AbgB0AHIAbwBsAHMAEyhWAGkAcwB1AEUAbABlAG0AcwBXAGkAbgBDAG8AbgB0AHIAbwBsAHMAFCRWAGkAcwB1AEUAbABlAG0AVABlAHgAdABFAGQAaQB0AG8AcgAVIlYAaQBzAHUATgBhAHQAaQB2AGUAQwBvAG4AdAByAG8AbAAWFHYAaQBzAHUAaQBuAHAAdQB0AHMAFwxzAHkAcwB0AGUAbQAYGFYAaQBzAHUARQBsAGUAbQBCAGEAcwBlABkmRABlAHYAUABsAGEAYwBlAGgAbwBsAGQAZQByAHMAVQBzAGUAZAAaCGIAbwBvAGwAGyJQAGwAdQBnAGkAbgBDAG8AbgBzAHQAcgBhAGkAbgB0AHMAHEx7ADQAMwBkADUAMgBiAGMAZQAtADkANAAyAGMALQA0ADQAZAA3AC0AOQBlADkANAAtADEAYgBmAGQAZgAzADEAMABlADYAMwBjAH0AHRxBAHQATABlAGEAcwB0AFYAZQByAHMAaQBvAG4AHhRQAGwAdQBnAGkAbgBHAHUAaQBkAB8WUwB5AHMAdABlAG0ALgBHAHUAaQBkACBIYQBmAGMAZAA1ADQANAA2AC0ANAA5ADEANAAtADQAZgBlADcALQBiAGIANwA4AC0AOQBiAGYAZgBlAGIANwAwAGYAZAAxADcAIRRVAHAAZABhAHQAZQBJAG4AZgBvACJMewBiADAAMwAzADYANgBhADgALQBiADUAYwAwAC0ANABiADkAYQAtAGEAMAAwAGUALQBlAGIAOAA2ADAAMQAxADEAMAA0AGMAMwB9ACMOVQBwAGQAYQB0AGUAcwAkTHsAMQA4ADYAOABmAGYAYwA5AC0AZQA0AGYAYwAtADQANQAzADIALQBhAGMAMAA2AC0AMQBlADMAOQBiAGIANQA1ADcAYgA2ADkAfQAlTHsAYQA1AGIAZAA0ADgAYwAzAC0AMABkADEANwAtADQAMQBiADUALQBiADEANgA0AC0ANQBmAGMANgBhAGQAMgBiADkANgBiADcAfQAmFk8AYgBqAGUAYwB0AHMAVAB5AHAAZQAnVFUAcABkAGEAdABlAEwAYQBuAGcAdQBhAGcAZQBNAG8AZABlAGwARgBvAHIAQwBvAG4AdgBlAHIAdABpAGIAbABlAEwAaQBiAHIAYQByAGkAZQBzACgQTABpAGIAVABpAHQAbABlACkUTABpAGIAQwBvAG0AcABhAG4AeQAqHlUAcABkAGEAdABlAFAAcgBvAHYAaQBkAGUAcgBzACs4UwB5AHMAdABlAG0ALgBDAG8AbABsAGUAYwB0AGkAbwBuAHMALgBIAGEAcwBoAHQAYQBiAGwAZQAsEnYAaQBzAHUAZQBsAGUAbQBzAC1INgBjAGIAMQBjAGQAZQAxAC0AZAA1AGQAYwAtADQAYQAzAGIALQA5ADAANQA0AC0AMgAxAGYAYQA3ADUANgBhADMAZgBhADQALihJAG4AdABlAHIAZgBhAGMAZQBWAGUAcgBzAGkAbwBuAEkAbgBmAG8AL0x7AGMANgAxADEAZQA0ADAAMAAtADcAZgBiADkALQA0AGMAMwA1AC0AYgA5AGEAYwAtADQAZQAzADEANABiADUAOQA5ADYANAAzAH0AMBhNAGEAagBvAHIAVgBlAHIAcwBpAG8AbgAxGE0AaQBuAG8AcgBWAGUAcgBzAGkAbwBuADIMTABlAGcAYQBjAHkAMzBMAGEAbgBnAHUAYQBnAGUATQBvAGQAZQBsAFYAZQByAHMAaQBvAG4ASQBuAGYAbwA0MEwAbwBhAGQATABpAGIAcgBhAHIAaQBlAHMASQBuAHQAbwBQAHIAbwBqAGUAYwB0ADUaQwBvAG0AcABhAHQAaQBiAGkAbABpAHQAeQDQAAIaA9ADAS0E0AUGGgfQBwgaAUUHCQjQAAkaBEUKCwQDAAAABQAAAA0AAAAAAAAA0AwLrQIAAADQDQEtDtAPAS0Q0AAJGgRFCgsEAwAAAAUAAAANAAAAKAAAANAMC60BAAAA0A0BLRHQDwEtENAACRoERQoLBAMAAAAFAAAADQAAAAAAAADQDAutAgAAANANAS0S0A8BLRDQAAkaBEUKCwQDAAAABQAAAA0AAAAUAAAA0AwLrQIAAADQDQEtE9APAS0Q0AAJGgRFCgsEAwAAAAUAAAANAAAAAAAAANAMC60CAAAA0A0BLRTQDwEtENAACRoERQoLBAMAAAAFAAAADQAAAAAAAADQDAutAgAAANANAS0V0A8BLRDQAAkaBEUKCwQDAAAABQAAAA0AAAAAAAAA0AwLrQIAAADQDQEtFtAPAS0X0AAJGgRFCgsEAwAAAAUAAAANAAAAKAAAANAMC60EAAAA0A0BLRjQDwEtENAZGq0BRRscAdAAHBoCRR0LBAMAAAAFAAAADQAAAAAAAADQHh8tINAhIhoCRSMkAtAAJRoFRQoLBAMAAAADAAAAAAAAAAoAAADQJgutAAAAANADAS0n0CgBLRHQKQEtENAAJRoFRQoLBAMAAAADAAAAAAAAAAoAAADQJgutAQAAANADAS0n0CgBLRHQKQEtEJoqKwFFAAEC0AABLSzQAAEtF9AAHy0t0C4vGgPQMAutAQAAANAxC60XAAAA0DIarQDQMy8aA9AwC60CAAAA0DELrQMAAADQMhqtANA0Gq0A0DUarQA=</v>
+          </d>
+        </o>
+        <v>{192FAD59-8248-4824-A8DE-9177C94C195A}</v>
+        <o>
+          <v n="Name">"{192FAD59-8248-4824-A8DE-9177C94C195A}"</v>
+          <d n="SubKeys" t="Hashtable" />
+          <d n="Values" t="Hashtable" />
+        </o>
+      </d>
+      <d n="Values" t="Hashtable" />
+    </o>
+        </Data>
+        <TypeList>
+          <Type n="Hashtable">System.Collections.Hashtable</Type>
+          <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
+          <Type n="String">System.String</Type>
+        </TypeList>
+      </XmlArchive>
+    </PlcProjectOptions>
+  </ProjectExtensions>
+</Project>

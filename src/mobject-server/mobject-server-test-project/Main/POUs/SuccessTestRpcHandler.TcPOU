@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="SuccessTestRpcHandler" Id="{3308dee3-7162-4e6b-ab6c-6da43be8ef3f}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK SuccessTestRpcHandler IMPLEMENTS I_RpcHandler
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Handle" Id="{b973a79f-d251-4a0d-baf6-50941936d5fe}">
+      <Declaration><![CDATA[METHOD Handle
+VAR_INPUT
+	Parameters : I_RpcParameters;
+	Response : I_RpcResponse;
+END_VAR
+VAR
+	fooParam : T_MAXSTRING;
+	helloParam : T_MAXSTRING;
+	result : T_MAXSTRING;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT Parameters.TryGetParameter('foo',fooParam) THEN
+	Response.Reject('Missing foo parameter');
+	RETURN;
+END_IF
+
+Parameters.TryGetParameter('hello',helloParam);
+
+result := SuccessTestFunction(foo:=fooParam, hello:=helloParam);
+
+Response.Build().StartObject().AddKeyString('test',result).EndObject().Finalize();
+
+//Response.Reject('');
+//Response.MakeAsync(myAsyncResponse);]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="SuccessTestRpcHandler">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="SuccessTestRpcHandler.Handle">
+      <LineId Id="19" Count="0" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="78" Count="0" />
+      <LineId Id="75" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="52" Count="1" />
+      <LineId Id="90" Count="0" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="72" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
