@@ -32,20 +32,5 @@ IF trigger THEN
 	reply := server.HandleRequest(serializedHeader,serializedPayload);
 END_IF]]></ST>
     </Implementation>
-    <LineIds Name="MAIN">
-      <LineId Id="19" Count="0" />
-      <LineId Id="30" Count="0" />
-      <LineId Id="57" Count="0" />
-      <LineId Id="31" Count="0" />
-      <LineId Id="76" Count="0" />
-      <LineId Id="75" Count="0" />
-      <LineId Id="33" Count="0" />
-      <LineId Id="32" Count="0" />
-      <LineId Id="40" Count="0" />
-      <LineId Id="39" Count="0" />
-      <LineId Id="41" Count="0" />
-      <LineId Id="43" Count="0" />
-      <LineId Id="42" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

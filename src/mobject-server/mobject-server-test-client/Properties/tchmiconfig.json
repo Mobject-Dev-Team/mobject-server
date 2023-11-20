@@ -1,7 +1,7 @@
 {
   "$schema": "./../../Packages/Beckhoff.TwinCAT.HMI.Framework.12.760.44/runtimes/native1.12-tchmi/Schema/TchmiConfig.Schema.json",
   "basePath": "./framework",
-  "scaleMode": "",
+  "scaleMode": "None",
   "startupView": "Desktop.view",
   "loginPage": "",
   "tcHmiServer": {
@@ -46,16 +46,6 @@
     }
   },
   "dependencyFiles": [
-    {
-      "name": "Scripts/JsonRpcApi.js",
-      "description": "",
-      "type": "JavaScript"
-    },
-    {
-      "name": "Fonts/Fonts.css",
-      "description": "",
-      "type": "Stylesheet"
-    },
     {
       "name": "Scripts/JsonRpcApi.js",
       "description": "",
@@ -127,7 +117,18 @@
   "tcSpeech": {},
   "systemKeyboard": {
     "providerName": "",
-    "projectKeyboardMapping": {}
+    "projectKeyboardMapping": {
+      "de": {
+        "text": "",
+        "decimal": "",
+        "numeric": ""
+      },
+      "en": {
+        "text": "",
+        "decimal": "",
+        "numeric": ""
+      }
+    }
   },
   "systemPopups": {
     "providerName": ""

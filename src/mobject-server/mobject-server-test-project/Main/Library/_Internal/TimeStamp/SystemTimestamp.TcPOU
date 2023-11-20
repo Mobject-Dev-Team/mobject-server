@@ -54,6 +54,24 @@ END_VAR
         <ST><![CDATA[recordedTime := F_GetSystemTime();]]></ST>
       </Implementation>
     </Method>
+    <Property Name="TimeSince" Id="{62ab1b2e-2bc0-4650-b8c5-568d3a471dfc}">
+      <Declaration><![CDATA[PROPERTY PUBLIC TimeSince : TIME]]></Declaration>
+      <Get Name="Get" Id="{d309cd68-f815-4384-bfe5-74b290b70532}">
+        <Declaration><![CDATA[VAR
+	currentTime : ULINT;
+	elapsedDurationInHundredNs : ULINT;
+	convertTime : ULINT;
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[currentTime := F_GetSystemTime();
+
+elapsedDurationInHundredNs := currentTime - recordedTime;
+convertTime := elapsedDurationInHundredNs / 10000;
+TimeSince := ULINT_TO_TIME(convertTime);]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
     <LineIds Name="SystemTimestamp">
       <LineId Id="9" Count="0" />
     </LineIds>
@@ -66,6 +84,12 @@ END_VAR
     </LineIds>
     <LineIds Name="SystemTimestamp.SetNow">
       <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SystemTimestamp.TimeSince.Get">
+      <LineId Id="5" Count="0" />
+      <LineId Id="21" Count="1" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="20" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

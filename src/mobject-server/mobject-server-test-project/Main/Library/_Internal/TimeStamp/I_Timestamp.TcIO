@@ -9,5 +9,11 @@ VAR_INPUT
 	Duration : TIME;
 END_VAR]]></Declaration>
     </Method>
+    <Property Name="TimeSince" Id="{54bd26be-a299-4b39-89df-953419364d05}">
+      <Declaration><![CDATA[PROPERTY PUBLIC TimeSince : TIME]]></Declaration>
+      <Get Name="Get" Id="{98199a8c-8f41-49f6-8ed5-de68ab6608c2}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
   </Itf>
 </TcPlcObject>

@@ -19,5 +19,11 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
+    <Method Name="RefreshSession" Id="{9703b05e-fc33-4ea6-a9e0-e38e51a6a160}">
+      <Declaration><![CDATA[METHOD PUBLIC RefreshSession
+VAR_INPUT
+	Id : T_MAXSTRING;
+END_VAR]]></Declaration>
+    </Method>
   </Itf>
 </TcPlcObject>

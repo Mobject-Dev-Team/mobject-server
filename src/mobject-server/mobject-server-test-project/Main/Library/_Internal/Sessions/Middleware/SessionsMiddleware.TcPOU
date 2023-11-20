@@ -43,6 +43,8 @@ END_VAR]]></Declaration>
 	config.UpdateRequestWithSessionId(Request,sessionId);
 END_IF
 
+sessionManager.RefreshSession(sessionId);
+
 config.UpdateResponseWithSessionId(Response, sessionId);
 Next(Request, Response);]]></ST>
       </Implementation>
@@ -69,6 +71,8 @@ END_VAR
       <LineId Id="76" Count="0" />
       <LineId Id="94" Count="0" />
       <LineId Id="75" Count="0" />
+      <LineId Id="103" Count="0" />
+      <LineId Id="102" Count="0" />
       <LineId Id="77" Count="0" />
       <LineId Id="56" Count="0" />
       <LineId Id="64" Count="0" />

@@ -16,7 +16,6 @@ END_VAR
     </Implementation>
     <Folder Name="Constructor" Id="{8592cdb5-cda5-4488-a7d8-7f9298e4c6eb}" />
     <Folder Name="Destructor" Id="{fb318f0b-2e08-4568-af7e-b120b123a70c}" />
-    <Folder Name="Private" Id="{12f1b0f0-3d83-4e02-adba-8a7bc8d03d23}" />
     <Method Name="AddOrUpdateStorage" Id="{e26f978d-d270-4745-b672-d6bde43eb40d}">
       <Declaration><![CDATA[METHOD PUBLIC AddOrUpdateStorage
 VAR_INPUT
@@ -114,6 +113,15 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
+    <Method Name="Refresh" Id="{9813f788-a2ed-4ed5-bd00-5b6f69a81564}">
+      <Declaration><![CDATA[METHOD PUBLIC Refresh
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_lastAccessedTimestamp.SetNow();]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="TryGetDataFromStorage" Id="{490aeb08-e407-49ba-8054-c25284551ce2}">
       <Declaration><![CDATA[METHOD PUBLIC TryGetDataFromStorage : BOOL
 VAR_INPUT
@@ -122,17 +130,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[UpdateLastAccessedTime();
-TryGetDataFromStorage := sessionStorage.TryGetValue(StorageId, Destination);]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="UpdateLastAccessedTime" Id="{ee491495-7508-48af-95bb-e76297618c9b}" FolderPath="Private\">
-      <Declaration><![CDATA[METHOD PRIVATE UpdateLastAccessedTime
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[_lastAccessedTimestamp.SetNow();]]></ST>
+        <ST><![CDATA[TryGetDataFromStorage := sessionStorage.TryGetValue(StorageId, Destination);]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="Session">
@@ -167,11 +165,10 @@ END_VAR
     <LineIds Name="Session.LastAccessedTimestamp.Get">
       <LineId Id="2" Count="0" />
     </LineIds>
-    <LineIds Name="Session.TryGetDataFromStorage">
-      <LineId Id="8" Count="0" />
+    <LineIds Name="Session.Refresh">
       <LineId Id="5" Count="0" />
     </LineIds>
-    <LineIds Name="Session.UpdateLastAccessedTime">
+    <LineIds Name="Session.TryGetDataFromStorage">
       <LineId Id="5" Count="0" />
     </LineIds>
   </POU>

@@ -35,6 +35,12 @@ END_VAR
         <Declaration><![CDATA[]]></Declaration>
       </Get>
     </Property>
+    <Method Name="Refresh" Id="{fae7c6d8-dbc2-4cd6-95f3-ba00f57cceab}">
+      <Declaration><![CDATA[METHOD PUBLIC Refresh
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
     <Method Name="TryGetDataFromStorage" Id="{2ae68a48-247d-4878-9606-cb764cdf35db}">
       <Declaration><![CDATA[METHOD PUBLIC TryGetDataFromStorage : BOOL
 VAR_INPUT
