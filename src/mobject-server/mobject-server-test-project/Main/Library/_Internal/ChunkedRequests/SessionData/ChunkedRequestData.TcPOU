@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="ChunkedRequestData" Id="{99b41408-4cca-4749-b5ea-cc34ac4e8cbd}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ChunkedRequestData
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

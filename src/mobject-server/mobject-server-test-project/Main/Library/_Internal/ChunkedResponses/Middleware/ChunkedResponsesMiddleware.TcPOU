@@ -55,21 +55,5 @@ END_VAR
         <ST><![CDATA[this^.config := Config;]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="ChunkedResponsesMiddleware">
-      <LineId Id="9" Count="0" />
-    </LineIds>
-    <LineIds Name="ChunkedResponsesMiddleware.FB_init">
-      <LineId Id="26" Count="0" />
-      <LineId Id="18" Count="0" />
-    </LineIds>
-    <LineIds Name="ChunkedResponsesMiddleware.Handle">
-      <LineId Id="72" Count="0" />
-      <LineId Id="74" Count="1" />
-      <LineId Id="73" Count="0" />
-      <LineId Id="64" Count="0" />
-    </LineIds>
-    <LineIds Name="ChunkedResponsesMiddleware.UpdateConfig">
-      <LineId Id="7" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

@@ -111,43 +111,5 @@ currentPointerLocation := pData;
 remainingLengthToSendInBytes := Size;]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="ChunkedResponseData">
-      <LineId Id="9" Count="0" />
-    </LineIds>
-    <LineIds Name="ChunkedResponseData.FB_exit">
-      <LineId Id="6" Count="2" />
-      <LineId Id="10" Count="0" />
-      <LineId Id="9" Count="0" />
-      <LineId Id="11" Count="1" />
-    </LineIds>
-    <LineIds Name="ChunkedResponseData.FB_init">
-      <LineId Id="7" Count="0" />
-    </LineIds>
-    <LineIds Name="ChunkedResponseData.SendComplete.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ChunkedResponseData.SendNextChunk">
-      <LineId Id="8" Count="1" />
-      <LineId Id="11" Count="0" />
-      <LineId Id="10" Count="0" />
-      <LineId Id="27" Count="0" />
-      <LineId Id="26" Count="0" />
-      <LineId Id="17" Count="0" />
-      <LineId Id="16" Count="0" />
-      <LineId Id="18" Count="1" />
-      <LineId Id="13" Count="0" />
-      <LineId Id="12" Count="0" />
-      <LineId Id="22" Count="0" />
-      <LineId Id="20" Count="1" />
-    </LineIds>
-    <LineIds Name="ChunkedResponseData.SizeRemaining.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ChunkedResponseData.StoreData">
-      <LineId Id="5" Count="0" />
-      <LineId Id="9" Count="0" />
-      <LineId Id="8" Count="0" />
-      <LineId Id="10" Count="1" />
-    </LineIds>
   </POU>
 </TcPlcObject>

@@ -25,7 +25,8 @@ VAR
 	sessionsMiddleware : SessionsMiddleware(sessionManager, serverConfig);
 	
 	// ability to suppoort chunked requests
-	chunkedRequestsMiddleware : ChunkedRequestsMiddleware(serverConfig);
+	chunkedRequestsManager : ChunkedRequestsManager(sessionManager, serverConfig);
+	chunkedRequestsMiddleware : ChunkedRequestsMiddleware(chunkedRequestsManager,serverConfig);
 	
 	// ability to support chunked responses
 	chunkedResponseManager : ChunkedResponseManager(Constants.RESPONSE_PAYLOAD_STRING_SIZE, sessionManager, sequentialResponseIdGenerator, serverConfig);
@@ -139,38 +140,5 @@ END_VAR]]></Declaration>
         <ST><![CDATA[middlewareStack.Use(Middleware);]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="Server">
-      <LineId Id="9" Count="0" />
-    </LineIds>
-    <LineIds Name="Server.CyclicCall">
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="Server.FB_init">
-      <LineId Id="7" Count="0" />
-      <LineId Id="20" Count="2" />
-      <LineId Id="13" Count="0" />
-    </LineIds>
-    <LineIds Name="Server.HandleRequest">
-      <LineId Id="1330" Count="1" />
-      <LineId Id="1316" Count="3" />
-      <LineId Id="1305" Count="0" />
-    </LineIds>
-    <LineIds Name="Server.Rpc.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="Server.SessionCount.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="Server.UpdateConfig">
-      <LineId Id="8" Count="3" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="7" Count="0" />
-      <LineId Id="16" Count="0" />
-      <LineId Id="18" Count="1" />
-      <LineId Id="17" Count="0" />
-    </LineIds>
-    <LineIds Name="Server.Use">
-      <LineId Id="5" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

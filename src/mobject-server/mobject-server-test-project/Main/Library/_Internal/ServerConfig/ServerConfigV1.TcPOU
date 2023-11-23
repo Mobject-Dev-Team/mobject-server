@@ -332,6 +332,17 @@ END_VAR
         <ST><![CDATA[TryGetContentTypeFromRequest := Request.Header.TryGetField(HeaderKey_ContentType,Destination);]]></ST>
       </Implementation>
     </Method>
+    <Method Name="TryGetHasMoreChunksFromRequest" Id="{a6fd5b5d-572f-4b12-ba85-babb0355453c}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetHasMoreChunksFromRequest : BOOL
+VAR_INPUT
+	Request : I_Request;
+	Destination : ANY;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TryGetHasMoreChunksFromRequest := Request.Header.TryGetField(HeaderKey_HasMoreChunks,Destination);]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="TryGetMethodNameFromRequest" Id="{7df482db-036e-45ab-a3af-6e122ddd395b}">
       <Declaration><![CDATA[METHOD PUBLIC TryGetMethodNameFromRequest : BOOL
 VAR_INPUT
@@ -484,157 +495,5 @@ END_VAR]]></Declaration>
         <ST><![CDATA[Response.Header.TryWriteField(HeaderKey_Status,StatusValue_Success);]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="ServerConfigV1">
-      <LineId Id="9" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.ContentType_Json.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.ContentType_Json.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_Accept.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_Accept.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_ContentType.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_ContentType.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_HasMoreChunks.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_HasMoreChunks.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_Message.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_Message.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_MethodName.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_MethodName.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_ResponseId.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_ResponseId.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_RetryDelay.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_RetryDelay.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_SessionId.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_SessionId.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_Status.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_Status.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_Type.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_Type.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.StatusValue_Accepted.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.StatusValue_Accepted.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.StatusValue_Busy.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.StatusValue_Busy.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.StatusValue_Error.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.StatusValue_Error.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.StatusValue_Pending.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.StatusValue_Pending.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.StatusValue_Success.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.StatusValue_Success.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.TryGetAcceptResponseFormatFromRequest">
-      <LineId Id="7" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.TryGetContentTypeFromRequest">
-      <LineId Id="7" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.TryGetMethodNameFromRequest">
-      <LineId Id="7" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.TryGetResponseIdFromRequest">
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.TryGetSessionIdFromRequest">
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.TryGetSessionIdFromResponse">
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.TryGetTypeFromRequest">
-      <LineId Id="7" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.UpdateRequestWithSessionId">
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.UpdateResponseWithAccepted">
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.UpdateResponseWithBusy">
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.UpdateResponseWithError">
-      <LineId Id="30" Count="0" />
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.UpdateResponseWithHasMoreChunks">
-      <LineId Id="44" Count="0" />
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.UpdateResponseWithPending">
-      <LineId Id="5" Count="0" />
-      <LineId Id="11" Count="0" />
-      <LineId Id="16" Count="0" />
-      <LineId Id="15" Count="0" />
-      <LineId Id="17" Count="0" />
-      <LineId Id="19" Count="0" />
-      <LineId Id="18" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.UpdateResponseWithSessionId">
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.UpdateResponseWithSuccess">
-      <LineId Id="30" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

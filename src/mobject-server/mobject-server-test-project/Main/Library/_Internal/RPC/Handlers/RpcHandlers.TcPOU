@@ -34,14 +34,5 @@ END_VAR
         <ST><![CDATA[TryGetByMethodName := handlers.TryGetValue(MethodName, Destination);]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="RpcHandlers">
-      <LineId Id="9" Count="0" />
-    </LineIds>
-    <LineIds Name="RpcHandlers.RegisterHandler">
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="RpcHandlers.TryGetByMethodName">
-      <LineId Id="5" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

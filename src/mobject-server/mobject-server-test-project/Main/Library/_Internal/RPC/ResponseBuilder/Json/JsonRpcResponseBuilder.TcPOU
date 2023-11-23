@@ -48,25 +48,5 @@ response.Success(pJsonString, jsonSize);
 __DELETE(pJsonString);]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="JsonRpcResponseBuilder">
-      <LineId Id="9" Count="0" />
-    </LineIds>
-    <LineIds Name="JsonRpcResponseBuilder.FB_init">
-      <LineId Id="7" Count="0" />
-    </LineIds>
-    <LineIds Name="JsonRpcResponseBuilder.Finalize">
-      <LineId Id="14" Count="0" />
-      <LineId Id="19" Count="0" />
-      <LineId Id="18" Count="0" />
-      <LineId Id="21" Count="0" />
-      <LineId Id="23" Count="0" />
-      <LineId Id="22" Count="0" />
-      <LineId Id="25" Count="0" />
-      <LineId Id="24" Count="0" />
-      <LineId Id="26" Count="0" />
-      <LineId Id="35" Count="0" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="27" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

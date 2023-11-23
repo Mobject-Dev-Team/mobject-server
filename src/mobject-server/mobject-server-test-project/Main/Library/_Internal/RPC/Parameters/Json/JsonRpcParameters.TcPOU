@@ -93,33 +93,5 @@ Destination := jsonParser.GetStringLength(jsonLocation);
 TryGetStringParameterSize := TRUE;]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="JsonRpcParameters">
-      <LineId Id="9" Count="0" />
-    </LineIds>
-    <LineIds Name="JsonRpcParameters.FB_init">
-      <LineId Id="7" Count="0" />
-    </LineIds>
-    <LineIds Name="JsonRpcParameters.TryCopyStringParameter">
-      <LineId Id="40" Count="2" />
-      <LineId Id="48" Count="0" />
-      <LineId Id="47" Count="0" />
-      <LineId Id="78" Count="0" />
-      <LineId Id="58" Count="0" />
-      <LineId Id="76" Count="1" />
-      <LineId Id="57" Count="0" />
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="JsonRpcParameters.TryGetParameter">
-      <LineId Id="40" Count="2" />
-      <LineId Id="48" Count="0" />
-      <LineId Id="47" Count="0" />
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="JsonRpcParameters.TryGetStringParameterSize">
-      <LineId Id="67" Count="8" />
-      <LineId Id="88" Count="0" />
-      <LineId Id="87" Count="0" />
-      <LineId Id="5" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

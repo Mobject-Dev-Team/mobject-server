@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="ChunkedRequestsManager" Id="{d60679ab-47a7-4db9-808f-1b091389a559}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'linkalways'} 
+{attribute 'no_explicit_call' := 'This FB is a CLASS and must be accessed using methods or properties'}
+{attribute 'enable_dynamic_creation'}
+FUNCTION_BLOCK ChunkedRequestsManager IMPLEMENTS I_ChunkedRequestsManager
+VAR
+	sessionStorage : I_SessionStorage;
+	config : I_ChunkedRequestsManagerConfig;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Constructor" Id="{787a67cf-dc0a-443d-9817-3b18a2ceda27}" />
+    <Method Name="FB_init" Id="{7cb4f61c-1081-4781-b9bf-cf2049838078}" FolderPath="Constructor\">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	SessionStorage : I_SessionStorage;
+	Config : I_ChunkedRequestsManagerConfig;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.sessionStorage := SessionStorage;
+THIS^.config := Config;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

@@ -95,33 +95,5 @@ END_VAR]]></Declaration>
         <ST><![CDATA[chunkedResponseManager.HandleSuccess(serverResponse, PayloadDataAddress, PayloadDataSize);]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="ChunkableServerResponse">
-      <LineId Id="9" Count="0" />
-    </LineIds>
-    <LineIds Name="ChunkableServerResponse.Accepted">
-      <LineId Id="4" Count="0" />
-    </LineIds>
-    <LineIds Name="ChunkableServerResponse.Busy">
-      <LineId Id="4" Count="0" />
-    </LineIds>
-    <LineIds Name="ChunkableServerResponse.Error">
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="ChunkableServerResponse.FB_init">
-      <LineId Id="7" Count="0" />
-      <LineId Id="12" Count="0" />
-    </LineIds>
-    <LineIds Name="ChunkableServerResponse.Header.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ChunkableServerResponse.HeadersSent.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ChunkableServerResponse.Pending">
-      <LineId Id="6" Count="0" />
-    </LineIds>
-    <LineIds Name="ChunkableServerResponse.Success">
-      <LineId Id="15" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

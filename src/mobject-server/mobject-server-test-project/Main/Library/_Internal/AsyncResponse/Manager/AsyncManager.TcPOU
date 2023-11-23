@@ -47,22 +47,5 @@ END_VAR
         <ST><![CDATA[THIS^.config := Config;]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="AsyncManager">
-      <LineId Id="9" Count="0" />
-    </LineIds>
-    <LineIds Name="AsyncManager.ConvertResponseToAsync">
-      <LineId Id="5" Count="0" />
-      <LineId Id="12" Count="1" />
-      <LineId Id="11" Count="0" />
-      <LineId Id="16" Count="0" />
-      <LineId Id="14" Count="0" />
-      <LineId Id="17" Count="1" />
-      <LineId Id="28" Count="0" />
-      <LineId Id="20" Count="0" />
-      <LineId Id="19" Count="0" />
-    </LineIds>
-    <LineIds Name="AsyncManager.FB_init">
-      <LineId Id="7" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

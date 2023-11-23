@@ -47,19 +47,5 @@ END_VAR]]></Declaration>
         <ST><![CDATA[serverResponse.Error(Message);]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="RpcResponse">
-      <LineId Id="9" Count="0" />
-    </LineIds>
-    <LineIds Name="RpcResponse.Build">
-      <LineId Id="9" Count="0" />
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="RpcResponse.FB_init">
-      <LineId Id="16" Count="0" />
-      <LineId Id="23" Count="0" />
-    </LineIds>
-    <LineIds Name="RpcResponse.Reject">
-      <LineId Id="66" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>
