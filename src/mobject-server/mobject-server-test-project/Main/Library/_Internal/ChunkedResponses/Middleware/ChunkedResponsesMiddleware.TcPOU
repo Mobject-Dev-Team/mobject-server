@@ -7,7 +7,6 @@
 FUNCTION_BLOCK ChunkedResponsesMiddleware EXTENDS Middleware
 VAR
 	chunkedResponseManager : I_ChunkedResponseManager;
-	config : I_ChunkedResponsesMiddlewareConfig;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -20,12 +19,10 @@ VAR_INPUT
 	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
 	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
 	ChunkedResponseManager : I_ChunkedResponseManager;
-	Config : I_ChunkedResponsesMiddlewareConfig;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[THIS^.chunkedResponseManager := ChunkedResponseManager;
-THIS^.config := Config;]]></ST>
+        <ST><![CDATA[THIS^.chunkedResponseManager := ChunkedResponseManager;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Handle" Id="{233b0b80-15cd-432e-b8d7-1d7e76c75590}">
@@ -43,16 +40,6 @@ END_VAR]]></Declaration>
 END_IF
 
 Next(Request, chunkableServerResponse);]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="UpdateConfig" Id="{51266403-a36a-451e-bac8-aa23236cb9bb}">
-      <Declaration><![CDATA[METHOD PUBLIC UpdateConfig
-VAR_INPUT
-	Config : I_ChunkedResponsesMiddlewareConfig;
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[this^.config := Config;]]></ST>
       </Implementation>
     </Method>
   </POU>

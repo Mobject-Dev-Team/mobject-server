@@ -15,7 +15,7 @@ END_VAR
       <Declaration><![CDATA[METHOD PUBLIC TryGetSessionIdFromRequest : BOOL
 VAR_INPUT
 	Request : I_Request;
-	Destination : ANY;
+	Destination : REFERENCE TO T_MAXSTRING;
 END_VAR
 ]]></Declaration>
     </Method>

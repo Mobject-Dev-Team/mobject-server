@@ -65,9 +65,9 @@
 
         const client = new TcHmiAsyncClient('%s%PLC1.MAIN.server.HandleRequest%/s%');
 
-        setInterval(async () => {
-            apiTest();
-        }, 40);
+        //setInterval(async () => {
+        //    apiTest();
+        //}, 40);
 
         async function apiTest(){
             console.time('test');

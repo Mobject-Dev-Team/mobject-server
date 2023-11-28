@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
-  <Itf Name="I_ChunkedResponsesMiddlewareConfig" Id="{c5d9e905-2a9d-4090-afd5-fe76d89ace34}">
-    <Declaration><![CDATA[INTERFACE I_ChunkedResponsesMiddlewareConfig
-]]></Declaration>
-  </Itf>
-</TcPlcObject>

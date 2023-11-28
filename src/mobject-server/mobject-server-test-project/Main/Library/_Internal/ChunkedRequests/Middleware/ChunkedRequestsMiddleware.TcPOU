@@ -7,7 +7,6 @@
 FUNCTION_BLOCK ChunkedRequestsMiddleware EXTENDS Middleware
 VAR
 	chunkedRequestsManager : I_ChunkedRequestsManager;
-	config : I_ChunkedRequestsMiddlewareConfig;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -20,12 +19,10 @@ VAR_INPUT
 	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
 	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
 	ChunkedRequestsManager : I_ChunkedRequestsManager;
-	Config : I_ChunkedRequestsMiddlewareConfig;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[THIS^.chunkedRequestsManager := ChunkedRequestsManager;
-THIS^.config := Config;]]></ST>
+        <ST><![CDATA[THIS^.chunkedRequestsManager := ChunkedRequestsManager;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Handle" Id="{2756a409-70dc-4f3a-b4c9-8c97c902954c}">
@@ -38,24 +35,10 @@ VAR
 	hasMoreChunks : BOOL;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[config.TryGetHasMoreChunksFromRequest(Request, hasMoreChunks);
-
-IF NOT hasMoreChunks THEN
+        <ST><![CDATA[IF NOT chunkedRequestsManager.TryHandleIncomingRequest(Request, Response, NextMiddleware) THEN
 	Next(Request, Response);
 	RETURN;
-END_IF
-
-// todo, combine and send on if its finished.]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="UpdateConfig" Id="{77c62bc4-deff-4f1f-b8c1-eee7a1bd6680}">
-      <Declaration><![CDATA[METHOD PUBLIC UpdateConfig
-VAR_INPUT
-	Config : I_ChunkedRequestsMiddlewareConfig;
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[this^.config := Config;]]></ST>
+END_IF]]></ST>
       </Implementation>
     </Method>
   </POU>

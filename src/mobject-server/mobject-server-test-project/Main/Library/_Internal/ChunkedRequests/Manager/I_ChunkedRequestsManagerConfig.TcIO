@@ -3,5 +3,41 @@
   <Itf Name="I_ChunkedRequestsManagerConfig" Id="{cdf74b0f-d21f-4451-b9ee-85eec7aa413a}">
     <Declaration><![CDATA[INTERFACE I_ChunkedRequestsManagerConfig
 ]]></Declaration>
+    <Method Name="TryGetChunkSequenceFromRequest" Id="{11f1b26f-e484-4358-9de5-2bcf4e4f6510}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetChunkSequenceFromRequest : BOOL
+VAR_INPUT
+	Request : I_Request;
+	Destination : REFERENCE TO DINT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="TryGetChunkTotalFromRequest" Id="{26891607-e6a2-4757-a772-1ce94b7e2530}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetChunkTotalFromRequest : BOOL
+VAR_INPUT
+	Request : I_Request;
+	Destination : REFERENCE TO DINT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="TryGetHasMoreChunksFromRequest" Id="{4ee825c9-9bd4-4603-a4eb-2f1dcd13740b}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetHasMoreChunksFromRequest : BOOL
+VAR_INPUT
+	Request : I_Request;
+	Destination : REFERENCE TO BOOL;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="TryGetRequestIdFromRequest" Id="{23112332-f1af-4201-9485-5ad8f8ebf422}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetRequestIdFromRequest : BOOL
+VAR_INPUT
+	Request : I_Request;
+	Destination : REFERENCE TO T_MAXSTRING;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="TryGetSessionIdFromRequest" Id="{1efe8051-9e37-4188-bb4b-f0704a92e750}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetSessionIdFromRequest : BOOL
+VAR_INPUT
+	Request : I_Request;
+	Destination : REFERENCE TO T_MAXSTRING;
+END_VAR]]></Declaration>
+    </Method>
   </Itf>
 </TcPlcObject>

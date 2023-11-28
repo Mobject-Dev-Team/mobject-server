@@ -25,12 +25,12 @@ VAR
 	sessionsMiddleware : SessionsMiddleware(sessionManager, serverConfig);
 	
 	// ability to suppoort chunked requests
-	chunkedRequestsManager : ChunkedRequestsManager(sessionManager, serverConfig);
-	chunkedRequestsMiddleware : ChunkedRequestsMiddleware(chunkedRequestsManager,serverConfig);
+	chunkedRequestsManager : ChunkedRequestsManager(Constants.REQUEST_PAYLOAD_STRING_SIZE, sessionManager, serverConfig);
+	chunkedRequestsMiddleware : ChunkedRequestsMiddleware(chunkedRequestsManager);
 	
 	// ability to support chunked responses
 	chunkedResponseManager : ChunkedResponseManager(Constants.RESPONSE_PAYLOAD_STRING_SIZE, sessionManager, sequentialResponseIdGenerator, serverConfig);
-	chunkedResponsesMiddleware : ChunkedResponsesMiddleware(chunkedResponseManager, serverConfig);
+	chunkedResponsesMiddleware : ChunkedResponsesMiddleware(chunkedResponseManager);
 	
 	// ability to support pending responses
 	pendingResponseMiddleware : PendingResponseMiddleware(serverConfig);
@@ -112,25 +112,6 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <Method Name="UpdateConfig" Id="{137c2786-6c3e-4f8d-b9ea-cea6d61ea378}">
-      <Declaration><![CDATA[METHOD PUBLIC UpdateConfig
-VAR_INPUT
-	Config : I_ServerConfig;
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[IF Config = 0 THEN
-	RETURN;
-END_IF
-
-serverConfig := Config;
-sessionsMiddleware.UpdateConfig(Config);
-chunkedRequestsMiddleware.UpdateConfig(Config);
-chunkedResponsesMiddleware.UpdateConfig(Config);
-pendingResponseMiddleware.UpdateConfig(Config);
-]]></ST>
-      </Implementation>
-    </Method>
     <Method Name="Use" Id="{6e5ea3d5-bee9-4d79-bfef-f3e289ac77c8}">
       <Declaration><![CDATA[METHOD PUBLIC Use
 VAR_INPUT

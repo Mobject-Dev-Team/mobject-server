@@ -40,6 +40,9 @@
     <Compile Include="Library\_Internal\AsyncResponse\Manager\I_AsyncManagerConfig.TcIO">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Library\_Internal\ChunkedRequests\ChunkedRequest\ChunkedRequest.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Library\_Internal\ChunkedRequests\Manager\ChunkedRequestsManager.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -52,10 +55,10 @@
     <Compile Include="Library\_Internal\ChunkedRequests\Middleware\ChunkedRequestsMiddleware.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Library\_Internal\ChunkedRequests\Middleware\I_ChunkedRequestsMiddlewareConfig.TcIO">
+    <Compile Include="Library\_Internal\ChunkedRequests\SessionData\ChunkedRequestData.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Library\_Internal\ChunkedRequests\SessionData\ChunkedRequestData.TcPOU">
+    <Compile Include="Library\_Internal\ChunkedRequests\SessionData\I_ChunkedRequestData.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Library\_Internal\ChunkedResponses\SessionData\ChunkedResponseData.TcPOU">
@@ -74,9 +77,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Library\_Internal\ChunkedResponses\Middleware\ChunkedResponsesMiddleware.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Library\_Internal\ChunkedResponses\Middleware\I_ChunkedResponsesMiddlewareConfig.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Library\_Internal\ChunkedResponses\ServerResponse\ChunkableServerResponse.TcPOU">
@@ -232,6 +232,7 @@
     <Folder Include="Library\_Internal\ChunkedRequests" />
     <Folder Include="Library\_Internal\ChunkedRequests\Manager" />
     <Folder Include="Library\_Internal\ChunkedRequests\Middleware" />
+    <Folder Include="Library\_Internal\ChunkedRequests\ChunkedRequest" />
     <Folder Include="Library\_Internal\ChunkedRequests\SessionData" />
     <Folder Include="Library\_Internal\ChunkedResponses\Middleware" />
     <Folder Include="Library\_Internal\ChunkedResponses\SessionData" />
