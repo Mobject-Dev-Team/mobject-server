@@ -15,9 +15,15 @@
         <Declaration><![CDATA[]]></Declaration>
       </Get>
     </Property>
-    <Property Name="Payload" Id="{9009cd02-59c3-442d-b694-7fd07046c812}">
-      <Declaration><![CDATA[PROPERTY PUBLIC Payload : REFERENCE TO STRING(Constants.REQUEST_PAYLOAD_STRING_SIZE);]]></Declaration>
-      <Get Name="Get" Id="{a4712b06-3c0b-406d-a560-cb95d77529be}">
+    <Property Name="PayloadAddress" Id="{f0a14312-a7f3-4fde-a466-6fa0210857d4}">
+      <Declaration><![CDATA[PROPERTY PUBLIC PayloadAddress : POINTER TO STRING]]></Declaration>
+      <Get Name="Get" Id="{9d2ca32a-6748-482e-86dd-a46e8d522a62}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="PayloadSizeInBytes" Id="{9682ec78-1d85-4cc2-95d0-414b63bd0d84}">
+      <Declaration><![CDATA[PROPERTY PUBLIC PayloadSizeInBytes : UDINT]]></Declaration>
+      <Get Name="Get" Id="{d4101461-c609-41eb-b582-700fc702336c}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>
     </Property>

@@ -9,8 +9,8 @@ VAR
 	maximumChunkSizeInBytes : UDINT;
 	totalReceivedChunks : UDINT;
 	totalExpectedChunks : UDINT;
-	pBuffer : POINTER TO BYTE;
-	bufferSize : UDINT;
+	pPayloadBuffer : POINTER TO STRING;
+	payloadBufferSize : UDINT;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
@@ -18,26 +18,6 @@ END_VAR]]></Declaration>
     <Folder Name="Constructor" Id="{b2f03932-c0a7-4fe4-a604-837598c04c83}" />
     <Folder Name="Destructor" Id="{f84b601d-779e-4ad4-b195-11bc1f60e4e2}" />
     <Folder Name="Private" Id="{e024060d-d35c-4597-95b4-0cff4bf92202}" />
-    <Method Name="CopyBufferToDestination" Id="{3dba3b3a-1b4b-4b76-b407-65ece2daef65}" FolderPath="Private\">
-      <Declaration><![CDATA[METHOD PRIVATE CopyBufferToDestination
-VAR_INPUT
-	DestinationAddress : PVOID;
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[MEMCPY(DestinationAddress, pBuffer, bufferSize);]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="CopySourceToBuffer" Id="{08222928-3fe2-4559-af7d-3dd180f076f1}" FolderPath="Private\">
-      <Declaration><![CDATA[METHOD PRIVATE CopySourceToBuffer
-VAR_INPUT
-	SourceAddress : PVOID;
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[MEMCPY(pBuffer, SourceAddress, bufferSize);]]></ST>
-      </Implementation>
-    </Method>
     <Method Name="CreateBuffer" Id="{ef5e76d1-6f88-4dbe-8c69-fe6d45ff059a}" FolderPath="Private\">
       <Declaration><![CDATA[METHOD PRIVATE CreateBuffer
 VAR_INPUT
@@ -45,9 +25,9 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[bufferSize := SizeInBytes;
-pBuffer := __NEW(BYTE, SizeInBytes);
-memset(pBuffer, 0, SizeInBytes);]]></ST>
+        <ST><![CDATA[payloadBufferSize := SizeInBytes;
+pPayloadBuffer := __NEW(BYTE, SizeInBytes);
+memset(pPayloadBuffer, 0, SizeInBytes);]]></ST>
       </Implementation>
     </Method>
     <Method Name="DestroyBuffer" Id="{4ed70f4f-4840-48da-bbee-f1b2190add5c}" FolderPath="Private\">
@@ -56,12 +36,12 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF pBuffer = 0 THEN
+        <ST><![CDATA[IF pPayloadBuffer = 0 THEN
 	RETURN;
 END_IF
 
-__DELETE(pBuffer);
-bufferSize := 0;]]></ST>
+__DELETE(pPayloadBuffer);
+pPayloadBuffer := 0;]]></ST>
       </Implementation>
     </Method>
     <Method Name="FB_exit" Id="{6a2ccd47-29e4-4a99-9715-482cec32f0a1}" FolderPath="Destructor\">
@@ -104,10 +84,33 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <Method Name="TryAddChunkedRequest" Id="{ad3d576d-bd11-4286-8b2d-751760ad4719}">
-      <Declaration><![CDATA[METHOD PUBLIC TryAddChunkedRequest : BOOL;
+    <Property Name="PayloadAddress" Id="{35a25d9f-39dc-42e1-a305-0ce971a3b2fc}">
+      <Declaration><![CDATA[PROPERTY PUBLIC PayloadAddress : POINTER TO STRING]]></Declaration>
+      <Get Name="Get" Id="{0142df66-2c76-4394-8960-ce277420641c}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[PayloadAddress := pPayloadBuffer;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="PayloadSizeInBytes" Id="{dd39ffcf-b0eb-46b8-ae64-6b4e786014e3}">
+      <Declaration><![CDATA[PROPERTY PUBLIC PayloadSizeInBytes : UDINT]]></Declaration>
+      <Get Name="Get" Id="{74a77183-f16e-45d6-b585-93edc7b81455}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[PayloadSizeInBytes := payloadBufferSize;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="TryAddChunkedPayload" Id="{ad3d576d-bd11-4286-8b2d-751760ad4719}">
+      <Declaration><![CDATA[METHOD PUBLIC TryAddChunkedPayload : BOOL;
 VAR_INPUT
-	Request : I_Request;
+	PayloadAddress : POINTER TO STRING;
+	PayloadSize : DINT;
 	ChunkSequence : DINT;
 END_VAR
 VAR
@@ -115,11 +118,11 @@ VAR
 	pBufferChunkLocation : POINTER TO BYTE;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF totalReceivedChunks < totalExpectedChunks THEN
+        <ST><![CDATA[IF totalReceivedChunks >= totalExpectedChunks THEN
 	RETURN;
 END_IF
 
-IF SIZEOF(Request.Payload) > maximumChunkSizeInBytes THEN
+IF DINT_TO_UDINT(PayloadSize) > maximumChunkSizeInBytes THEN
 	RETURN;
 END_IF
 
@@ -127,12 +130,10 @@ IF ChunkSequence <= 0 THEN
 	RETURN;
 END_IF
 
-offset := (DINT_TO_UDINT(ChunkSequence) - 1) * maximumChunkSizeInBytes;
+concat2(pPayloadBuffer, PayloadAddress, pPayloadBuffer, payloadBufferSize);
+totalReceivedChunks := totalReceivedChunks + 1;
 
-pBufferChunkLocation := pBuffer + offset;
-//memcpy(pBufferChunkLocation, ADR(Request.Payload), SIZEOF(Request.Payload));
-
-totalReceivedChunks := totalReceivedChunks + 1;]]></ST>
+TryAddChunkedPayload := TRUE;]]></ST>
       </Implementation>
     </Method>
   </POU>

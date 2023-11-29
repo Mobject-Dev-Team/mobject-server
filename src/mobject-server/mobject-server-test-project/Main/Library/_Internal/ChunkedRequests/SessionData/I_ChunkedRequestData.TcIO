@@ -10,10 +10,23 @@
         <Declaration><![CDATA[]]></Declaration>
       </Get>
     </Property>
-    <Method Name="TryAddChunkedRequest" Id="{ea33a017-e809-4192-9e23-7f6dbb771687}">
-      <Declaration><![CDATA[METHOD PUBLIC TryAddChunkedRequest : BOOL;
+    <Property Name="PayloadAddress" Id="{fe185271-e250-47aa-a0b9-2e0e28a991c8}">
+      <Declaration><![CDATA[PROPERTY PUBLIC PayloadAddress : POINTER TO STRING]]></Declaration>
+      <Get Name="Get" Id="{8456e78e-25c8-4737-bab5-94ad02e875a7}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="PayloadSizeInBytes" Id="{d690937c-d467-4628-a473-8fcf6c810e11}">
+      <Declaration><![CDATA[PROPERTY PUBLIC PayloadSizeInBytes : UDINT]]></Declaration>
+      <Get Name="Get" Id="{d5d17680-b9dc-4e35-b159-bc292786ec3f}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="TryAddChunkedPayload" Id="{ea33a017-e809-4192-9e23-7f6dbb771687}">
+      <Declaration><![CDATA[METHOD PUBLIC TryAddChunkedPayload : BOOL;
 VAR_INPUT
-	Request : I_Request;
+	PayloadAddress : POINTER TO STRING;
+	PayloadSize : DINT;
 	ChunkSequence : DINT;
 END_VAR]]></Declaration>
     </Method>

@@ -61,17 +61,25 @@
         //    //await callApi('busyTest', client);
         //}, 7000);
 
+        console.log('loading');
+
 
 
         const client = new TcHmiAsyncClient('%s%PLC1.MAIN.server.HandleRequest%/s%');
 
-        //setInterval(async () => {
-        //    apiTest();
-        //}, 40);
+        fetch('./Imports/payload64kb.json')
+        //fetch('./Imports/payload64kb.json')
+          .then(response => response.json())
+          .then(data => {
+              apiTestPayload(data);
+          })
+          .catch(error => {
+              console.error('Error loading JSON:', error);
+          });
 
         async function apiTest(){
             console.time('test');
-            client.rpcCall('successTest', {foo: 'bar', hello: 'woooooooooooooooooooorld'})
+            client.rpcCall('concat', {STR1: 'foo', STR2: 'bar'})
               .then(response => {
                   console.log('Response:', response);
                   console.timeEnd('test');
@@ -83,7 +91,21 @@
               });
         }
 
-        apiTest();
+        async function apiTestPayload(payload){
+            console.time('test');
+            client.rpcCall('concat', payload)
+              .then(response => {
+                  console.log('Response:', response);
+                  console.timeEnd('test');
+                  //apiTest();
+              })
+              .catch(error => {
+                  console.error('Error:', error);
+                  console.timeEnd('test');
+              });
+        }
+
+        //apiTest();
 
 
     </script>

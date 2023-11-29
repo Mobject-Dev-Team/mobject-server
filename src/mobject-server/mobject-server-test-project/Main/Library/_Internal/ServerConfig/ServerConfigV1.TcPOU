@@ -165,7 +165,7 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[HeaderKey_ResponseId := 'Request-Id';]]></ST>
+          <ST><![CDATA[HeaderKey_RequestId := 'Request-Id';]]></ST>
         </Implementation>
       </Get>
       <Set Name="Set" Id="{5d6c91fc-abab-4bb2-920f-293a2c737303}">
@@ -388,7 +388,7 @@ VAR
 	chunkSequence : DINT;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF NOT Request.Header.TryGetField(HeaderKey_ChunkSequence,Destination) THEN
+        <ST><![CDATA[IF NOT Request.Header.TryGetField(HeaderKey_ChunkSequence,chunkSequence) THEN
 	RETURN;
 END_IF
 
@@ -406,7 +406,7 @@ VAR
 	chunkTotal : DINT;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF NOT Request.Header.TryGetField(HeaderKey_ChunkTotal,Destination) THEN
+        <ST><![CDATA[IF NOT Request.Header.TryGetField(HeaderKey_ChunkTotal,chunkTotal) THEN
 	RETURN;
 END_IF
 
@@ -435,7 +435,7 @@ VAR
 	hasMoreChunks : BOOL;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF NOT Request.Header.TryGetField(HeaderKey_HasMoreChunks,Destination) THEN
+        <ST><![CDATA[IF NOT Request.Header.TryGetField(HeaderKey_HasMoreChunks,hasMoreChunks) THEN
 	RETURN;
 END_IF
 
@@ -465,7 +465,7 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF NOT Request.Header.TryGetField(HeaderKey_SessionId,Destination) THEN
+        <ST><![CDATA[IF NOT Request.Header.TryGetField(HeaderKey_RequestId,requestId) THEN
 	RETURN;
 END_IF
 

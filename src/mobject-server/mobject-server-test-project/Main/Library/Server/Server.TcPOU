@@ -11,6 +11,8 @@ VAR
 	// for now, v1 is used in the server.  call UpdateConfig to change.
 	defaultServerConfig : ServerConfigV1;
 	serverConfig : I_ServerConfig := defaultServerConfig;
+	requestPayloadStringSizeIncludingNull : UDINT := Constants.REQUEST_PAYLOAD_STRING_SIZE + 1;
+	responsePayloadStringSizeIncludingNull : UDINT := Constants.RESPONSE_PAYLOAD_STRING_SIZE + 1;
 	
 	// the middleware stack allows us to construct our server in any way needed.
 	// by default we will support sessions, async polling and chunked requests/
@@ -21,15 +23,15 @@ VAR
 	
 	// ability to support sessions...
 	sessionIdGenerator : SequentialSessionIdGenerator;
-	sessionManager : SessionManager(sessionIdGenerator, T#10S);
+	sessionManager : SessionManager(sessionIdGenerator, INACTIVE_SESSION_MAX_AGE);
 	sessionsMiddleware : SessionsMiddleware(sessionManager, serverConfig);
 	
 	// ability to suppoort chunked requests
-	chunkedRequestsManager : ChunkedRequestsManager(Constants.REQUEST_PAYLOAD_STRING_SIZE, sessionManager, serverConfig);
+	chunkedRequestsManager : ChunkedRequestsManager(requestPayloadStringSizeIncludingNull, sessionManager, serverConfig);
 	chunkedRequestsMiddleware : ChunkedRequestsMiddleware(chunkedRequestsManager);
 	
 	// ability to support chunked responses
-	chunkedResponseManager : ChunkedResponseManager(Constants.RESPONSE_PAYLOAD_STRING_SIZE, sessionManager, sequentialResponseIdGenerator, serverConfig);
+	chunkedResponseManager : ChunkedResponseManager(responsePayloadStringSizeIncludingNull, sessionManager, sequentialResponseIdGenerator, serverConfig);
 	chunkedResponsesMiddleware : ChunkedResponsesMiddleware(chunkedResponseManager);
 	
 	// ability to support pending responses
@@ -40,7 +42,9 @@ VAR
 	rpcMiddleware : RpcMiddleware(rpcHandlers,serverConfig);
 	
 END_VAR
-]]></Declaration>
+VAR CONSTANT
+	INACTIVE_SESSION_MAX_AGE : TIME := T#10S;
+END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>

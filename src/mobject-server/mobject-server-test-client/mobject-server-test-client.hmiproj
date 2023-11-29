@@ -130,6 +130,12 @@
     <Content Include=".eslintrc.json">
       <Visible>false</Visible>
     </Content>
+    <Content Include="Imports\payload5mb.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Imports\payload64kb.json">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="Scripts\JsonRpcApi.js">
       <SubType>Content</SubType>
     </Content>

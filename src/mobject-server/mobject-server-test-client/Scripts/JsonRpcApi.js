@@ -54,8 +54,9 @@ class AsyncClient {
   #serverConnectionStrategy;
   #activeRequests = new Map();
   #timeout;
+  #stackSize;
   #chunkSize;
-  #debug = true;
+  #debug = false;
   #sessionId = null;
   #nextRequestId = 0;
   #taskQueue = new TaskQueue();
@@ -80,9 +81,10 @@ class AsyncClient {
   }
 
   constructor(serverConnectionStrategy, config = {}) {
-    this.#serverConnectionStrategy = serverConnectionStrategy;
-    this.#chunkSize = config.chunkSize || 50;
-    this.#timeout = config.timeout || 5000;
+      this.#serverConnectionStrategy = serverConnectionStrategy;
+      this.#stackSize = 524288;
+      this.#chunkSize = config.chunkSize || this.#stackSize / 4;
+    this.#timeout = config.timeout || 50000;
     this.#defaultRpcConfig.serializePayload =
       config.serializePayload || this.#defaultSerializePayload;
   }
@@ -222,7 +224,7 @@ class AsyncClient {
     const isLastChunk = index === totalChunks - 1;
     return {
       ...originalHeader,
-      "Chunk-Sequence": index,
+      "Chunk-Sequence": index + 1,
       "Chunk-Total": totalChunks,
       "Has-More-Chunks": !isLastChunk,
     };
@@ -426,12 +428,18 @@ class ServerConnectionStrategy {
 
 class TcHmiSymbolRequestStrategy extends ServerConnectionStrategy {
   #apiHandleClientRequestSymbol;
+  #debug = false;
 
   constructor(handleClientRequestSymbolName) {
     super();
     this.#apiHandleClientRequestSymbol = new TcHmi.Symbol(
       handleClientRequestSymbolName
     );
+  }
+
+  #log(...args) {
+    if (!this.#debug) return;
+    console.log(...args);
   }
 
   async request(header, serializedPayload) {
@@ -475,7 +483,7 @@ class TcHmiSymbolRequestStrategy extends ServerConnectionStrategy {
 
   async #writeToSymbol(symbol, args) {
     return new Promise((resolve, reject) => {
-      console.log(symbol, args);
+      this.#log(symbol, args);
       symbol.write(args, (data) => {
         try {
           this.#validateData(data, reject);

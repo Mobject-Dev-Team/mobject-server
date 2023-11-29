@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="Server_IntegrationTestSuite" Id="{cdfabd45-d3f9-4657-b5eb-78ded2b6a8d3}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Server_IntegrationTestSuite EXTENDS TcUnit.FB_TestSuite
+VAR
+	out : ResponseData;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[TestConcatRpcCallAndResponse();
+TestConcatRpcCallAndResponseWithChunkedRequest();]]></ST>
+    </Implementation>
+    <Method Name="TestConcatRpcCallAndResponse" Id="{98853763-3f92-414f-a8ce-839282bd98fd}">
+      <Declaration><![CDATA[METHOD TestConcatRpcCallAndResponse
+VAR
+	server : Server;
+	concatStringRpcHandler : ConcatStringRpcHandler;
+	header : T_MAXSTRING := '{"Type":"RPC 1.0","Method-Name":"concat","Content-Type":"application/json"}';
+    payload : T_MAXSTRING := '{"STR1":"hello", "STR2":"world"}';
+	expected : T_MAXSTRING := '"helloworld"';
+//	out : ResponseData;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('TestConcatRpcCallAndResponse');
+
+server.Rpc.RegisterHandler('concat',concatStringRpcHandler);
+
+out := server.HandleRequest(header,payload);
+
+AssertTrue(
+	Condition := expected = out.Payload,
+	Message := 'Did not produce the expected result'
+);
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TestConcatRpcCallAndResponseWithChunkedRequest" Id="{071fb0ea-7b30-4b8e-af98-330bf3ca9442}">
+      <Declaration><![CDATA[METHOD TestConcatRpcCallAndResponseWithChunkedRequest
+VAR
+	server : Server;
+	concatStringRpcHandler : ConcatStringRpcHandler;
+	chunk1Header : T_MAXSTRING := '{"Type":"RPC 1.0","Method-Name":"concat","Request-Id":"abc","Has-More-Chunks":true, "Chunk-Sequence":1, "Chunk-Total":2, "Content-Type":"application/json"}';
+    chunk1payload : T_MAXSTRING := '{"STR1":"hello",';
+	chunk2Header : T_MAXSTRING := '{"Type":"RPC 1.0","Session-Id":"1","Method-Name":"concat","Request-Id":"abc","Has-More-Chunks":false, "Chunk-Sequence":2, "Chunk-Total":2, "Content-Type":"application/json"}';
+    chunk2payload : T_MAXSTRING := ' "STR2":"world"}';
+	expected : T_MAXSTRING := '"helloworld"';
+	out : ResponseData;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//TEST('TestConcatRpcCallAndResponseWithChunkedRequest');
+
+//server.Rpc.RegisterHandler('concat',concatStringRpcHandler);
+
+//out := server.HandleRequest(chunk1Header,chunk1payload);
+//out := server.HandleRequest(chunk2Header,chunk2payload);
+
+//AssertTrue(
+//	Condition := expected = out.Payload,
+//	Message := 'Did not produce the expected result'
+//);
+
+//TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

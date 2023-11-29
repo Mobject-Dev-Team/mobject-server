@@ -124,14 +124,15 @@ END_IF
 // at this point we know we have all of the data required for handling a chunked request
 
 IF NOT sessionStorage.TryRetreiveSessionDataById(sessionId, requestId, sessionData) THEN	
-	chunkedRequestData := CreateChunkedRequestData(maximumChunkSizeInBytes,chunkTotal);
+	chunkedRequestData := CreateChunkedRequestData(maximumChunkSizeInBytes, chunkTotal);
+	sessionStorage.TryStoreSessionDataById(sessionId, requestId, chunkedRequestData);
 ELSIF NOT __QUERYINTERFACE(sessionData, chunkedRequestData) THEN
 	response.Error('Server was unable to retreive previous session data as chunked request data');
 	TryHandleIncomingRequest := TRUE;
 	RETURN;
 END_IF
 
-chunkedRequestData.TryAddChunkedRequest(request, chunkSequence);
+chunkedRequestData.TryAddChunkedPayload(request.PayloadAddress, request.PayloadSizeInBytes, chunkSequence);
 
 IF NOT chunkedRequestData.IsComplete THEN
 	Response.Accepted();
@@ -140,7 +141,7 @@ IF NOT chunkedRequestData.IsComplete THEN
 END_IF
 
 NextMidleware.Handle(chunkedRequest, Response);
-// delete chunk?
+sessionStorage.DisposeSessionDataById(sessionId, requestId);
 TryHandleIncomingRequest := TRUE;]]></ST>
       </Implementation>
     </Method>

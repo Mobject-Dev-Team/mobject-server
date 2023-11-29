@@ -3,34 +3,23 @@
   <POU Name="MAIN" Id="{6a5ba616-dd43-4b8b-8788-947f674d5790}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
+	server_IntegrationTestSuite : Server_IntegrationTestSuite;
+	chunkedRequestData_TestSuite : ChunkedRequestData_TestSuite;
+	
 	initialized : BOOL;
 	server : Server;
-	sessionCount : DINT;
-	
-	// manual test (allows breakpoints)
-	trigger : BOOL;
-	
-	testRpcHandler : SuccessTestRpcHandler;
-    serializedHeader : T_MAXSTRING := '{"Type":"RPC 1.0","Accept":"application/json","Method-Name":"successTest","Request-Id":"B699444945900-48","Content-Type":"application/json"}';
-    serializedPayload : T_MAXSTRING := '{"foo":"1", "hello":"1"}';
-	reply : ResponseData;
-	
+	concatStringRpcHandler : ConcatStringRpcHandler;	
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF NOT initialized THEN
+      <ST><![CDATA[TcUnit.RUN();
+
+IF NOT initialized THEN
 	initialized := TRUE;
-	server.Rpc.RegisterHandler('successTest',testRpcHandler);
+	server.Rpc.RegisterHandler('concat',concatStringRpcHandler);
 END_IF
 
-sessionCount := server.SessionCount;
-
-server.CyclicCall();
-
-IF trigger THEN
-	trigger := FALSE;
-	reply := server.HandleRequest(serializedHeader,serializedPayload);
-END_IF]]></ST>
+server.CyclicCall();]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

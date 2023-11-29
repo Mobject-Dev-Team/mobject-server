@@ -213,10 +213,13 @@
     <Compile Include="POUs\MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\SuccessTestFunction.TcPOU">
+    <Compile Include="Tests\Mocks\ConcatStringRpcHandler.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\SuccessTestRpcHandler.TcPOU">
+    <Compile Include="Tests\Server_IntegrationTestSuite.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tests\ChunkedRequestData_TestSuite.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -269,7 +272,9 @@
     <Folder Include="Library\_Internal\Middleware" />
     <Folder Include="Library\_Internal\Request" />
     <Folder Include="Library\_Internal\ServerResponse" />
+    <Folder Include="Tests" />
     <Folder Include="POUs" />
+    <Folder Include="Tests\Mocks" />
   </ItemGroup>
   <ItemGroup>
     <PlaceholderReference Include="mobject-collections">
@@ -307,6 +312,9 @@
     <PlaceholderReference Include="Tc3_Module">
       <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc3_Module</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="TcUnit">
+      <DefaultResolution>TcUnit, * (www.tcunit.org)</DefaultResolution>
     </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
