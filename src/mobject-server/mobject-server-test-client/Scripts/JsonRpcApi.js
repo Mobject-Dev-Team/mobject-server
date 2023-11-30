@@ -82,8 +82,8 @@ class AsyncClient {
 
   constructor(serverConnectionStrategy, config = {}) {
       this.#serverConnectionStrategy = serverConnectionStrategy;
-      this.#stackSize = 524288;
-      this.#chunkSize = config.chunkSize || this.#stackSize / 4;
+      this.#stackSize = config.stackSize || 64000;
+      this.#chunkSize = config.chunkSize || this.#stackSize / 8;
     this.#timeout = config.timeout || 50000;
     this.#defaultRpcConfig.serializePayload =
       config.serializePayload || this.#defaultSerializePayload;

@@ -132,7 +132,12 @@ ELSIF NOT __QUERYINTERFACE(sessionData, chunkedRequestData) THEN
 	RETURN;
 END_IF
 
-chunkedRequestData.TryAddChunkedPayload(request.PayloadAddress, request.PayloadSizeInBytes, chunkSequence);
+IF NOT chunkedRequestData.TryAddChunkedPayload(request.PayloadAddress, request.PayloadSizeInBytes, chunkSequence) THEN
+	response.Error('Unable to store request payload in chunk session storage');
+	sessionStorage.DisposeSessionDataById(sessionId, requestId);
+	TryHandleIncomingRequest := TRUE;
+	RETURN;
+END_IF
 
 IF NOT chunkedRequestData.IsComplete THEN
 	Response.Accepted();
