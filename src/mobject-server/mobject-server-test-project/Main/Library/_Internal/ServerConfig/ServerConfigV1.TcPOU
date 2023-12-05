@@ -44,6 +44,44 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
+    <Property Name="HeaderKey_ChunkSequence" Id="{46d19b85-496d-4c44-b303-fb8fb93901e5}" FolderPath="Constants\">
+      <Declaration><![CDATA[PROPERTY PUBLIC HeaderKey_ChunkSequence : T_MAXSTRING]]></Declaration>
+      <Get Name="Get" Id="{66c7d0e6-32b9-48ad-bfd0-0f7cdf455ffd}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[HeaderKey_ChunkSequence := 'Chunk-Sequence';]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{c6a49c1a-89be-464f-9487-61e0cc1bf5f0}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="HeaderKey_ChunkTotal" Id="{1359d1dd-3b58-472a-a89b-a88d40b8d230}" FolderPath="Constants\">
+      <Declaration><![CDATA[PROPERTY PUBLIC HeaderKey_ChunkTotal : T_MAXSTRING]]></Declaration>
+      <Get Name="Get" Id="{33988837-753c-4829-9beb-9d6149a08c2f}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[HeaderKey_ChunkTotal := 'Chunk-Total';]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{e73cd27a-9c46-4711-8ce7-623b33126d94}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
     <Property Name="HeaderKey_ContentType" Id="{e8890c4e-782e-482f-9d0d-b8126c826fa5}" FolderPath="Constants\">
       <Declaration><![CDATA[PROPERTY PUBLIC HeaderKey_ContentType : T_MAXSTRING]]></Declaration>
       <Get Name="Get" Id="{0e4eeb9e-0a97-407e-ac7d-002f6fbe535b}">
@@ -112,6 +150,25 @@ END_VAR
         </Implementation>
       </Get>
       <Set Name="Set" Id="{d2161734-5825-443f-aaa4-2b5ae220a47c}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="HeaderKey_RequestId" Id="{c1fbe171-d879-452d-b2a7-b08e5b0bd058}" FolderPath="Constants\">
+      <Declaration><![CDATA[PROPERTY PUBLIC HeaderKey_RequestId : T_MAXSTRING]]></Declaration>
+      <Get Name="Get" Id="{4141ecee-7660-4f0f-87e1-392bfb0d23df}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[HeaderKey_RequestId := 'Request-Id';]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{5d6c91fc-abab-4bb2-920f-293a2c737303}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -321,6 +378,42 @@ END_VAR
         <ST><![CDATA[TryGetAcceptResponseFormatFromRequest := Request.Header.TryGetField(HeaderKey_Accept,Destination);]]></ST>
       </Implementation>
     </Method>
+    <Method Name="TryGetChunkSequenceFromRequest" Id="{abd949fa-741d-4310-899d-5574d0d916ce}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetChunkSequenceFromRequest : BOOL
+VAR_INPUT
+	Request : I_Request;
+	Destination : REFERENCE TO DINT;
+END_VAR
+VAR
+	chunkSequence : DINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT Request.Header.TryGetField(HeaderKey_ChunkSequence,chunkSequence) THEN
+	RETURN;
+END_IF
+
+Destination := chunkSequence;
+TryGetChunkSequenceFromRequest := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TryGetChunkTotalFromRequest" Id="{fc66068f-cef7-42a7-a4f4-3662bbe3c4bc}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetChunkTotalFromRequest : BOOL
+VAR_INPUT
+	Request : I_Request;
+	Destination : REFERENCE TO DINT;
+END_VAR
+VAR
+	chunkTotal : DINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT Request.Header.TryGetField(HeaderKey_ChunkTotal,chunkTotal) THEN
+	RETURN;
+END_IF
+
+Destination := chunkTotal;
+TryGetChunkTotalFromRequest := TRUE;]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="TryGetContentTypeFromRequest" Id="{bfc2f968-6804-4b0d-be31-582c5988f399}">
       <Declaration><![CDATA[METHOD PUBLIC TryGetContentTypeFromRequest : BOOL
 VAR_INPUT
@@ -332,6 +425,24 @@ END_VAR
         <ST><![CDATA[TryGetContentTypeFromRequest := Request.Header.TryGetField(HeaderKey_ContentType,Destination);]]></ST>
       </Implementation>
     </Method>
+    <Method Name="TryGetHasMoreChunksFromRequest" Id="{a6fd5b5d-572f-4b12-ba85-babb0355453c}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetHasMoreChunksFromRequest : BOOL
+VAR_INPUT
+	Request : I_Request;
+	Destination : REFERENCE TO BOOL;
+END_VAR
+VAR
+	hasMoreChunks : BOOL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT Request.Header.TryGetField(HeaderKey_HasMoreChunks,hasMoreChunks) THEN
+	RETURN;
+END_IF
+
+Destination := hasMoreChunks;
+TryGetHasMoreChunksFromRequest := TRUE;]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="TryGetMethodNameFromRequest" Id="{7df482db-036e-45ab-a3af-6e122ddd395b}">
       <Declaration><![CDATA[METHOD PUBLIC TryGetMethodNameFromRequest : BOOL
 VAR_INPUT
@@ -341,6 +452,25 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[TryGetMethodNameFromRequest := Request.Header.TryGetField(HeaderKey_MethodName,Destination);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TryGetRequestIdFromRequest" Id="{c05ae6bc-8c69-4d16-9066-4fe4e9e97dc3}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetRequestIdFromRequest : BOOL
+VAR_INPUT
+	Request : I_Request;
+	Destination : REFERENCE TO T_MAXSTRING;
+END_VAR
+VAR
+	requestId : T_MAXSTRING;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT Request.Header.TryGetField(HeaderKey_RequestId,requestId) THEN
+	RETURN;
+END_IF
+
+Destination := requestId;
+TryGetRequestIdFromRequest := TRUE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="TryGetResponseIdFromRequest" Id="{3f5e3861-3088-43c1-8db2-7c4a461570ec}">
@@ -358,11 +488,18 @@ END_VAR
       <Declaration><![CDATA[METHOD PUBLIC TryGetSessionIdFromRequest : BOOL
 VAR_INPUT
 	Request : I_Request;
-	Destination : ANY;
+	Destination : REFERENCE TO T_MAXSTRING;
 END_VAR
-]]></Declaration>
+VAR
+	sessionId : T_MAXSTRING;
+END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[TryGetSessionIdFromRequest := Request.Header.TryGetField(HeaderKey_SessionId,Destination);]]></ST>
+        <ST><![CDATA[IF NOT Request.Header.TryGetField(HeaderKey_SessionId, sessionId) THEN
+	RETURN;
+END_IF
+
+Destination := sessionId;
+TryGetSessionIdFromRequest := TRUE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="TryGetSessionIdFromResponse" Id="{99f15cca-8910-4c79-be2a-74dff847fd21}">
@@ -484,157 +621,5 @@ END_VAR]]></Declaration>
         <ST><![CDATA[Response.Header.TryWriteField(HeaderKey_Status,StatusValue_Success);]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="ServerConfigV1">
-      <LineId Id="9" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.ContentType_Json.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.ContentType_Json.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_Accept.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_Accept.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_ContentType.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_ContentType.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_HasMoreChunks.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_HasMoreChunks.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_Message.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_Message.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_MethodName.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_MethodName.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_ResponseId.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_ResponseId.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_RetryDelay.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_RetryDelay.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_SessionId.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_SessionId.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_Status.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_Status.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_Type.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.HeaderKey_Type.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.StatusValue_Accepted.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.StatusValue_Accepted.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.StatusValue_Busy.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.StatusValue_Busy.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.StatusValue_Error.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.StatusValue_Error.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.StatusValue_Pending.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.StatusValue_Pending.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.StatusValue_Success.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.StatusValue_Success.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.TryGetAcceptResponseFormatFromRequest">
-      <LineId Id="7" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.TryGetContentTypeFromRequest">
-      <LineId Id="7" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.TryGetMethodNameFromRequest">
-      <LineId Id="7" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.TryGetResponseIdFromRequest">
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.TryGetSessionIdFromRequest">
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.TryGetSessionIdFromResponse">
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.TryGetTypeFromRequest">
-      <LineId Id="7" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.UpdateRequestWithSessionId">
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.UpdateResponseWithAccepted">
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.UpdateResponseWithBusy">
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.UpdateResponseWithError">
-      <LineId Id="30" Count="0" />
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.UpdateResponseWithHasMoreChunks">
-      <LineId Id="44" Count="0" />
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.UpdateResponseWithPending">
-      <LineId Id="5" Count="0" />
-      <LineId Id="11" Count="0" />
-      <LineId Id="16" Count="0" />
-      <LineId Id="15" Count="0" />
-      <LineId Id="17" Count="0" />
-      <LineId Id="19" Count="0" />
-      <LineId Id="18" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.UpdateResponseWithSessionId">
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerConfigV1.UpdateResponseWithSuccess">
-      <LineId Id="30" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

@@ -509,6 +509,279 @@
                 }
             ]
         },
+        "PLC1.METHOD-RETURNING-ResponseData-PARAMETERS-SerializedHeader-STRING-1024--SerializedPayload-STRING-131072": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/PLC1.ResponseData"
+                },
+                {
+                    "function": true,
+                    "writeValue": {
+                        "properties": {
+                            "SerializedHeader": {
+                                "allOf": [
+                                    {
+                                        "maxLength": 1024
+                                    },
+                                    {
+                                        "$ref": "tchmi:general#/definitions/String"
+                                    }
+                                ]
+                            },
+                            "SerializedPayload": {
+                                "allOf": [
+                                    {
+                                        "maxLength": 131072
+                                    },
+                                    {
+                                        "$ref": "tchmi:general#/definitions/String"
+                                    }
+                                ]
+                            }
+                        },
+                        "required": [
+                            "SerializedHeader",
+                            "SerializedPayload"
+                        ],
+                        "type": "object"
+                    }
+                }
+            ]
+        },
+        "PLC1.METHOD-RETURNING-ResponseData-PARAMETERS-SerializedHeader-STRING-1024--SerializedPayload-STRING-16000": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/PLC1.ResponseData"
+                },
+                {
+                    "function": true,
+                    "writeValue": {
+                        "properties": {
+                            "SerializedHeader": {
+                                "allOf": [
+                                    {
+                                        "maxLength": 1024
+                                    },
+                                    {
+                                        "$ref": "tchmi:general#/definitions/String"
+                                    }
+                                ]
+                            },
+                            "SerializedPayload": {
+                                "allOf": [
+                                    {
+                                        "maxLength": 16000
+                                    },
+                                    {
+                                        "$ref": "tchmi:general#/definitions/String"
+                                    }
+                                ]
+                            }
+                        },
+                        "required": [
+                            "SerializedHeader",
+                            "SerializedPayload"
+                        ],
+                        "type": "object"
+                    }
+                }
+            ]
+        },
+        "PLC1.METHOD-RETURNING-ResponseData-PARAMETERS-SerializedHeader-STRING-1024--SerializedPayload-STRING-200000": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/PLC1.ResponseData"
+                },
+                {
+                    "function": true,
+                    "writeValue": {
+                        "properties": {
+                            "SerializedHeader": {
+                                "allOf": [
+                                    {
+                                        "maxLength": 1024
+                                    },
+                                    {
+                                        "$ref": "tchmi:general#/definitions/String"
+                                    }
+                                ]
+                            },
+                            "SerializedPayload": {
+                                "allOf": [
+                                    {
+                                        "maxLength": 200000
+                                    },
+                                    {
+                                        "$ref": "tchmi:general#/definitions/String"
+                                    }
+                                ]
+                            }
+                        },
+                        "required": [
+                            "SerializedHeader",
+                            "SerializedPayload"
+                        ],
+                        "type": "object"
+                    }
+                }
+            ]
+        },
+        "PLC1.METHOD-RETURNING-ResponseData-PARAMETERS-SerializedHeader-STRING-1024--SerializedPayload-STRING-2048": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/PLC1.ResponseData"
+                },
+                {
+                    "function": true,
+                    "writeValue": {
+                        "properties": {
+                            "SerializedHeader": {
+                                "allOf": [
+                                    {
+                                        "maxLength": 1024
+                                    },
+                                    {
+                                        "$ref": "tchmi:general#/definitions/String"
+                                    }
+                                ]
+                            },
+                            "SerializedPayload": {
+                                "allOf": [
+                                    {
+                                        "maxLength": 2048
+                                    },
+                                    {
+                                        "$ref": "tchmi:general#/definitions/String"
+                                    }
+                                ]
+                            }
+                        },
+                        "required": [
+                            "SerializedHeader",
+                            "SerializedPayload"
+                        ],
+                        "type": "object"
+                    }
+                }
+            ]
+        },
+        "PLC1.METHOD-RETURNING-ResponseData-PARAMETERS-SerializedHeader-STRING-1024--SerializedPayload-STRING-409600": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/PLC1.ResponseData"
+                },
+                {
+                    "function": true,
+                    "writeValue": {
+                        "properties": {
+                            "SerializedHeader": {
+                                "allOf": [
+                                    {
+                                        "maxLength": 1024
+                                    },
+                                    {
+                                        "$ref": "tchmi:general#/definitions/String"
+                                    }
+                                ]
+                            },
+                            "SerializedPayload": {
+                                "allOf": [
+                                    {
+                                        "maxLength": 409600
+                                    },
+                                    {
+                                        "$ref": "tchmi:general#/definitions/String"
+                                    }
+                                ]
+                            }
+                        },
+                        "required": [
+                            "SerializedHeader",
+                            "SerializedPayload"
+                        ],
+                        "type": "object"
+                    }
+                }
+            ]
+        },
+        "PLC1.METHOD-RETURNING-ResponseData-PARAMETERS-SerializedHeader-STRING-1024--SerializedPayload-STRING-65536": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/PLC1.ResponseData"
+                },
+                {
+                    "function": true,
+                    "writeValue": {
+                        "properties": {
+                            "SerializedHeader": {
+                                "allOf": [
+                                    {
+                                        "maxLength": 1024
+                                    },
+                                    {
+                                        "$ref": "tchmi:general#/definitions/String"
+                                    }
+                                ]
+                            },
+                            "SerializedPayload": {
+                                "allOf": [
+                                    {
+                                        "maxLength": 65536
+                                    },
+                                    {
+                                        "$ref": "tchmi:general#/definitions/String"
+                                    }
+                                ]
+                            }
+                        },
+                        "required": [
+                            "SerializedHeader",
+                            "SerializedPayload"
+                        ],
+                        "type": "object"
+                    }
+                }
+            ]
+        },
+        "PLC1.METHOD-RETURNING-ResponseData-PARAMETERS-SerializedHeader-STRING-1024--SerializedPayload-STRING-8000": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/PLC1.ResponseData"
+                },
+                {
+                    "function": true,
+                    "writeValue": {
+                        "properties": {
+                            "SerializedHeader": {
+                                "allOf": [
+                                    {
+                                        "maxLength": 1024
+                                    },
+                                    {
+                                        "$ref": "tchmi:general#/definitions/String"
+                                    }
+                                ]
+                            },
+                            "SerializedPayload": {
+                                "allOf": [
+                                    {
+                                        "maxLength": 8000
+                                    },
+                                    {
+                                        "$ref": "tchmi:general#/definitions/String"
+                                    }
+                                ]
+                            }
+                        },
+                        "required": [
+                            "SerializedHeader",
+                            "SerializedPayload"
+                        ],
+                        "type": "object"
+                    }
+                }
+            ]
+        },
         "PLC1.METHOD-RETURNING-ResponseData-PARAMETERS-SerializedHeader-STRING-255--SerializedPayload-STRING-255": {
             "allOf": [
                 {
@@ -2340,7 +2613,7 @@
                 "Header": {
                     "allOf": [
                         {
-                            "maxLength": 255,
+                            "maxLength": 1024,
                             "propertyOrder": 1
                         },
                         {
@@ -2351,7 +2624,7 @@
                 "Payload": {
                     "allOf": [
                         {
-                            "maxLength": 10,
+                            "maxLength": 8000,
                             "propertyOrder": 2
                         },
                         {
@@ -5466,7 +5739,7 @@
             "DYNAMIC": true,
             "MAPPING": "PLC1::MAIN::server::HandleRequest",
             "SCHEMA": {
-                "$ref": "tchmi:server#/definitions/PLC1.METHOD-RETURNING-ResponseData-PARAMETERS-SerializedHeader-STRING-255--SerializedPayload-STRING-255"
+                "$ref": "tchmi:server#/definitions/PLC1.METHOD-RETURNING-ResponseData-PARAMETERS-SerializedHeader-STRING-1024--SerializedPayload-STRING-8000"
             },
             "USEMAPPING": true
         },

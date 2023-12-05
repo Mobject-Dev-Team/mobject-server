@@ -49,36 +49,5 @@ config.UpdateResponseWithSessionId(Response, sessionId);
 Next(Request, Response);]]></ST>
       </Implementation>
     </Method>
-    <Method Name="UpdateConfig" Id="{da59716b-bc1b-4897-9c08-9434007abde6}">
-      <Declaration><![CDATA[METHOD PUBLIC UpdateConfig
-VAR_INPUT
-	Config : I_SessionMiddlewareConfig;
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[this^.config := Config;]]></ST>
-      </Implementation>
-    </Method>
-    <LineIds Name="SessionsMiddleware">
-      <LineId Id="9" Count="0" />
-    </LineIds>
-    <LineIds Name="SessionsMiddleware.FB_init">
-      <LineId Id="26" Count="0" />
-      <LineId Id="18" Count="0" />
-    </LineIds>
-    <LineIds Name="SessionsMiddleware.Handle">
-      <LineId Id="72" Count="0" />
-      <LineId Id="76" Count="0" />
-      <LineId Id="94" Count="0" />
-      <LineId Id="75" Count="0" />
-      <LineId Id="103" Count="0" />
-      <LineId Id="102" Count="0" />
-      <LineId Id="77" Count="0" />
-      <LineId Id="56" Count="0" />
-      <LineId Id="64" Count="0" />
-    </LineIds>
-    <LineIds Name="SessionsMiddleware.UpdateConfig">
-      <LineId Id="7" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

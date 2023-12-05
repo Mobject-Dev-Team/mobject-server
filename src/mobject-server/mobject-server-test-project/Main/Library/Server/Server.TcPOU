@@ -11,6 +11,8 @@ VAR
 	// for now, v1 is used in the server.  call UpdateConfig to change.
 	defaultServerConfig : ServerConfigV1;
 	serverConfig : I_ServerConfig := defaultServerConfig;
+	requestPayloadStringSizeIncludingNull : UDINT := Constants.REQUEST_PAYLOAD_STRING_SIZE + 1;
+	responsePayloadStringSizeIncludingNull : UDINT := Constants.RESPONSE_PAYLOAD_STRING_SIZE + 1;
 	
 	// the middleware stack allows us to construct our server in any way needed.
 	// by default we will support sessions, async polling and chunked requests/
@@ -21,15 +23,16 @@ VAR
 	
 	// ability to support sessions...
 	sessionIdGenerator : SequentialSessionIdGenerator;
-	sessionManager : SessionManager(sessionIdGenerator, T#10S);
+	sessionManager : SessionManager(sessionIdGenerator, INACTIVE_SESSION_MAX_AGE);
 	sessionsMiddleware : SessionsMiddleware(sessionManager, serverConfig);
 	
 	// ability to suppoort chunked requests
-	chunkedRequestsMiddleware : ChunkedRequestsMiddleware(serverConfig);
+	chunkedRequestsManager : ChunkedRequestsManager(requestPayloadStringSizeIncludingNull, sessionManager, serverConfig);
+	chunkedRequestsMiddleware : ChunkedRequestsMiddleware(chunkedRequestsManager);
 	
 	// ability to support chunked responses
-	chunkedResponseManager : ChunkedResponseManager(Constants.RESPONSE_PAYLOAD_STRING_SIZE, sessionManager, sequentialResponseIdGenerator, serverConfig);
-	chunkedResponsesMiddleware : ChunkedResponsesMiddleware(chunkedResponseManager, serverConfig);
+	chunkedResponseManager : ChunkedResponseManager(responsePayloadStringSizeIncludingNull, sessionManager, sequentialResponseIdGenerator, serverConfig);
+	chunkedResponsesMiddleware : ChunkedResponsesMiddleware(chunkedResponseManager);
 	
 	// ability to support pending responses
 	pendingResponseMiddleware : PendingResponseMiddleware(serverConfig);
@@ -39,7 +42,9 @@ VAR
 	rpcMiddleware : RpcMiddleware(rpcHandlers,serverConfig);
 	
 END_VAR
-]]></Declaration>
+VAR CONSTANT
+	INACTIVE_SESSION_MAX_AGE : TIME := T#10S;
+END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
@@ -111,25 +116,6 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <Method Name="UpdateConfig" Id="{137c2786-6c3e-4f8d-b9ea-cea6d61ea378}">
-      <Declaration><![CDATA[METHOD PUBLIC UpdateConfig
-VAR_INPUT
-	Config : I_ServerConfig;
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[IF Config = 0 THEN
-	RETURN;
-END_IF
-
-serverConfig := Config;
-sessionsMiddleware.UpdateConfig(Config);
-chunkedRequestsMiddleware.UpdateConfig(Config);
-chunkedResponsesMiddleware.UpdateConfig(Config);
-pendingResponseMiddleware.UpdateConfig(Config);
-]]></ST>
-      </Implementation>
-    </Method>
     <Method Name="Use" Id="{6e5ea3d5-bee9-4d79-bfef-f3e289ac77c8}">
       <Declaration><![CDATA[METHOD PUBLIC Use
 VAR_INPUT
@@ -139,38 +125,5 @@ END_VAR]]></Declaration>
         <ST><![CDATA[middlewareStack.Use(Middleware);]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="Server">
-      <LineId Id="9" Count="0" />
-    </LineIds>
-    <LineIds Name="Server.CyclicCall">
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="Server.FB_init">
-      <LineId Id="7" Count="0" />
-      <LineId Id="20" Count="2" />
-      <LineId Id="13" Count="0" />
-    </LineIds>
-    <LineIds Name="Server.HandleRequest">
-      <LineId Id="1330" Count="1" />
-      <LineId Id="1316" Count="3" />
-      <LineId Id="1305" Count="0" />
-    </LineIds>
-    <LineIds Name="Server.Rpc.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="Server.SessionCount.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="Server.UpdateConfig">
-      <LineId Id="8" Count="3" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="7" Count="0" />
-      <LineId Id="16" Count="0" />
-      <LineId Id="18" Count="1" />
-      <LineId Id="17" Count="0" />
-    </LineIds>
-    <LineIds Name="Server.Use">
-      <LineId Id="5" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

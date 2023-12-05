@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="JsonRpcResponseBuilder" Id="{65e3981c-03d0-4a54-8803-bd1abcc522d0}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'linkalways'} 
+{attribute 'no_explicit_call' := 'This FB is a CLASS and must be accessed using methods or properties'}
+{attribute 'enable_dynamic_creation'}
+FUNCTION_BLOCK JsonRpcResponseBuilder EXTENDS JsonResponseBuilder;
+VAR
+	response : I_ServerResponse;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Constructor" Id="{70b42c17-8bd5-4434-8ca6-61410830c57f}" />
+    <Method Name="FB_init" Id="{0a35b816-4235-41ca-99d6-72739d1e01b9}" FolderPath="Constructor\">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	Response : I_ServerResponse;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.response := Response;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Finalize" Id="{9bd68d42-b7b6-4370-88c0-e2cc10c5fabe}">
+      <Declaration><![CDATA[METHOD PUBLIC Finalize
+VAR_INPUT
+END_VAR
+VAR
+	jsonSize : UDINT;
+	pJsonString : POINTER TO STRING(0);
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonSize := jsonSaxWriter.GetDocumentLength();
+
+IF jsonSize = 0 THEN
+	response.Error('RPC Handler returned invalid object');
+	RETURN;
+END_IF
+
+pJsonString := __NEW(BYTE, jsonSize);
+jsonSaxWriter.CopyDocument(pJsonString^,jsonSize);
+jsonSaxWriter.ResetDocument();
+response.Success(pJsonString, jsonSize);
+__DELETE(pJsonString);]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

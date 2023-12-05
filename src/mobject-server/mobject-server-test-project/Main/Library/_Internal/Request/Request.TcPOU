@@ -7,7 +7,8 @@
 FUNCTION_BLOCK Request Extends Disposable IMPLEMENTS I_Request
 VAR
 	_header : I_RequestHeader;
-	payloadReference : REFERENCE TO STRING(Constants.REQUEST_PAYLOAD_STRING_SIZE);	
+	_payloadAddress : POINTER TO STRING(0);
+	_payloadSizeInBytes : UDINT;	
 	_createdTimestamp : SystemTimestamp;
 END_VAR
 ]]></Declaration>
@@ -32,12 +33,13 @@ VAR_INPUT
 	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
 	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
 	Header : I_RequestHeader;
-	SerializedPayload : REFERENCE TO STRING(Constants.REQUEST_PAYLOAD_STRING_SIZE);
+	Payload : ANY_STRING;
 END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[_header := Header;
-payloadReference REF= SerializedPayload;]]></ST>
+_payloadSizeInBytes := DINT_TO_UDINT(Payload.diSize);
+_payloadAddress := Payload.pValue;]]></ST>
       </Implementation>
     </Method>
     <Property Name="Header" Id="{6a8dfce7-c2ed-466c-92a4-c26060597052}">
@@ -51,32 +53,27 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <Property Name="Payload" Id="{f482bf7c-0b59-4c01-ac97-7684aeb1d288}">
-      <Declaration><![CDATA[PROPERTY PUBLIC Payload : REFERENCE TO STRING(Constants.REQUEST_PAYLOAD_STRING_SIZE);]]></Declaration>
-      <Get Name="Get" Id="{dda62759-91b8-4519-9336-d3e6211ee967}">
+    <Property Name="PayloadAddress" Id="{56d9e88f-fa3d-4222-9e7f-45cea47e98ba}">
+      <Declaration><![CDATA[PROPERTY PUBLIC PayloadAddress : POINTER TO STRING]]></Declaration>
+      <Get Name="Get" Id="{2c606c38-bc9d-47b6-92d0-084033a24263}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[Payload ref= payloadReference;]]></ST>
+          <ST><![CDATA[PayloadAddress := _payloadAddress;]]></ST>
         </Implementation>
       </Get>
     </Property>
-    <LineIds Name="Request">
-      <LineId Id="9" Count="0" />
-    </LineIds>
-    <LineIds Name="Request.CreatedTimestamp.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="Request.FB_init">
-      <LineId Id="16" Count="0" />
-      <LineId Id="15" Count="0" />
-    </LineIds>
-    <LineIds Name="Request.Header.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="Request.Payload.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
+    <Property Name="PayloadSizeInBytes" Id="{17e6cd9b-4400-4c96-b38a-0206e039857b}">
+      <Declaration><![CDATA[PROPERTY PUBLIC PayloadSizeInBytes : UDINT]]></Declaration>
+      <Get Name="Get" Id="{2805a454-ecb2-4c73-a65f-f16b0cf4ec83}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[PayloadSizeInBytes := _payloadSizeInBytes;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
   </POU>
 </TcPlcObject>

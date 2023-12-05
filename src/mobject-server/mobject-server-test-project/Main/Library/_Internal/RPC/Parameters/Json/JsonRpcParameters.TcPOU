@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="JsonRpcParameters" Id="{c2052a22-204c-4703-b63f-d6389588b16e}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'linkalways'} 
+{attribute 'no_explicit_call' := 'This FB is a CLASS and must be accessed using methods or properties'}
+{attribute 'enable_dynamic_creation'}
+FUNCTION_BLOCK JsonRpcParameters IMPLEMENTS I_RpcParameters
+VAR
+	jsonParser : JsonDomParser;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Constructor" Id="{86758b1f-1dbe-4e3b-9c86-512c7d9c3163}" />
+    <Method Name="FB_init" Id="{ae069f97-8438-4136-85a1-1ec02bba0801}" FolderPath="Constructor\">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	ClientRequest : I_Request;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonParser.ParseDocument(ClientRequest.PayloadAddress^);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TryCopyStringParameter" Id="{7aa6e809-76c7-450b-8984-10232dd67fd7}">
+      <Declaration><![CDATA[METHOD PUBLIC TryCopyStringParameter : BOOL;
+VAR_INPUT
+	ParameterName : STRING;
+	DestinationAddress : REFERENCE TO STRING;
+	DestinationSize : UDINT;
+END_VAR
+VAR
+	jsonKey : T_MAXSTRING;
+	jsonLocation : SJsonValue;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF ParameterName = '' THEN
+	RETURN;
+END_IF
+
+jsonKey := concat('.',ParameterName);
+
+IF NOT jsonParser.TryLocate(jsonKey, jsonLocation) THEN
+	RETURN;
+END_IF
+
+TryCopyStringParameter := jsonParser.CopyString(jsonLocation, DestinationAddress, DestinationSize) > 0;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TryGetParameter" Id="{cd9d4e28-4209-4aae-8a63-f84fc1fa4377}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetParameter : BOOL;
+VAR_INPUT
+	ParameterName : STRING;
+	Destination : ANY;
+END_VAR
+VAR
+	jsonKey : T_MAXSTRING;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF ParameterName = '' THEN
+	RETURN;
+END_IF
+
+jsonKey := concat('.',ParameterName);
+TryGetParameter := jsonParser.TryRead(jsonKey, Destination);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TryGetStringParameterSize" Id="{65a7f9af-f815-4927-8e4f-1a8c60f2ab76}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetStringParameterSize : BOOL;
+VAR_INPUT
+	ParameterName : STRING;
+	Destination : REFERENCE TO UDINT;	
+END_VAR
+VAR
+	jsonKey : T_MAXSTRING;
+	jsonLocation : SJsonValue;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF ParameterName = '' THEN
+	RETURN;
+END_IF
+
+jsonKey := concat('.',ParameterName);
+
+IF NOT jsonParser.TryLocate(jsonKey, jsonLocation) THEN
+	RETURN;
+END_IF
+
+Destination := jsonParser.GetStringLength(jsonLocation);
+TryGetStringParameterSize := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>
