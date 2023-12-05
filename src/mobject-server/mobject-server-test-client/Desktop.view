@@ -68,7 +68,9 @@
         const client = new TcHmiAsyncClient('%s%PLC1.MAIN.server.HandleRequest%/s%');
 
         fetch('./Imports/payload64kb.json')
-        //fetch('./Imports/payload64kb.json')
+        //fetch('./Imports/payload5mb.json')
+        //fetch('./Imports/payload10mb.json')
+        //fetch('./Imports/payload50mb.json') // only possible if you increase the router memory above 50mb!
           .then(response => response.json())
           .then(data => {
               apiTestPayload(data);

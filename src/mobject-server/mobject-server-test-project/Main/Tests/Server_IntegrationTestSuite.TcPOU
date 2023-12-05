@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <POU Name="Server_IntegrationTestSuite" Id="{cdfabd45-d3f9-4657-b5eb-78ded2b6a8d3}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK Server_IntegrationTestSuite EXTENDS TcUnit.FB_TestSuite
@@ -18,7 +18,6 @@ VAR
 	header : T_MAXSTRING := '{"Type":"RPC 1.0","Method-Name":"concat","Content-Type":"application/json"}';
     payload : T_MAXSTRING := '{"STR1":"hello", "STR2":"world"}';
 	expected : T_MAXSTRING := '"helloworld"';
-//	out : ResponseData;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[TEST('TestConcatRpcCallAndResponse');

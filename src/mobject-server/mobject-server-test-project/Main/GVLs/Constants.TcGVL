@@ -1,13 +1,13 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <GVL Name="Constants" Id="{40cbde69-f801-440d-b4ab-1956cf6bdb10}">
     <Declaration><![CDATA[{attribute 'qualified_only'}
 VAR_GLOBAL CONSTANT
-	STACK_SIZE : UDINT := 524288;
-	REQUEST_HEADER_STRING_SIZE : UDINT := 1024 ; //:= 1048576;
-	REQUEST_PAYLOAD_STRING_SIZE : UDINT := STACK_SIZE/4;
-	RESPONSE_HEADER_STRING_SIZE : UDINT := 1024; //:= 1048576;
-	RESPONSE_PAYLOAD_STRING_SIZE : UDINT := STACK_SIZE/4;	
+	STACK_SIZE : UDINT := 64000;
+	REQUEST_HEADER_STRING_SIZE : UDINT := 1024;
+	REQUEST_PAYLOAD_STRING_SIZE : UDINT := STACK_SIZE/8;
+	RESPONSE_HEADER_STRING_SIZE : UDINT := 1024;
+	RESPONSE_PAYLOAD_STRING_SIZE : UDINT := STACK_SIZE/8;	
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

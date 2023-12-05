@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <POU Name="ChunkedRequestsManager" Id="{d60679ab-47a7-4db9-808f-1b091389a559}" SpecialFunc="None">
     <Declaration><![CDATA[{attribute 'linkalways'} 
@@ -132,7 +132,12 @@ ELSIF NOT __QUERYINTERFACE(sessionData, chunkedRequestData) THEN
 	RETURN;
 END_IF
 
-chunkedRequestData.TryAddChunkedPayload(request.PayloadAddress, request.PayloadSizeInBytes, chunkSequence);
+IF NOT chunkedRequestData.TryAddChunkedPayload(request.PayloadAddress, request.PayloadSizeInBytes, chunkSequence) THEN
+	response.Error('Unable to store request payload in chunk session storage');
+	sessionStorage.DisposeSessionDataById(sessionId, requestId);
+	TryHandleIncomingRequest := TRUE;
+	RETURN;
+END_IF
 
 IF NOT chunkedRequestData.IsComplete THEN
 	Response.Accepted();
