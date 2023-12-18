@@ -35,7 +35,8 @@ VAR
 	chunkedResponsesMiddleware : ChunkedResponsesMiddleware(chunkedResponseManager);
 	
 	// ability to support pending responses
-	pendingResponseMiddleware : PendingResponseMiddleware(serverConfig);
+	pendingResponseManager : PendingResponseManager(sessionManager, serverConfig);
+	pendingResponseMiddleware : PendingResponseMiddleware(pendingResponseManager);
 	
 	// ability to handle rpc
 	rpcHandlers : RpcHandlers;

@@ -122,7 +122,9 @@ chunkedResponseData.SendNextChunk(Response, maximumChunkSizeInBytes);
 
 IF chunkedResponseData.SendComplete THEN
 	sessionStorage.DisposeSessionDataById(sessionId, responseId);
-END_IF]]></ST>
+END_IF
+
+TryHandleIncomingRequest := TRUE;]]></ST>
       </Implementation>
     </Method>
   </POU>

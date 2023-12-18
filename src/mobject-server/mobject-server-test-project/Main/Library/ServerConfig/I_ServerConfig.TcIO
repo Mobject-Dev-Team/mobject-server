@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <Itf Name="I_ServerConfig" Id="{39c7717a-a112-4a65-95ac-09aab042aac6}">
-    <Declaration><![CDATA[INTERFACE I_ServerConfig EXTENDS I_SessionMiddlewareConfig, I_ServerResponseConfig, I_RpcMiddlewareConfig, I_AsyncManagerConfig, I_PendingResponseMiddlewareConfig, I_ChunkedResponseManagerConfig, I_ChunkedRequestsManagerConfig
+    <Declaration><![CDATA[INTERFACE I_ServerConfig EXTENDS I_SessionMiddlewareConfig, I_ServerResponseConfig, I_RpcMiddlewareConfig, I_RpcResponseManagerConfig, I_PendingResponseManagerConfig, I_ChunkedResponseManagerConfig, I_ChunkedRequestsManagerConfig
 ]]></Declaration>
   </Itf>
 </TcPlcObject>

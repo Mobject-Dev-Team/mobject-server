@@ -83,20 +83,7 @@ rpcHandler.Handle(rpcParameters, rpcReturn);
 IF NOT Response.HeadersSent THEN
 	Response.Error('RPC : Handler did not return a valid response');
 	RETURN;
-END_IF
-// make response async...
-
-]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="UpdateConfig" Id="{bd22a84c-6960-4825-8224-512e18394bcd}">
-      <Declaration><![CDATA[METHOD PUBLIC UpdateConfig
-VAR_INPUT
-	Config : I_RpcMiddlewareConfig;
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[this^.config := Config;]]></ST>
+END_IF]]></ST>
       </Implementation>
     </Method>
   </POU>

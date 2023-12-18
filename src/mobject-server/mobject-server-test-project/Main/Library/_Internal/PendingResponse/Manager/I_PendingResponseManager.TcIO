@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="I_PendingResponseManager" Id="{abe05406-b7ab-4a25-a70f-e90409730aeb}">
+    <Declaration><![CDATA[INTERFACE I_PendingResponseManager
+]]></Declaration>
+    <Method Name="TryHandleIncomingRequest" Id="{dcc914a9-8a7f-4fe6-be9f-213c490e1a75}">
+      <Declaration><![CDATA[METHOD PUBLIC TryHandleIncomingRequest : BOOL
+VAR_INPUT
+	Request : I_Request;
+	Response : I_ServerResponse;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

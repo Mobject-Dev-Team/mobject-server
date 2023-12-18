@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
-  <Itf Name="I_PendingResponseMiddlewareConfig" Id="{84165e98-d8fc-4161-8351-d7ee8fc22df1}">
-    <Declaration><![CDATA[INTERFACE I_PendingResponseMiddlewareConfig
-]]></Declaration>
-  </Itf>
-</TcPlcObject>

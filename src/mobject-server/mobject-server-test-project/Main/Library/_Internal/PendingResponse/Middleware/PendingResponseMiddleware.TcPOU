@@ -3,7 +3,7 @@
   <POU Name="PendingResponseMiddleware" Id="{6371efe8-c6db-4885-801d-1a3c9cf89e08}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK PendingResponseMiddleware EXTENDS Middleware
 VAR
-	config : I_PendingResponseMiddlewareConfig;
+	pendingResponseManager : I_PendingResponseManager;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -15,11 +15,11 @@ END_VAR
 VAR_INPUT
 	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
 	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
-	Config : I_PendingResponseMiddlewareConfig;
+	PendingResponseManager : I_PendingResponseManager;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[This^.config := Config;]]></ST>
+        <ST><![CDATA[This^.pendingResponseManager := PendingResponseManager;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Handle" Id="{8696b458-a0eb-4d91-a059-aff474e59f3b}">
@@ -29,30 +29,12 @@ VAR_INPUT
 	Response : I_ServerResponse;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[Next(Request, Response);]]></ST>
+        <ST><![CDATA[IF pendingResponseManager.TryHandleIncomingRequest(Request, Response) THEN
+	RETURN;
+END_IF
+
+Next(Request, Response);]]></ST>
       </Implementation>
     </Method>
-    <Method Name="UpdateConfig" Id="{7bdab257-412b-4f04-9246-2569f787053f}">
-      <Declaration><![CDATA[METHOD PUBLIC UpdateConfig
-VAR_INPUT
-	Config : I_PendingResponseMiddlewareConfig;
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[this^.config := Config;]]></ST>
-      </Implementation>
-    </Method>
-    <LineIds Name="PendingResponseMiddleware">
-      <LineId Id="9" Count="0" />
-    </LineIds>
-    <LineIds Name="PendingResponseMiddleware.FB_init">
-      <LineId Id="7" Count="0" />
-    </LineIds>
-    <LineIds Name="PendingResponseMiddleware.Handle">
-      <LineId Id="64" Count="0" />
-    </LineIds>
-    <LineIds Name="PendingResponseMiddleware.UpdateConfig">
-      <LineId Id="7" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

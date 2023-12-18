@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <POU Name="ChunkedRequestsManager" Id="{d60679ab-47a7-4db9-808f-1b091389a559}" SpecialFunc="None">
     <Declaration><![CDATA[{attribute 'linkalways'} 
@@ -124,7 +124,7 @@ END_IF
 // at this point we know we have all of the data required for handling a chunked request
 
 IF NOT sessionStorage.TryRetreiveSessionDataById(sessionId, requestId, sessionData) THEN	
-	chunkedRequestData := CreateChunkedRequestData(maximumChunkSizeInBytes, chunkTotal);
+	chunkedRequestData := CreateChunkedRequestData(maximumChunkSizeInBytes, DINT_TO_UDINT(chunkTotal));
 	sessionStorage.TryStoreSessionDataById(sessionId, requestId, chunkedRequestData);
 ELSIF NOT __QUERYINTERFACE(sessionData, chunkedRequestData) THEN
 	response.Error('Server was unable to retreive previous session data as chunked request data');
