@@ -6,7 +6,7 @@
 {attribute 'enable_dynamic_creation'}
 FUNCTION_BLOCK PendingResponseData EXTENDS Disposable IMPLEMENTS I_PendingResponseData
 VAR
-	_suggestedRetryDelay : UDINT;
+	_suggestedRetryDelayInMs : UDINT;
 	state : (PENDING, SUCCESS, ERROR) := PENDING;
 	errorMessage : T_MAXSTRING;
 	pData : POINTER TO BYTE;
@@ -79,11 +79,11 @@ DeletePayloadData();]]></ST>
 VAR_INPUT
 	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
 	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
-	SuggestedRetryDelay : UDINT;
+	SuggestedRetryDelayInMs : UDINT;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[_suggestedRetryDelay := SuggestedRetryDelay;]]></ST>
+        <ST><![CDATA[_suggestedRetryDelayInMs := SuggestedRetryDelayInMs;]]></ST>
       </Implementation>
     </Method>
     <Property Name="IsPending" Id="{73fe6f9a-3972-4114-b912-1cdd633f7015}">
@@ -113,16 +113,25 @@ state := SUCCESS;
 CopyPayloadData(PayloadDataAddress, PayloadDataSize);]]></ST>
       </Implementation>
     </Method>
-    <Property Name="SuggestedRetryDelay" Id="{188e8b06-d5ec-41e3-81ef-1fe315326cab}">
-      <Declaration><![CDATA[PROPERTY PUBLIC SuggestedRetryDelay : UDINT]]></Declaration>
+    <Property Name="SuggestedRetryDelayInMs" Id="{188e8b06-d5ec-41e3-81ef-1fe315326cab}">
+      <Declaration><![CDATA[PROPERTY PUBLIC SuggestedRetryDelayInMs : UDINT]]></Declaration>
       <Get Name="Get" Id="{ca2ed6f1-4b09-488e-adba-9274ce464b54}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[SuggestedRetryDelay := _suggestedRetryDelay;]]></ST>
+          <ST><![CDATA[SuggestedRetryDelayInMs := _suggestedRetryDelayInMs;]]></ST>
         </Implementation>
       </Get>
+      <Set Name="Set" Id="{cd5cba61-bced-4f11-8bf0-1ca313739d04}">
+        <Declaration><![CDATA[PUBLIC 
+VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_suggestedRetryDelayInMs := SuggestedRetryDelayInMs;]]></ST>
+        </Implementation>
+      </Set>
     </Property>
     <Method Name="TryUpdateServerResponse" Id="{312b7c7f-0ca0-4541-b900-f6304201b4d3}">
       <Declaration><![CDATA[METHOD PUBLIC TryUpdateServerResponse : BOOL

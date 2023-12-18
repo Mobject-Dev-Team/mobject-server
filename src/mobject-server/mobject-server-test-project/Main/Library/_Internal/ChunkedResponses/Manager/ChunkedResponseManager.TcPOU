@@ -4,7 +4,7 @@
     <Declaration><![CDATA[{attribute 'linkalways'} 
 {attribute 'no_explicit_call' := 'This FB is a CLASS and must be accessed using methods or properties'}
 {attribute 'enable_dynamic_creation'}
-FUNCTION_BLOCK ChunkedResponseManager Implements I_ChunkedResponseManager
+FUNCTION_BLOCK ChunkedResponseManager IMPLEMENTS I_ChunkedResponseManager
 VAR
 	maximumChunkSizeInBytes : UDINT;
 	sessionStorage : I_SessionStorage;
@@ -50,7 +50,7 @@ This^.config := Config;]]></ST>
       </Implementation>
     </Method>
     <Method Name="HandleSuccess" Id="{8a7f7f97-8567-464c-8b51-a7240f7c9f00}">
-      <Declaration><![CDATA[METHOD PUBLIC HandleSuccess : T_MAXSTRING;
+      <Declaration><![CDATA[METHOD PUBLIC HandleSuccess;
 VAR_INPUT
 	OriginalResponse : I_ServerResponse;
 	SourceAddress : PVOID;

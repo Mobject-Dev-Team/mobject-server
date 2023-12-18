@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
-  <Itf Name="I_RpcResponseManagerConfig" Id="{4a4f0798-ed83-499b-b5a8-20a54d5c473a}">
-    <Declaration><![CDATA[INTERFACE I_RpcResponseManagerConfig
-]]></Declaration>
-  </Itf>
-</TcPlcObject>

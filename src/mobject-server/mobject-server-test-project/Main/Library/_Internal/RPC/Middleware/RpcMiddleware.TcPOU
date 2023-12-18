@@ -6,8 +6,7 @@
 {attribute 'enable_dynamic_creation'}
 FUNCTION_BLOCK RpcMiddleware EXTENDS Middleware
 VAR
-	rpcHandlers : I_RpcHandlers;
-	config : I_RpcMiddlewareConfig;
+	rpcManager : I_RpcManager;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -19,13 +18,11 @@ END_VAR
 VAR_INPUT
 	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
 	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
-	RpcHandlers : I_RpcHandlers;
-	Config : I_RpcMiddlewareConfig;
+	RpcManager : I_RpcManager;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[THIS^.config := Config;
-THIS^.rpcHandlers := RpcHandlers;]]></ST>
+        <ST><![CDATA[THIS^.rpcManager := RpcManager;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Handle" Id="{7b8c3067-5e37-4e1f-9d92-bbf59a32024f}">
@@ -33,57 +30,13 @@ THIS^.rpcHandlers := RpcHandlers;]]></ST>
 VAR_INPUT
 	Request : I_Request;
 	Response : I_ServerResponse;
-END_VAR
-VAR
-	requestType : T_MAXSTRING;
-	contentType : T_MAXSTRING;
-	acceptType : T_MAXSTRING;
-	methodName : T_MAXSTRING;
-	rpcHandler : I_RpcHandler;
-
-	// currently we only support json, however, this can become a factory in the future when used with contentType and acceptType.
-	rpcParameters : JsonRpcParameters(ClientRequest := Request);
-	rpcResponseBuilder : JsonRpcResponseBuilder(Response);
-	rpcReturn : RpcResponse(ServerResponse := Response, ResponseBuilder := rpcResponseBuilder);
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF NOT config.TryGetTypeFromRequest(Request, requestType) THEN
-	Next(Request, Response);
+        <ST><![CDATA[IF rpcManager.TryHandleIncomingRequest(Request, Response) THEN
 	RETURN;
 END_IF
 
-IF requestType <> 'RPC 1.0' THEN
-	Next(Request, Response);
-	RETURN;
-END_IF
-
-IF NOT(config.TryGetContentTypeFromRequest(Request, contentType)) OR_ELSE NOT(contentType = config.ContentType_Json) THEN
-	Response.Error('RPC : Missing or unsupported content type in header');
-	RETURN;
-END_IF
-
-IF (config.TryGetAcceptResponseFormatFromRequest(Request, acceptType)) AND_THEN NOT(acceptType = config.ContentType_Json) THEN
-	Response.Error('RPC : Unsupported accept type in header');
-	RETURN;
-END_IF
-
-IF NOT config.TryGetMethodNameFromRequest(Request, methodName) THEN
-	Response.Error('RPC : Missing RPC method name');
-	RETURN;
-END_IF
-
-IF NOT rpcHandlers.TryGetByMethodName(methodName, rpcHandler) THEN
-	// if not found then we pass it on as there may be other rpc handlers in the middleware stack
-	Next(Request, Response);
-	RETURN;
-END_IF
-
-rpcHandler.Handle(rpcParameters, rpcReturn);
-
-IF NOT Response.HeadersSent THEN
-	Response.Error('RPC : Handler did not return a valid response');
-	RETURN;
-END_IF]]></ST>
+Next(Request, Response);]]></ST>
       </Implementation>
     </Method>
   </POU>

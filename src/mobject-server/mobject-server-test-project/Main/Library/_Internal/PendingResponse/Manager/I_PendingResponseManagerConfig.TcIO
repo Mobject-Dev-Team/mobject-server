@@ -19,5 +19,13 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
+    <Method Name="TryGetSessionIdFromResponse" Id="{f09b3527-116a-4384-9dd4-4f391780723d}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetSessionIdFromResponse : BOOL
+VAR_INPUT
+	Response : I_ServerResponse;
+	Destination : ANY;
+END_VAR
+]]></Declaration>
+    </Method>
   </Itf>
 </TcPlcObject>

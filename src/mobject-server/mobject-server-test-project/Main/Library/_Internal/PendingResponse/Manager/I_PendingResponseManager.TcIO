@@ -3,6 +3,14 @@
   <Itf Name="I_PendingResponseManager" Id="{abe05406-b7ab-4a25-a70f-e90409730aeb}">
     <Declaration><![CDATA[INTERFACE I_PendingResponseManager
 ]]></Declaration>
+    <Method Name="TryCreatePendingResponse" Id="{8380e3cc-5e13-46ae-aeba-58c11cb37c90}">
+      <Declaration><![CDATA[METHOD PUBLIC TryCreatePendingResponse : BOOL;
+VAR_INPUT
+	OriginalResponse : I_ServerResponse;
+	RetryDelayInMs : UDINT;
+	DestinationResponseId : REFERENCE TO T_MAXSTRING;
+END_VAR]]></Declaration>
+    </Method>
     <Method Name="TryHandleIncomingRequest" Id="{dcc914a9-8a7f-4fe6-be9f-213c490e1a75}">
       <Declaration><![CDATA[METHOD PUBLIC TryHandleIncomingRequest : BOOL
 VAR_INPUT

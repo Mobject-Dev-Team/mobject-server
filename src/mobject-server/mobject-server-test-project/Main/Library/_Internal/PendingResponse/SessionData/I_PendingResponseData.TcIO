@@ -22,16 +22,18 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
-    <Property Name="SuggestedRetryDelay" Id="{8f111503-00bc-43b6-990c-bf24471dc87f}">
-      <Declaration><![CDATA[PROPERTY PUBLIC SuggestedRetryDelay : UDINT]]></Declaration>
-      <Get Name="Get" Id="{3db708eb-77b9-4b37-8374-24a40c7c1968}">
+    <Property Name="SuggestedRetryDelayInMs" Id="{163e1020-dc66-4ccd-a55f-161175d2157b}">
+      <Declaration><![CDATA[PROPERTY PUBLIC SuggestedRetryDelayInMs : UDINT]]></Declaration>
+      <Get Name="Get" Id="{96e70065-7195-4432-876e-f62d3cf20873}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>
+      <Set Name="Set" Id="{3d33e40b-75d9-46e3-adc0-59dd55866fb5}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
     </Property>
     <Method Name="TryUpdateServerResponse" Id="{6f1965bb-8fc1-4c06-b1cd-28a8fa7ac11b}">
       <Declaration><![CDATA[METHOD PUBLIC TryUpdateServerResponse : BOOL
 VAR_INPUT
-	Request : I_Request;
 	Response : I_ServerResponse;
 END_VAR]]></Declaration>
     </Method>

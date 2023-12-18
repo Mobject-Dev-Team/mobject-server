@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="RpcManager" Id="{3f208033-fc55-4901-a839-41a96f923931}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK RpcManager IMPLEMENTS I_RpcManager
+VAR
+	rpcHandlers : I_RpcHandlers;
+	config : I_RpcManagerConfig;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Constructor" Id="{4cf791e2-033e-41c1-bd7f-0547acd5686e}" />
+    <Method Name="FB_init" Id="{53fea6ea-86b0-4213-974d-53d7704695f3}" FolderPath="Constructor\">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	RpcHandlers : I_RpcHandlers;
+	Config : I_RpcManagerConfig;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.rpcHandlers := RpcHandlers;
+THIS^.config := Config;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TryHandleIncomingRequest" Id="{037660a9-555d-4498-9d9d-65500789aa7c}">
+      <Declaration><![CDATA[METHOD PUBLIC TryHandleIncomingRequest : BOOL
+VAR_INPUT
+	Request : I_Request;
+	Response : I_ServerResponse;
+END_VAR
+VAR
+	requestType : T_MAXSTRING;
+	contentType : T_MAXSTRING;
+	acceptType : T_MAXSTRING;
+	methodName : T_MAXSTRING;
+	rpcHandler : I_RpcHandler;
+
+	// currently we only support json, however, this can become a factory in the future when used with contentType and acceptType.
+	rpcParameters : JsonRpcParameters(ClientRequest := Request);
+	rpcResponseBuilder : JsonRpcResponseBuilder(Response);
+	rpcReturn : RpcResponse(ServerResponse := Response, ResponseBuilder := rpcResponseBuilder);
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT config.TryGetTypeFromRequest(Request, requestType) THEN
+	RETURN;
+END_IF
+
+IF requestType <> 'RPC 1.0' THEN
+	RETURN;
+END_IF
+
+IF NOT(config.TryGetContentTypeFromRequest(Request, contentType)) OR_ELSE NOT(contentType = config.ContentType_Json) THEN
+	Response.Error('RPC : Missing or unsupported content type in header');
+	TryHandleIncomingRequest := TRUE;
+	RETURN;
+END_IF
+
+IF (config.TryGetAcceptResponseFormatFromRequest(Request, acceptType)) AND_THEN NOT(acceptType = config.ContentType_Json) THEN
+	Response.Error('RPC : Unsupported accept type in header');
+	TryHandleIncomingRequest := TRUE;
+	RETURN;
+END_IF
+
+IF NOT config.TryGetMethodNameFromRequest(Request, methodName) THEN
+	Response.Error('RPC : Missing RPC method name');
+	TryHandleIncomingRequest := TRUE;
+	RETURN;
+END_IF
+
+IF NOT rpcHandlers.TryGetByMethodName(methodName, rpcHandler) THEN
+	RETURN;
+END_IF
+
+rpcHandler.Handle(rpcParameters, rpcReturn);
+
+IF NOT Response.HeadersSent THEN
+	Response.Error('RPC : Handler did not return a valid response');
+	TryHandleIncomingRequest := TRUE;
+	RETURN;
+END_IF
+
+TryHandleIncomingRequest := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

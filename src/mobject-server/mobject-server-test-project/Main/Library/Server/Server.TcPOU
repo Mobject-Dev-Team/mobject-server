@@ -35,12 +35,13 @@ VAR
 	chunkedResponsesMiddleware : ChunkedResponsesMiddleware(chunkedResponseManager);
 	
 	// ability to support pending responses
-	pendingResponseManager : PendingResponseManager(sessionManager, serverConfig);
+	pendingResponseManager : PendingResponseManager(sessionManager, sequentialResponseIdGenerator, serverConfig);
 	pendingResponseMiddleware : PendingResponseMiddleware(pendingResponseManager);
 	
 	// ability to handle rpc
 	rpcHandlers : RpcHandlers;
-	rpcMiddleware : RpcMiddleware(rpcHandlers,serverConfig);
+	rpcManager : RpcManager(rpcHandlers, serverConfig);
+	rpcMiddleware : RpcMiddleware(rpcManager);
 	
 END_VAR
 VAR CONSTANT

@@ -116,25 +116,16 @@
     <Compile Include="Library\_Internal\ResponseId\SequentialResponseIdGenerator.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Library\_Internal\RPC\DeferredResponse\I_DeferredRpcResponse.TcIO">
+    <Compile Include="Library\_Internal\RPC\Manager\I_RpcManager.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Library\_Internal\RPC\DeferredResponse\DeferredRpcResponse.TcPOU">
+    <Compile Include="Library\_Internal\RPC\Manager\I_RpcManagerConfig.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Library\_Internal\RPC\Manager\I_RpcResponseManager.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Library\_Internal\RPC\Manager\I_RpcResponseManagerConfig.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Library\_Internal\RPC\Manager\RpcResponseManager.TcPOU">
+    <Compile Include="Library\_Internal\RPC\Manager\RpcManager.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Library\_Internal\RPC\Parameters\I_RpcParameters.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Library\_Internal\RPC\Middleware\I_RpcMiddlewareConfig.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Library\_Internal\RPC\Middleware\RpcMiddleware.TcPOU">
@@ -272,7 +263,6 @@
     <Folder Include="Library\_Internal\PendingResponse" />
     <Folder Include="Library\_Internal\ResponseBuilder\Json" />
     <Folder Include="Library\_Internal\ResponseId" />
-    <Folder Include="Library\_Internal\RPC\DeferredResponse" />
     <Folder Include="Library\_Internal\RPC\Manager" />
     <Folder Include="Library\_Internal\RPC\Parameters\Json" />
     <Folder Include="Library\_Internal\RPC\ResponseBuilder" />

@@ -4,7 +4,7 @@
     <Declaration><![CDATA[INTERFACE I_ChunkedResponseManager
 ]]></Declaration>
     <Method Name="HandleSuccess" Id="{90371fe9-8d96-473e-b2c5-d42ae6d2dbf7}">
-      <Declaration><![CDATA[METHOD PUBLIC HandleSuccess : T_MAXSTRING;
+      <Declaration><![CDATA[METHOD PUBLIC HandleSuccess;
 VAR_INPUT
 	OriginalResponse : I_ServerResponse;
 	SourceAddress : PVOID;
