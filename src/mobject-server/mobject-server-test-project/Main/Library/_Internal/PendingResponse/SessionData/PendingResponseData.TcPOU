@@ -146,7 +146,7 @@ END_VAR]]></Declaration>
 END_IF
 
 IF State = SUCCESS THEN
-	Response.Success(pData,dataSize);
+	Response.SuccessWithPayload(pData,dataSize);
 	TryUpdateServerResponse := TRUE;
 	RETURN;
 END_IF]]></ST>

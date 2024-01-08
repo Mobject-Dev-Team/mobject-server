@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <POU Name="Server_IntegrationTestSuite" Id="{cdfabd45-d3f9-4657-b5eb-78ded2b6a8d3}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK Server_IntegrationTestSuite EXTENDS TcUnit.FB_TestSuite
@@ -13,7 +13,7 @@ TestConcatRpcCallAndResponseWithChunkedRequest();]]></ST>
     <Method Name="TestConcatRpcCallAndResponse" Id="{98853763-3f92-414f-a8ce-839282bd98fd}">
       <Declaration><![CDATA[METHOD TestConcatRpcCallAndResponse
 VAR
-	server : Server;
+	server : RpcServer;
 	concatStringRpcHandler : ConcatStringRpcHandler;
 	header : T_MAXSTRING := '{"Type":"RPC 1.0","Method-Name":"concat","Content-Type":"application/json"}';
     payload : T_MAXSTRING := '{"STR1":"hello", "STR2":"world"}';
@@ -37,7 +37,7 @@ TEST_FINISHED();]]></ST>
     <Method Name="TestConcatRpcCallAndResponseWithChunkedRequest" Id="{071fb0ea-7b30-4b8e-af98-330bf3ca9442}">
       <Declaration><![CDATA[METHOD TestConcatRpcCallAndResponseWithChunkedRequest
 VAR
-	server : Server;
+	server : RpcServer;
 	concatStringRpcHandler : ConcatStringRpcHandler;
 	chunk1Header : T_MAXSTRING := '{"Type":"RPC 1.0","Method-Name":"concat","Request-Id":"abc","Has-More-Chunks":true, "Chunk-Sequence":1, "Chunk-Total":2, "Content-Type":"application/json"}';
     chunk1payload : T_MAXSTRING := '{"STR1":"hello",';

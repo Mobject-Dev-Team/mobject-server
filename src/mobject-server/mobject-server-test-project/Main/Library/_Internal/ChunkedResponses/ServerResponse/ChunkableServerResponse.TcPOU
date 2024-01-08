@@ -85,14 +85,22 @@ END_VAR]]></Declaration>
         <ST><![CDATA[serverResponse.Pending(ResponseId, RetryDelayInMs);]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Success" Id="{900688fe-0167-4eee-bf11-e332ca2b544d}">
+    <Method Name="Success" Id="{74290220-d91b-4133-aac6-6ea71acd45ca}">
       <Declaration><![CDATA[METHOD PUBLIC Success
+VAR_INPUT
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[serverResponse.Success();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SuccessWithPayload" Id="{900688fe-0167-4eee-bf11-e332ca2b544d}">
+      <Declaration><![CDATA[METHOD PUBLIC SuccessWithPayload
 VAR_INPUT
 	PayloadDataAddress : PVOID;
 	PayloadDataSize : UDINT;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[chunkedResponseManager.HandleSuccess(serverResponse, PayloadDataAddress, PayloadDataSize);]]></ST>
+        <ST><![CDATA[chunkedResponseManager.HandleSuccessWithPayload(serverResponse, PayloadDataAddress, PayloadDataSize);]]></ST>
       </Implementation>
     </Method>
   </POU>

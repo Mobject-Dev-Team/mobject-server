@@ -49,8 +49,8 @@ THIS^.responseIdGenerator := ResponseIdGenerator;
 This^.config := Config;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="HandleSuccess" Id="{8a7f7f97-8567-464c-8b51-a7240f7c9f00}">
-      <Declaration><![CDATA[METHOD PUBLIC HandleSuccess;
+    <Method Name="HandleSuccessWithPayload" Id="{8a7f7f97-8567-464c-8b51-a7240f7c9f00}">
+      <Declaration><![CDATA[METHOD PUBLIC HandleSuccessWithPayload;
 VAR_INPUT
 	OriginalResponse : I_ServerResponse;
 	SourceAddress : PVOID;
@@ -63,7 +63,7 @@ VAR
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF SourceSize <= maximumChunkSizeInBytes THEN
-	OriginalResponse.Success(SourceAddress, SourceSize);
+	OriginalResponse.SuccessWithPayload(SourceAddress, SourceSize);
 	RETURN;
 END_IF
 

@@ -38,8 +38,13 @@ VAR_INPUT
 	RetryDelayInMs : UDINT;
 END_VAR]]></Declaration>
     </Method>
-    <Method Name="Success" Id="{8212960f-67a8-4f5b-b6a5-06afdb71fe7e}">
+    <Method Name="Success" Id="{dcba0e73-d1db-4767-a918-598bfb8da5cb}">
       <Declaration><![CDATA[METHOD PUBLIC Success
+VAR_INPUT
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="SuccessWithPayload" Id="{8212960f-67a8-4f5b-b6a5-06afdb71fe7e}">
+      <Declaration><![CDATA[METHOD PUBLIC SuccessWithPayload
 VAR_INPUT
 	PayloadDataAddress : PVOID;
 	PayloadDataSize : UDINT;

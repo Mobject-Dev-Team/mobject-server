@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
-  <POU Name="Middleware" Id="{af066795-5139-47ab-af4d-eab87d77ce03}" SpecialFunc="None">
+  <POU Name="MiddlewareBase" Id="{af066795-5139-47ab-af4d-eab87d77ce03}" SpecialFunc="None">
     <Declaration><![CDATA[{attribute 'linkalways'} 
 {attribute 'no_explicit_call' := 'This FB is a CLASS and must be accessed using methods or properties'}
 {attribute 'enable_dynamic_creation'}
-FUNCTION_BLOCK ABSTRACT Middleware implements I_Middleware
+FUNCTION_BLOCK ABSTRACT MiddlewareBase implements I_Middleware
 VAR
 	_next : I_Middleware;
 END_VAR]]></Declaration>
@@ -58,23 +58,5 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
-    <LineIds Name="Middleware">
-      <LineId Id="9" Count="0" />
-    </LineIds>
-    <LineIds Name="Middleware.Handle">
-      <LineId Id="11" Count="0" />
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="Middleware.Next">
-      <LineId Id="5" Count="2" />
-      <LineId Id="9" Count="0" />
-      <LineId Id="8" Count="0" />
-    </LineIds>
-    <LineIds Name="Middleware.NextMiddleware.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="Middleware.NextMiddleware.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

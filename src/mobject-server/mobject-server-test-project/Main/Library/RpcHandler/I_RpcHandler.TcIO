@@ -7,7 +7,7 @@
       <Declaration><![CDATA[METHOD Handle
 VAR_INPUT
 	Parameters : I_RpcParameters;
-	Response : I_RpcResponse;
+	Reply : I_RpcSynchronousReply;
 END_VAR
 ]]></Declaration>
     </Method>

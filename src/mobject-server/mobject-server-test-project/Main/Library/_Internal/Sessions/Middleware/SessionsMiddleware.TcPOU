@@ -4,7 +4,7 @@
     <Declaration><![CDATA[{attribute 'linkalways'} 
 {attribute 'no_explicit_call' := 'This FB is a CLASS and must be accessed using methods or properties'}
 {attribute 'enable_dynamic_creation'}
-FUNCTION_BLOCK SessionsMiddleware EXTENDS Middleware
+FUNCTION_BLOCK SessionsMiddleware EXTENDS MiddlewareBase
 VAR
 	sessionManager: I_SessionManager;
 	config : I_SessionMiddlewareConfig;

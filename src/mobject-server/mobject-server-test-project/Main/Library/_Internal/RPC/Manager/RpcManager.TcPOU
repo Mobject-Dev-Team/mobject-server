@@ -40,8 +40,8 @@ VAR
 
 	// currently we only support json, however, this can become a factory in the future when used with contentType and acceptType.
 	rpcParameters : JsonRpcParameters(ClientRequest := Request);
-	rpcResponseBuilder : JsonRpcResponseBuilder(Response);
-	rpcReturn : RpcResponse(ServerResponse := Response, ResponseBuilder := rpcResponseBuilder);
+	jsonSerializer : JsonSerializer;;
+	rpcReturn : RpcSynchronousReply(ServerResponse := Response, Serializer := jsonSerializer);
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF NOT config.TryGetTypeFromRequest(Request, requestType) THEN

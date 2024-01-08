@@ -7,10 +7,8 @@
 {attribute 'TcRpcEnable'}
 FUNCTION_BLOCK Server
 VAR
-	// header constants can be swapped out later if new versions are used. 
-	// for now, v1 is used in the server.  call UpdateConfig to change.
-	defaultServerConfig : ServerConfigV1;
-	serverConfig : I_ServerConfig := defaultServerConfig;
+
+	serverConfig : ServerConfigV1;
 	requestPayloadStringSizeIncludingNull : UDINT := Constants.REQUEST_PAYLOAD_STRING_SIZE + 1;
 	responsePayloadStringSizeIncludingNull : UDINT := Constants.RESPONSE_PAYLOAD_STRING_SIZE + 1;
 	
@@ -37,11 +35,6 @@ VAR
 	// ability to support pending responses
 	pendingResponseManager : PendingResponseManager(sessionManager, sequentialResponseIdGenerator, serverConfig);
 	pendingResponseMiddleware : PendingResponseMiddleware(pendingResponseManager);
-	
-	// ability to handle rpc
-	rpcHandlers : RpcHandlers;
-	rpcManager : RpcManager(rpcHandlers, serverConfig);
-	rpcMiddleware : RpcMiddleware(rpcManager);
 	
 END_VAR
 VAR CONSTANT
@@ -70,11 +63,10 @@ END_VAR
         <ST><![CDATA[MiddlewareStack.Use(sessionsMiddleware);
 MiddlewareStack.Use(chunkedRequestsMiddleware);
 MiddlewareStack.Use(chunkedResponsesMiddleware);
-MiddlewareStack.Use(pendingResponseMiddleware);
-MiddlewareStack.Use(rpcMiddleware);]]></ST>
+MiddlewareStack.Use(pendingResponseMiddleware);]]></ST>
       </Implementation>
     </Method>
-    <Method Name="HandleRequest" Id="{7b13833b-f9b3-4890-a277-3064b3265ee1}">
+    <Method Name="HandleRequest" Id="{db6b2597-6f8c-4ee7-b696-98db242e2e1d}">
       <Declaration><![CDATA[{attribute 'TcRpcEnable'}
 METHOD PUBLIC HandleRequest : ResponseData;
 VAR_INPUT
@@ -96,20 +88,9 @@ IF NOT serverResponse.HeadersSent THEN
 END_IF]]></ST>
       </Implementation>
     </Method>
-    <Property Name="Rpc" Id="{faf99840-17b0-43b6-8c58-1f09336d1276}">
-      <Declaration><![CDATA[PROPERTY PUBLIC Rpc : I_RpcHandlers]]></Declaration>
-      <Get Name="Get" Id="{d6af4457-81bc-4edb-8c8a-4cf4799cd9a1}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[Rpc := rpcHandlers;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Property Name="SessionCount" Id="{b31046af-fafb-43a3-bc84-b1db49953a24}">
+    <Property Name="SessionCount" Id="{50abdc36-48d8-4c00-82ca-90337c162dd2}">
       <Declaration><![CDATA[PROPERTY PUBLIC SessionCount : DINT]]></Declaration>
-      <Get Name="Get" Id="{07052640-8365-468c-a63a-a3825c975c42}">
+      <Get Name="Get" Id="{20da0683-6bc9-4606-b8c6-3e91fc23a7c1}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -118,7 +99,7 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <Method Name="Use" Id="{6e5ea3d5-bee9-4d79-bfef-f3e289ac77c8}">
+    <Method Name="Use" Id="{54e2f927-64c4-4b0d-9e0d-731676b77391}">
       <Declaration><![CDATA[METHOD PUBLIC Use
 VAR_INPUT
 	Middleware : I_Middleware;

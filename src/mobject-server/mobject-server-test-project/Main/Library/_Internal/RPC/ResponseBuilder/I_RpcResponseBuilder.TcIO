@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="I_RpcResponseBuilder" Id="{107a744d-3aae-4079-beba-d822425cd7b9}">
+    <Declaration><![CDATA[INTERFACE I_RpcResponseBuilder
+]]></Declaration>
+    <Method Name="AddBase64" Id="{d3472728-d564-4f75-beee-9e0123bc08ef}">
+      <Declaration><![CDATA[METHOD PUBLIC AddBase64 : I_RpcResponseBuilder
+VAR_INPUT
+	pBytes : POINTER TO BYTE;
+	nBytes : DINT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddBool" Id="{ba93d87b-8d64-45ed-a079-af2e080d5e0b}">
+      <Declaration><![CDATA[METHOD PUBLIC AddBool : I_RpcResponseBuilder
+VAR_INPUT
+	Value : BOOL;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddBytesAsHex" Id="{8c337c0a-af8a-471c-9432-f1f2291e4a8d}">
+      <Declaration><![CDATA[METHOD PUBLIC AddBytesAsHex : I_RpcResponseBuilder
+VAR_INPUT
+	pBytes : POINTER TO BYTE;
+	nBytes : DINT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddDateTime" Id="{80050a54-7102-4ba3-8a70-ba6351a50214}">
+      <Declaration><![CDATA[METHOD PUBLIC AddDateTime : I_RpcResponseBuilder
+VAR_INPUT
+	Value : DATE_AND_TIME;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddDcTime" Id="{b21c20b5-fd8a-4438-956d-289c60bdc131}">
+      <Declaration><![CDATA[METHOD PUBLIC AddDcTime : I_RpcResponseBuilder
+VAR_INPUT
+	Value : DCTIME;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddDint" Id="{df9eba34-07f5-42b1-82c7-01db285bd5ff}">
+      <Declaration><![CDATA[METHOD PUBLIC AddDint : I_RpcResponseBuilder
+VAR_INPUT
+	Value : DINT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddFileTime" Id="{ae02906d-c1ff-4708-82f2-22baad702a52}">
+      <Declaration><![CDATA[METHOD PUBLIC AddFileTime : I_RpcResponseBuilder
+VAR_INPUT
+	Value : FILETIME;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddKey" Id="{013045e6-a6b2-43c9-b000-478815ef2280}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKey : I_RpcResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddKeyBase64" Id="{555a7163-bbac-4081-8dea-8924d327c065}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyBase64 : I_RpcResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	pBytes : POINTER TO BYTE;
+	nBytes : DINT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddKeyBool" Id="{99ff3da9-5d96-4633-828b-02f96225222c}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyBool : I_RpcResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	Value : BOOL;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddKeyBytesAsHex" Id="{02276a8a-32c9-423a-ad68-471ea1512200}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyBytesAsHex : I_RpcResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	pBytes : POINTER TO BYTE;
+	nBytes : DINT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddKeyDateTime" Id="{824abcf5-35f0-4712-bd42-0de07475478d}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyDateTime : I_RpcResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	Value : DATE_AND_TIME;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddKeyDcTime" Id="{0a34a2fa-d8f9-4e55-ae90-73c844a2666f}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyDcTime : I_RpcResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	Value : DCTIME;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddKeyDint" Id="{54b96ee5-2fe1-4ea0-b63e-52e21362bdc2}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyDint : I_RpcResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	Value : DINT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddKeyFileTime" Id="{e735971a-9530-4f6e-ba29-9283f9ec69c8}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyFileTime : I_RpcResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	Value : FILETIME;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddKeyLint" Id="{588d480c-1938-463c-975f-d54a6b0bbb17}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyLint : I_RpcResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	Value : LINT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddKeyLreal" Id="{26bb5ed5-86ad-4701-8c28-4b9afd73cf6e}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyLreal : I_RpcResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	Value : LREAL;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddKeyNull" Id="{5698fff4-c6ee-4fb0-a2b5-441311b85159}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyNull : I_RpcResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddKeyReal" Id="{168cc75c-af63-4714-a76a-498f8e13659b}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyReal : I_RpcResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	Value : REAL;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddKeyString" Id="{dddfb4c0-724b-4fde-b1f7-0ccd4e237ecf}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyString : I_RpcResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	Value : T_MAXSTRING;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddKeyUdint" Id="{a9e8a74f-e049-47f4-bc02-9de4b35b98f3}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyUdint : I_RpcResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	Value : UDINT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddKeyUlint" Id="{b1fc84ab-9016-4eae-bd4f-24afea78e199}">
+      <Declaration><![CDATA[METHOD PUBLIC AddKeyUlint : I_RpcResponseBuilder
+VAR_INPUT
+	Key : T_MAXSTRING;
+	Value : ULINT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddLint" Id="{4be1e982-8866-4717-a949-5e1324120af4}">
+      <Declaration><![CDATA[METHOD PUBLIC AddLint : I_RpcResponseBuilder
+VAR_INPUT
+	Value : LINT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddLreal" Id="{332d7b32-4a5d-4c0d-93cc-3ad75f2542c3}">
+      <Declaration><![CDATA[METHOD PUBLIC AddLreal : I_RpcResponseBuilder
+VAR_INPUT
+	Value : LREAL;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddNull" Id="{8105184d-f90c-4f33-92e1-60b8f7f9d089}">
+      <Declaration><![CDATA[METHOD PUBLIC AddNull : I_RpcResponseBuilder
+VAR_INPUT
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddReal" Id="{fa0b4035-1780-4c41-8ada-6a6a25d75c5f}">
+      <Declaration><![CDATA[METHOD PUBLIC AddReal : I_RpcResponseBuilder
+VAR_INPUT
+	Value : REAL;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddString" Id="{ddef8ece-571e-4e11-b11e-86b6c90e9ccb}">
+      <Declaration><![CDATA[METHOD PUBLIC AddString : I_RpcResponseBuilder
+VAR_INPUT
+	Value : T_MAXSTRING;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddUdint" Id="{dfaf90c0-40d4-4571-9bab-773c7a53b41e}">
+      <Declaration><![CDATA[METHOD PUBLIC AddUdint : I_RpcResponseBuilder
+VAR_INPUT
+	Value : UDINT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddUlint" Id="{80c15204-704f-4bf1-bd7e-5b4ad6cceed8}">
+      <Declaration><![CDATA[METHOD PUBLIC AddUlint : I_RpcResponseBuilder
+VAR_INPUT
+	Value : ULINT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="EndArray" Id="{210af732-0186-45cd-8175-d997459b91b8}">
+      <Declaration><![CDATA[METHOD PUBLIC EndArray : I_RpcResponseBuilder
+VAR_INPUT
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="EndObject" Id="{b8c7bee9-c682-4024-a2e7-c8e666352a6d}">
+      <Declaration><![CDATA[METHOD PUBLIC EndObject : I_RpcResponseBuilder
+VAR_INPUT
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="Reset" Id="{a6be542d-c7de-4d1a-9933-5e19fa6c12b6}">
+      <Declaration><![CDATA[METHOD PUBLIC Reset
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Send" Id="{ec1f6c19-f68a-473f-8bc2-27bb22fb79ae}">
+      <Declaration><![CDATA[METHOD PUBLIC Send
+VAR_INPUT
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="StartArray" Id="{e04e4b83-97cd-460a-bdae-e1bd146aca8e}">
+      <Declaration><![CDATA[METHOD PUBLIC StartArray : I_RpcResponseBuilder
+VAR_INPUT
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="StartObject" Id="{38b8dd56-a8e0-4d05-9b6a-b5aa46537bd7}">
+      <Declaration><![CDATA[METHOD PUBLIC StartObject : I_RpcResponseBuilder
+VAR_INPUT
+END_VAR]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

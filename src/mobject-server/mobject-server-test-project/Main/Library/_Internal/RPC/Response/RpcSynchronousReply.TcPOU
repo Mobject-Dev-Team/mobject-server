@@ -1,0 +1,282 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="RpcSynchronousReply" Id="{c724498f-baf7-4f00-9137-6c3a66aa5cd0}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'linkalways'} 
+{attribute 'no_explicit_call' := 'This FB is a CLASS and must be accessed using methods or properties'}
+{attribute 'enable_dynamic_creation'}
+FUNCTION_BLOCK RpcSynchronousReply IMPLEMENTS I_RpcSynchronousReply, I_RpcSynchronousReplyReadyToSend
+VAR
+	serializer : I_Serializer;
+	serializerToSend : I_Serializer := serializer;
+	serverResponse : I_ServerResponse;
+	responseBuilder : RpcSynchronousResponseBuilder;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Constructor" Id="{12740898-8cc4-4e25-8ce9-9fc0666115c8}" />
+    <Folder Name="Private" Id="{dcb37f09-2ecb-4483-9579-8dcbc7918f05}" />
+    <Method Name="Compose" Id="{f36e2d3c-b4e8-439c-bf12-f5c1727b06af}">
+      <Declaration><![CDATA[METHOD PUBLIC Compose : I_RpcResponseBuilder
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ResetInternalSerializer();
+responseBuilder.Initialize(Serializer, ServerResponse);
+Compose := responseBuilder;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{58740322-7d24-44d6-95e0-bd81b1ebde4a}" FolderPath="Constructor\">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	ServerResponse : I_ServerResponse;
+	Serializer : I_Serializer;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.serverResponse := ServerResponse;
+THIS^.serializer := Serializer;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetSerializer" Id="{3c95a31f-9472-4fa2-8b38-a78edbb5c949}">
+      <Declaration><![CDATA[METHOD PUBLIC GetSerializer : I_Serializer
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetSerializer := serializer.Clone();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="RejectWithMessage" Id="{d016a36c-5bb1-48bd-ab36-b1534a482e0e}">
+      <Declaration><![CDATA[METHOD PUBLIC RejectWithMessage
+VAR_INPUT
+	Message : T_MAXSTRING;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[serverResponse.Error(Message);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ResetInternalSerializer" Id="{7aca96e4-a030-49b9-bab1-5f41b8d5633b}" FolderPath="Private\">
+      <Declaration><![CDATA[METHOD PRIVATE ResetInternalSerializer
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[serializer.Reset();
+serializerToSend := serializer;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Send" Id="{10656fd7-dd8c-4e2c-a443-082c5750c598}">
+      <Declaration><![CDATA[METHOD PUBLIC Send
+VAR
+	jsonSize : UDINT;
+	pJsonString : POINTER TO STRING;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[jsonSize := serializerToSend.GetSeralizedDataLength();
+
+IF jsonSize = 0 THEN
+	serverResponse.Success();
+END_IF
+
+pJsonString := __NEW(BYTE, jsonSize);
+
+IF NOT serializerToSend.TryGetSerialziedData(pJsonString, jsonSize) THEN
+	serverResponse.Error('RPC Handler unable to get serialized data');
+	__DELETE(pJsonString);
+	RETURN;
+END_IF
+
+serverResponse.SuccessWithPayload(pJsonString, jsonSize);
+__DELETE(pJsonString);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="WithBase64" Id="{1852c73b-7584-42d8-8595-d755b4b78f03}">
+      <Declaration><![CDATA[METHOD PUBLIC WithBase64 : I_RpcSynchronousReplyReadyToSend
+VAR_INPUT
+	pBytes : POINTER TO BYTE;
+	nBytes : DINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ResetInternalSerializer();
+serializer.AddBase64(pBytes, nBytes);
+WithBase64 := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="WithBool" Id="{7e7403d7-f4cb-400d-8ab9-ff3aedbf57b4}">
+      <Declaration><![CDATA[METHOD PUBLIC WithBool : I_RpcSynchronousReplyReadyToSend
+VAR_INPUT
+	Value : BOOL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ResetInternalSerializer();
+serializer.AddBool(Value);
+WithBool := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="WithBytesAsHex" Id="{93903bbf-3c38-4980-8b1f-e2263cdb86e0}">
+      <Declaration><![CDATA[METHOD PUBLIC WithBytesAsHex : I_RpcSynchronousReplyReadyToSend
+VAR_INPUT
+	pBytes : POINTER TO BYTE;
+	nBytes : DINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ResetInternalSerializer();
+serializer.AddBytesAsHex(pBytes, nBytes);
+WithBytesAsHex := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="WithDateTime" Id="{20014026-b2b6-43a2-93d7-0a69b7b874c8}">
+      <Declaration><![CDATA[METHOD PUBLIC WithDateTime : I_RpcSynchronousReplyReadyToSend
+VAR_INPUT
+	Value : DATE_AND_TIME;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ResetInternalSerializer();
+serializer.AddDateTime(Value);
+WithDateTime := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="WithDcTime" Id="{601da881-ce92-48c2-b16a-901c433dac2e}">
+      <Declaration><![CDATA[METHOD PUBLIC WithDcTime : I_RpcSynchronousReplyReadyToSend
+VAR_INPUT
+	Value : DCTIME;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ResetInternalSerializer();
+serializer.AddDcTime(Value);
+WithDcTime := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="WithDint" Id="{38773dc1-5afc-4fbe-8d85-19dcb6f6dec0}">
+      <Declaration><![CDATA[METHOD PUBLIC WithDint : I_RpcSynchronousReplyReadyToSend
+VAR_INPUT
+	Value : DINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ResetInternalSerializer();
+serializer.AddDint(Value);
+WithDint := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="WithFileTime" Id="{ce3c3570-3dbd-429b-a0df-6122eef0b941}">
+      <Declaration><![CDATA[METHOD PUBLIC WithFileTime : I_RpcSynchronousReplyReadyToSend
+VAR_INPUT
+	Value : FILETIME;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ResetInternalSerializer();
+serializer.AddFileTime(Value);
+WithFileTime := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="WithLint" Id="{15fb45be-f8cd-476e-936e-95dd739d2ad8}">
+      <Declaration><![CDATA[METHOD PUBLIC WithLint : I_RpcSynchronousReplyReadyToSend
+VAR_INPUT
+	Value : LINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ResetInternalSerializer();
+serializer.AddLint(Value);
+WithLint := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="WithLreal" Id="{a6f94923-7cc9-4772-9c0b-daa067666dd8}">
+      <Declaration><![CDATA[METHOD PUBLIC WithLreal : I_RpcSynchronousReplyReadyToSend
+VAR_INPUT
+	Value : LREAL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ResetInternalSerializer();
+serializer.AddLreal(Value);
+WithLreal := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="WithNull" Id="{a26a3275-f5d8-4d82-a9fa-28465a681661}">
+      <Declaration><![CDATA[METHOD PUBLIC WithNull : I_RpcSynchronousReplyReadyToSend
+VAR_INPUT
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ResetInternalSerializer();
+serializer.AddNull();
+WithNull := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="WithObject" Id="{8c148a58-c3ff-4c45-bfcd-db6bebceaad0}">
+      <Declaration><![CDATA[METHOD PUBLIC WithObject : I_RpcSynchronousReplyReadyToSend
+VAR_INPUT
+	Object : I_Serializable;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ResetInternalSerializer();
+Object.SerializeWith(serializer);
+WithObject := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="WithReal" Id="{c45e6c4a-0553-4bd2-a3cd-0a5b5bd48d1b}">
+      <Declaration><![CDATA[METHOD PUBLIC WithReal : I_RpcSynchronousReplyReadyToSend
+VAR_INPUT
+	Value : REAL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ResetInternalSerializer();
+serializer.AddReal(Value);
+WithReal := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="WithSerializedData" Id="{696c87ea-442f-4e8d-82ee-e793578eb606}">
+      <Declaration><![CDATA[METHOD PUBLIC WithSerializedData : I_RpcSynchronousReplyReadyToSend
+VAR_INPUT
+	Serializer : I_Serializer;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ResetInternalSerializer();
+
+IF Serializer = 0 THEN
+	WithSerializedData := THIS^;
+	RETURN;
+END_IF
+
+serializerToSend := Serializer;
+WithSerializedData := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="WithString" Id="{abf0072f-fd49-4976-9966-a04a5b803fee}">
+      <Declaration><![CDATA[METHOD PUBLIC WithString : I_RpcSynchronousReplyReadyToSend
+VAR_INPUT
+	Value : T_MAXSTRING;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ResetInternalSerializer();
+serializer.AddString(Value);
+WithString := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="WithUdint" Id="{859ce20a-da2e-47f5-ba72-c20e7d8c636d}">
+      <Declaration><![CDATA[METHOD PUBLIC WithUdint : I_RpcSynchronousReplyReadyToSend
+VAR_INPUT
+	Value : UDINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ResetInternalSerializer();
+serializer.AddUdint(Value);
+WithUdint := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="WithUlint" Id="{c6871ed5-3419-4e00-9dd1-9901890cf472}">
+      <Declaration><![CDATA[METHOD PUBLIC WithUlint : I_RpcSynchronousReplyReadyToSend
+VAR_INPUT
+	Value : ULINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ResetInternalSerializer();
+serializer.AddUlint(Value);
+WithUlint := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

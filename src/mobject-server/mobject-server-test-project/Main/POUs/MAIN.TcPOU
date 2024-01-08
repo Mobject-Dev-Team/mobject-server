@@ -7,8 +7,9 @@ VAR
 	chunkedRequestData_TestSuite : ChunkedRequestData_TestSuite;
 	
 	initialized : BOOL;
-	server : Server;
+	server : RpcServer;
 	concatStringRpcHandler : ConcatStringRpcHandler;	
+
 END_VAR
 ]]></Declaration>
     <Implementation>

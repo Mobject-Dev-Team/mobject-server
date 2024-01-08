@@ -118,8 +118,25 @@ END_VAR
 _header.ToString(destination.Header);]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Success" Id="{a0f936ba-3243-4794-876f-bbdda8e73d58}">
+    <Method Name="Success" Id="{e8ec9304-2bdf-4fd2-9723-3f3b826dd538}">
       <Declaration><![CDATA[METHOD PUBLIC Success
+VAR_INPUT
+END_VAR
+VAR
+	errorMessage : T_MAXSTRING;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _sent THEN
+	RETURN;
+END_IF
+
+config.UpdateResponseWithSuccess(THIS^);
+SendHeaderToDestination();
+memset(ADR(destination.Payload),0,SIZEOF(destination.Payload));]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SuccessWithPayload" Id="{a0f936ba-3243-4794-876f-bbdda8e73d58}">
+      <Declaration><![CDATA[METHOD PUBLIC SuccessWithPayload
 VAR_INPUT
 	PayloadDataAddress : PVOID;
 	PayloadDataSize : UDINT;
@@ -146,58 +163,5 @@ SendHeaderToDestination();
 memcpy(ADR(destination.Payload),PayloadDataAddress,PayloadDataSize);]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="ServerResponse">
-      <LineId Id="9" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerResponse.Accepted">
-      <LineId Id="76" Count="1" />
-      <LineId Id="72" Count="0" />
-      <LineId Id="79" Count="0" />
-      <LineId Id="78" Count="0" />
-      <LineId Id="66" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerResponse.Busy">
-      <LineId Id="76" Count="1" />
-      <LineId Id="72" Count="0" />
-      <LineId Id="79" Count="0" />
-      <LineId Id="78" Count="0" />
-      <LineId Id="66" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerResponse.Error">
-      <LineId Id="76" Count="1" />
-      <LineId Id="72" Count="0" />
-      <LineId Id="79" Count="0" />
-      <LineId Id="78" Count="0" />
-      <LineId Id="66" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerResponse.FB_init">
-      <LineId Id="7" Count="0" />
-      <LineId Id="15" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerResponse.Header.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerResponse.HeadersSent.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerResponse.Pending">
-      <LineId Id="76" Count="1" />
-      <LineId Id="72" Count="0" />
-      <LineId Id="79" Count="0" />
-      <LineId Id="78" Count="0" />
-      <LineId Id="66" Count="0" />
-    </LineIds>
-    <LineIds Name="ServerResponse.SendHeaderToDestination">
-      <LineId Id="5" Count="1" />
-    </LineIds>
-    <LineIds Name="ServerResponse.Success">
-      <LineId Id="93" Count="1" />
-      <LineId Id="92" Count="0" />
-      <LineId Id="95" Count="0" />
-      <LineId Id="80" Count="7" />
-      <LineId Id="90" Count="1" />
-      <LineId Id="89" Count="0" />
-      <LineId Id="78" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>
