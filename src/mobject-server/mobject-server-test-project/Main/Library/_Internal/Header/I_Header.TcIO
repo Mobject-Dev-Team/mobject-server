@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="I_Header" Id="{c6e1f27a-5582-4ccb-bee1-25638f811636}">
+    <Declaration><![CDATA[INTERFACE I_Header
+]]></Declaration>
+    <Method Name="ToString" Id="{87083345-4611-4dde-93e5-ca9bbb47ae82}">
+      <Declaration><![CDATA[METHOD PUBLIC ToString
+VAR_INPUT
+	Destination : REFERENCE TO STRING(Constants.HEADER_STRING_SIZE);
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="TryGetField" Id="{fe6fd5d1-3b7c-4375-8f49-aead63fa0dd6}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetField : BOOL;
+VAR_INPUT
+	Key : STRING;
+	Destination : ANY;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="TryWriteField" Id="{fbd1a505-b230-41e8-99d5-a5addaeeeff0}">
+      <Declaration><![CDATA[METHOD PUBLIC TryWriteField : BOOL;
+VAR_INPUT
+	Key : STRING;
+	Source : ANY;
+END_VAR]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

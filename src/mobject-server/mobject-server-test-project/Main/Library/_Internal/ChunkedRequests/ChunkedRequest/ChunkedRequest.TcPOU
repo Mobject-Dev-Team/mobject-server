@@ -40,7 +40,7 @@ this^.chunkedRequestData ref= ChunkedRequestData;]]></ST>
       </Implementation>
     </Method>
     <Property Name="Header" Id="{010e3e42-9687-478a-b993-1d469bcbbd40}">
-      <Declaration><![CDATA[PROPERTY PUBLIC Header : I_RequestHeader]]></Declaration>
+      <Declaration><![CDATA[PROPERTY PUBLIC Header : I_Header]]></Declaration>
       <Get Name="Get" Id="{c774c5c7-659e-42c1-afc5-0dda09dc5780}">
         <Declaration><![CDATA[VAR
 END_VAR

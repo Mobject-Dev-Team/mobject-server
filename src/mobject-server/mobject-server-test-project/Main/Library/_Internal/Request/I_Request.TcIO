@@ -10,7 +10,7 @@
       </Get>
     </Property>
     <Property Name="Header" Id="{e48d46f2-b1ae-4764-81c7-c961d7cf6a85}">
-      <Declaration><![CDATA[PROPERTY PUBLIC Header : I_RequestHeader]]></Declaration>
+      <Declaration><![CDATA[PROPERTY PUBLIC Header : I_Header]]></Declaration>
       <Get Name="Get" Id="{aa2814e0-af57-4ffe-a8c4-7e1da4004afd}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>

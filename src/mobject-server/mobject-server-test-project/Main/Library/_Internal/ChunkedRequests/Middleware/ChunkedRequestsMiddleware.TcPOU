@@ -35,10 +35,11 @@ VAR
 	hasMoreChunks : BOOL;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF NOT chunkedRequestsManager.TryHandleIncomingRequest(Request, Response, NextMiddleware) THEN
-	Next(Request, Response);
+        <ST><![CDATA[IF chunkedRequestsManager.TryHandleIncomingRequest(Request, Response, NextMiddleware) THEN
 	RETURN;
-END_IF]]></ST>
+END_IF
+
+Next(Request, Response);]]></ST>
       </Implementation>
     </Method>
   </POU>

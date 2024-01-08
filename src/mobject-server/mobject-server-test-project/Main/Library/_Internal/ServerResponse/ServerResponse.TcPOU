@@ -6,7 +6,7 @@
 {attribute 'enable_dynamic_creation'}
 FUNCTION_BLOCK ServerResponse IMPLEMENTS I_ServerResponse
 VAR
-	_header : ServerResponseHeader;
+	_header : Header(0);
 	_sent : BOOL := FALSE;
 	destination : REFERENCE TO ResponseData;
 	config : I_ServerResponseConfig;
@@ -72,7 +72,7 @@ This^.config := Config;]]></ST>
       </Implementation>
     </Method>
     <Property Name="Header" Id="{1a5384de-2402-4919-b8b4-9eb07e9635aa}">
-      <Declaration><![CDATA[PROPERTY PUBLIC Header : I_ServerResponseHeader]]></Declaration>
+      <Declaration><![CDATA[PROPERTY PUBLIC Header : I_Header]]></Declaration>
       <Get Name="Get" Id="{4d604038-9716-4bda-9a20-2c4af0caacb0}">
         <Declaration><![CDATA[VAR
 END_VAR

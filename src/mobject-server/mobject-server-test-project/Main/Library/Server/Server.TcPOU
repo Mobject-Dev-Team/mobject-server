@@ -9,8 +9,7 @@ FUNCTION_BLOCK Server
 VAR
 
 	serverConfig : ServerConfigV1;
-	requestPayloadStringSizeIncludingNull : UDINT := Constants.REQUEST_PAYLOAD_STRING_SIZE + 1;
-	responsePayloadStringSizeIncludingNull : UDINT := Constants.RESPONSE_PAYLOAD_STRING_SIZE + 1;
+	payloadStringSizeIncludingNull : UDINT := Constants.PAYLOAD_STRING_SIZE + 1;
 	
 	// the middleware stack allows us to construct our server in any way needed.
 	// by default we will support sessions, async polling and chunked requests/
@@ -25,11 +24,11 @@ VAR
 	sessionsMiddleware : SessionsMiddleware(sessionManager, serverConfig);
 	
 	// ability to suppoort chunked requests
-	chunkedRequestsManager : ChunkedRequestsManager(requestPayloadStringSizeIncludingNull, sessionManager, serverConfig);
+	chunkedRequestsManager : ChunkedRequestsManager(payloadStringSizeIncludingNull, sessionManager, serverConfig);
 	chunkedRequestsMiddleware : ChunkedRequestsMiddleware(chunkedRequestsManager);
 	
 	// ability to support chunked responses
-	chunkedResponseManager : ChunkedResponseManager(responsePayloadStringSizeIncludingNull, sessionManager, sequentialResponseIdGenerator, serverConfig);
+	chunkedResponseManager : ChunkedResponseManager(payloadStringSizeIncludingNull, sessionManager, sequentialResponseIdGenerator, serverConfig);
 	chunkedResponsesMiddleware : ChunkedResponsesMiddleware(chunkedResponseManager);
 	
 	// ability to support pending responses
@@ -70,11 +69,11 @@ MiddlewareStack.Use(pendingResponseMiddleware);]]></ST>
       <Declaration><![CDATA[{attribute 'TcRpcEnable'}
 METHOD PUBLIC HandleRequest : ResponseData;
 VAR_INPUT
-	SerializedHeader : STRING(Constants.REQUEST_HEADER_STRING_SIZE);
-	SerializedPayload : STRING(Constants.REQUEST_PAYLOAD_STRING_SIZE);
+	SerializedHeader : STRING(Constants.HEADER_STRING_SIZE);
+	SerializedPayload : STRING(Constants.PAYLOAD_STRING_SIZE);
 END_VAR
 VAR
-	header : RequestHeader(SerializedHeader);
+	header : Header(SerializedHeader);
 	request : Request(header, SerializedPayload);
 	serverResponse : ServerResponse(HandleRequest, serverConfig);
 END_VAR]]></Declaration>

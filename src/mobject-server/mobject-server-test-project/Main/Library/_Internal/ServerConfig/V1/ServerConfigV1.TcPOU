@@ -139,25 +139,6 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
-    <Property Name="HeaderKey_MethodName" Id="{a8a66445-8651-4241-b786-bb84e733d585}" FolderPath="Constants\">
-      <Declaration><![CDATA[PROPERTY PUBLIC HeaderKey_MethodName : T_MAXSTRING]]></Declaration>
-      <Get Name="Get" Id="{718f2bb1-d25d-4502-a025-7fbd9f8d3bd3}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[HeaderKey_MethodName := 'Method-Name';]]></ST>
-        </Implementation>
-      </Get>
-      <Set Name="Set" Id="{d2161734-5825-443f-aaa4-2b5ae220a47c}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
-        </Implementation>
-      </Set>
-    </Property>
     <Property Name="HeaderKey_RequestId" Id="{c1fbe171-d879-452d-b2a7-b08e5b0bd058}" FolderPath="Constants\">
       <Declaration><![CDATA[PROPERTY PUBLIC HeaderKey_RequestId : T_MAXSTRING]]></Declaration>
       <Get Name="Get" Id="{4141ecee-7660-4f0f-87e1-392bfb0d23df}">
@@ -441,17 +422,6 @@ END_IF
 
 Destination := hasMoreChunks;
 TryGetHasMoreChunksFromRequest := TRUE;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="TryGetMethodNameFromRequest" Id="{7df482db-036e-45ab-a3af-6e122ddd395b}">
-      <Declaration><![CDATA[METHOD PUBLIC TryGetMethodNameFromRequest : BOOL
-VAR_INPUT
-	Request : I_Request;
-	Destination : ANY;
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[TryGetMethodNameFromRequest := Request.Header.TryGetField(HeaderKey_MethodName,Destination);]]></ST>
       </Implementation>
     </Method>
     <Method Name="TryGetRequestIdFromRequest" Id="{c05ae6bc-8c69-4d16-9066-4fe4e9e97dc3}">

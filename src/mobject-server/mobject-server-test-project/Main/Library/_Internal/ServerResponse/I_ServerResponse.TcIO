@@ -20,7 +20,7 @@ VAR_INPUT
 END_VAR]]></Declaration>
     </Method>
     <Property Name="Header" Id="{e4fcf1e6-4e4e-4543-82d0-51f8c8a85113}">
-      <Declaration><![CDATA[PROPERTY PUBLIC Header : I_ServerResponseHeader]]></Declaration>
+      <Declaration><![CDATA[PROPERTY PUBLIC Header : I_Header]]></Declaration>
       <Get Name="Get" Id="{67cd667d-6708-4212-ac18-80548d414748}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>

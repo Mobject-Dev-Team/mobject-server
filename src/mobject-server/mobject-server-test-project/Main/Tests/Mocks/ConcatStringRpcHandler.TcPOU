@@ -32,9 +32,7 @@ END_IF
 
 result := CONCAT(str1, str2);
 
-Reply.Compose().AddString(result).Send();
-
-//Reply.WithString(result).Send();]]></ST>
+Reply.Compose().AddString(result).Send();]]></ST>
       </Implementation>
     </Method>
   </POU>

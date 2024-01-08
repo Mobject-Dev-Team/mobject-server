@@ -3,8 +3,8 @@
   <DUT Name="ResponseData" Id="{9f3087a2-4dcc-4a26-a54b-d846ba814219}">
     <Declaration><![CDATA[TYPE ResponseData : 
 STRUCT
-	Header : STRING(Constants.RESPONSE_HEADER_STRING_SIZE);
-	Payload : STRING(Constants.RESPONSE_PAYLOAD_STRING_SIZE);
+	Header : STRING(Constants.HEADER_STRING_SIZE);
+	Payload : STRING(Constants.PAYLOAD_STRING_SIZE);
 END_STRUCT
 END_TYPE
 ]]></Declaration>

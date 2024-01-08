@@ -54,7 +54,7 @@ This^.chunkedResponseManager := ChunkedResponseManager;]]></ST>
       </Implementation>
     </Method>
     <Property Name="Header" Id="{1daa3846-b6e0-490b-bc19-d32f5a3f29c3}">
-      <Declaration><![CDATA[PROPERTY PUBLIC Header : I_ServerResponseHeader]]></Declaration>
+      <Declaration><![CDATA[PROPERTY PUBLIC Header : I_Header]]></Declaration>
       <Get Name="Get" Id="{e5d490d6-a712-4f8e-b259-d2aac6a82b77}">
         <Declaration><![CDATA[VAR
 END_VAR
