@@ -1,20 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
-  <POU Name="ChunkableServerResponse" Id="{1f49da79-fc35-4c8f-8220-dbaca20491ac}" SpecialFunc="None">
+  <POU Name="AsyncServerResponse" Id="{5279022d-433f-46df-8aa0-20f3d6e3dc4e}" SpecialFunc="None">
     <Declaration><![CDATA[{attribute 'linkalways'} 
 {attribute 'no_explicit_call' := 'This FB is a CLASS and must be accessed using methods or properties'}
 {attribute 'enable_dynamic_creation'}
-FUNCTION_BLOCK ChunkableServerResponse IMPLEMENTS I_ServerResponse
+FUNCTION_BLOCK AsyncServerResponse IMPLEMENTS I_ServerResponse
 VAR
 	serverResponse : I_ServerResponse;
-	chunkedResponseManager : I_ChunkedResponseManager;
+	asyncResponseManager : I_AsyncResponseManager;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
-    <Folder Name="Constructor" Id="{1ca7b83f-10b7-4590-a248-a044744ee4f1}" />
-    <Method Name="Accepted" Id="{b6d0e7df-fe49-4f21-af57-ccd2f060058f}">
+    <Folder Name="Constructor" Id="{7472a293-bc0b-4d28-919f-6f4387813456}" />
+    <Method Name="Accepted" Id="{3f6f7ea2-6994-4c3d-9c41-d9f8236b0d04}">
       <Declaration><![CDATA[METHOD PUBLIC Accepted
 VAR_INPUT
 END_VAR]]></Declaration>
@@ -22,7 +22,7 @@ END_VAR]]></Declaration>
         <ST><![CDATA[serverResponse.Accepted();]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Busy" Id="{3b955f13-968e-4ac1-978c-3d20a4e8637e}">
+    <Method Name="Busy" Id="{b7ecd058-1eb0-4675-98a2-e0ab00a0924d}">
       <Declaration><![CDATA[METHOD PUBLIC Busy
 VAR_INPUT
 END_VAR]]></Declaration>
@@ -30,7 +30,7 @@ END_VAR]]></Declaration>
         <ST><![CDATA[serverResponse.Busy();]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Error" Id="{f9d27d9c-8ba1-40c8-972d-c24b136a8e4b}">
+    <Method Name="Error" Id="{b26c2977-852c-4f2a-b9c9-fc3e67f7242a}">
       <Declaration><![CDATA[METHOD PUBLIC Error
 VAR_INPUT
 	Message : T_MAXSTRING;
@@ -39,23 +39,23 @@ END_VAR]]></Declaration>
         <ST><![CDATA[serverResponse.Error(Message);]]></ST>
       </Implementation>
     </Method>
-    <Method Name="FB_init" Id="{5322a03e-2e39-4a02-a321-599436055475}" FolderPath="Constructor\">
+    <Method Name="FB_init" Id="{98d80c83-8412-4837-90cf-d15291aa0120}" FolderPath="Constructor\">
       <Declaration><![CDATA[METHOD FB_init : BOOL
 VAR_INPUT
 	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
 	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
 	ServerResponse : I_ServerResponse;
-	ChunkedResponseManager : I_ChunkedResponseManager;
+	AsyncResponseManager : I_AsyncResponseManager;
 END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[THIS^.serverResponse := ServerResponse;
-This^.chunkedResponseManager := ChunkedResponseManager;]]></ST>
+This^.asyncResponseManager := AsyncResponseManager;]]></ST>
       </Implementation>
     </Method>
-    <Property Name="Header" Id="{1daa3846-b6e0-490b-bc19-d32f5a3f29c3}">
+    <Property Name="Header" Id="{f9f8c5b5-0cd5-4f19-bebb-b3678d4adb6f}">
       <Declaration><![CDATA[PROPERTY PUBLIC Header : I_Header]]></Declaration>
-      <Get Name="Get" Id="{e5d490d6-a712-4f8e-b259-d2aac6a82b77}">
+      <Get Name="Get" Id="{82cbb266-0398-4ec0-a13e-b03276a2b0c4}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -64,9 +64,9 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <Property Name="HeadersSent" Id="{76d5ed19-c44f-48dc-9f9c-a6c85ef0aa6b}">
+    <Property Name="HeadersSent" Id="{802f509f-a21c-492d-b35c-183d9d69898a}">
       <Declaration><![CDATA[PROPERTY PUBLIC HeadersSent : BOOL]]></Declaration>
-      <Get Name="Get" Id="{8be4dc39-b712-4ac0-b614-4bb76382010e}">
+      <Get Name="Get" Id="{5b5e6204-b5ca-42ca-9bb3-c73446a49942}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -75,17 +75,17 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <Method Name="Pending" Id="{e682f307-3e49-4896-95ea-6f74ef047fe7}">
+    <Method Name="Pending" Id="{8f6fae18-499a-4115-809e-b02e280e4409}">
       <Declaration><![CDATA[METHOD PUBLIC Pending
 VAR_INPUT
 	ResponseId : REFERENCE TO T_MAXSTRING;
 	RetryDelayInMs : UDINT;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[serverResponse.Pending(ResponseId, RetryDelayInMs);]]></ST>
+        <ST><![CDATA[asyncResponseManager.HandlePending(serverResponse, ResponseId, RetryDelayInMs);]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Success" Id="{74290220-d91b-4133-aac6-6ea71acd45ca}">
+    <Method Name="Success" Id="{edd54756-c1d6-45d4-8aed-a5f86d7181cf}">
       <Declaration><![CDATA[METHOD PUBLIC Success
 VAR_INPUT
 END_VAR]]></Declaration>
@@ -93,14 +93,14 @@ END_VAR]]></Declaration>
         <ST><![CDATA[serverResponse.Success();]]></ST>
       </Implementation>
     </Method>
-    <Method Name="SuccessWithPayload" Id="{900688fe-0167-4eee-bf11-e332ca2b544d}">
+    <Method Name="SuccessWithPayload" Id="{4cf9b931-834b-420d-9f2d-3690e7fb763a}">
       <Declaration><![CDATA[METHOD PUBLIC SuccessWithPayload
 VAR_INPUT
 	PayloadDataAddress : PVOID;
 	PayloadDataSize : UDINT;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[chunkedResponseManager.HandleSuccessWithPayload(serverResponse, PayloadDataAddress, PayloadDataSize);]]></ST>
+        <ST><![CDATA[serverResponse.SuccessWithPayload(PayloadDataAddress, PayloadDataSize);]]></ST>
       </Implementation>
     </Method>
   </POU>

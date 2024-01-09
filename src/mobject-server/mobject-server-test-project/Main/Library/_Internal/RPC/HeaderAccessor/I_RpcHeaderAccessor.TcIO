@@ -32,6 +32,14 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
+    <Method Name="TryGetSessionIdFromResponse" Id="{ff56937b-95a1-41df-9a94-4ab1a9bdd40a}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetSessionIdFromResponse : BOOL
+VAR_INPUT
+	Response : I_ServerResponse;
+	Destination : ANY;
+END_VAR
+]]></Declaration>
+    </Method>
     <Method Name="TryGetTypeFromRequest" Id="{ac6c1ba2-f2e7-46c2-a005-dc4916581629}">
       <Declaration><![CDATA[METHOD PUBLIC TryGetTypeFromRequest : BOOL
 VAR_INPUT

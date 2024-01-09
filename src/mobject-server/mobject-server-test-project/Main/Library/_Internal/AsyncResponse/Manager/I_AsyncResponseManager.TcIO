@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
-  <Itf Name="I_PendingResponseManager" Id="{abe05406-b7ab-4a25-a70f-e90409730aeb}">
-    <Declaration><![CDATA[INTERFACE I_PendingResponseManager
+  <Itf Name="I_AsyncResponseManager" Id="{abe05406-b7ab-4a25-a70f-e90409730aeb}">
+    <Declaration><![CDATA[INTERFACE I_AsyncResponseManager
 ]]></Declaration>
-    <Method Name="TryCreatePendingResponse" Id="{8380e3cc-5e13-46ae-aeba-58c11cb37c90}">
-      <Declaration><![CDATA[METHOD PUBLIC TryCreatePendingResponse : BOOL;
+    <Method Name="HandlePending" Id="{8380e3cc-5e13-46ae-aeba-58c11cb37c90}">
+      <Declaration><![CDATA[METHOD PUBLIC HandlePending
 VAR_INPUT
 	OriginalResponse : I_ServerResponse;
+	ResponseId : REFERENCE TO T_MAXSTRING;
 	RetryDelayInMs : UDINT;
-	DestinationResponseId : REFERENCE TO T_MAXSTRING;
 END_VAR]]></Declaration>
     </Method>
     <Method Name="TryHandleIncomingRequest" Id="{dcc914a9-8a7f-4fe6-be9f-213c490e1a75}">

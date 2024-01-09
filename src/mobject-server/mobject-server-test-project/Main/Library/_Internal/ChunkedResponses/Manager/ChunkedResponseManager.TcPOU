@@ -50,7 +50,7 @@ This^.headerAccessor := HeaderAccessor;]]></ST>
       </Implementation>
     </Method>
     <Method Name="HandleSuccessWithPayload" Id="{8a7f7f97-8567-464c-8b51-a7240f7c9f00}">
-      <Declaration><![CDATA[METHOD PUBLIC HandleSuccessWithPayload;
+      <Declaration><![CDATA[METHOD PUBLIC HandleSuccessWithPayload
 VAR_INPUT
 	OriginalResponse : I_ServerResponse;
 	SourceAddress : PVOID;

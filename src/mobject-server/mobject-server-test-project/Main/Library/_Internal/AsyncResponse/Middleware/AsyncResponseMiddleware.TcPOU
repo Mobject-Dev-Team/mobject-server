@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
-  <POU Name="PendingResponseMiddleware" Id="{6371efe8-c6db-4885-801d-1a3c9cf89e08}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK PendingResponseMiddleware EXTENDS MiddlewareBase
+  <POU Name="AsyncResponseMiddleware" Id="{6371efe8-c6db-4885-801d-1a3c9cf89e08}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK AsyncResponseMiddleware EXTENDS MiddlewareBase
 VAR
-	pendingResponseManager : I_PendingResponseManager;
+	asyncResponseManager : I_AsyncResponseManager;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -15,11 +15,11 @@ END_VAR
 VAR_INPUT
 	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
 	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
-	PendingResponseManager : I_PendingResponseManager;
+	AsyncResponseManager : I_AsyncResponseManager;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[This^.pendingResponseManager := PendingResponseManager;]]></ST>
+        <ST><![CDATA[This^.asyncResponseManager := AsyncResponseManager;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Handle" Id="{8696b458-a0eb-4d91-a059-aff474e59f3b}">
@@ -27,13 +27,16 @@ END_VAR
 VAR_INPUT
 	Request : I_Request;
 	Response : I_ServerResponse;
+END_VAR
+VAR
+	asyncServerResponse : AsyncServerResponse(Response, asyncResponseManager);
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF pendingResponseManager.TryHandleIncomingRequest(Request, Response) THEN
+        <ST><![CDATA[IF asyncResponseManager.TryHandleIncomingRequest(Request, Response) THEN
 	RETURN;
 END_IF
 
-Next(Request, Response);]]></ST>
+Next(Request, asyncServerResponse);]]></ST>
       </Implementation>
     </Method>
   </POU>

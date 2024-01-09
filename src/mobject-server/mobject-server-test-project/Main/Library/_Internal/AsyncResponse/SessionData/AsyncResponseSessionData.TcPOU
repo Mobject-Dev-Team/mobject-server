@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
-  <POU Name="PendingResponseData" Id="{e80c52bf-a657-4476-96bf-ac23d371397e}" SpecialFunc="None">
+  <POU Name="AsyncResponseSessionData" Id="{e80c52bf-a657-4476-96bf-ac23d371397e}" SpecialFunc="None">
     <Declaration><![CDATA[{attribute 'linkalways'} 
 {attribute 'no_explicit_call' := 'This FB is a CLASS and must be accessed using methods or properties'}
 {attribute 'enable_dynamic_creation'}
-FUNCTION_BLOCK PendingResponseData EXTENDS Disposable IMPLEMENTS I_PendingResponseData
+FUNCTION_BLOCK AsyncResponseSessionData EXTENDS Disposable IMPLEMENTS I_AsyncResponseSessionData
 VAR
 	_suggestedRetryDelayInMs : UDINT;
-	state : (PENDING, SUCCESS, ERROR) := PENDING;
+	state : (PENDING, SUCCESS, SUCCESS_WITH_PAYLOAD, ERROR) := PENDING;
 	errorMessage : T_MAXSTRING;
 	pData : POINTER TO BYTE;
 	dataSize : UDINT;
@@ -100,6 +100,19 @@ END_VAR
     <Method Name="Success" Id="{ae814988-69a7-4780-8aa9-b373e08c0604}">
       <Declaration><![CDATA[METHOD PUBLIC Success
 VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF state <> PENDING THEN
+	RETURN;
+END_IF
+
+state := SUCCESS;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SuccessWithPayload" Id="{243b0523-3666-49d9-b67a-a1234f49e913}">
+      <Declaration><![CDATA[METHOD PUBLIC SuccessWithPayload
+VAR_INPUT
 	PayloadDataAddress : PVOID;
 	PayloadDataSize : UDINT;
 END_VAR
@@ -109,7 +122,7 @@ END_VAR
 	RETURN;
 END_IF
 
-state := SUCCESS;
+state := SUCCESS_WITH_PAYLOAD;
 CopyPayloadData(PayloadDataAddress, PayloadDataSize);]]></ST>
       </Implementation>
     </Method>
@@ -139,14 +152,20 @@ VAR_INPUT
 	Response : I_ServerResponse;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF state = ERROR THEN
-	Response.Error(errorMessage);
+        <ST><![CDATA[IF State = SUCCESS_WITH_PAYLOAD THEN
+	Response.SuccessWithPayload(pData,dataSize);
 	TryUpdateServerResponse := TRUE;
 	RETURN;
 END_IF
 
 IF State = SUCCESS THEN
-	Response.SuccessWithPayload(pData,dataSize);
+	Response.Success();
+	TryUpdateServerResponse := TRUE;
+	RETURN;
+END_IF
+
+IF state = ERROR THEN
+	Response.Error(errorMessage);
 	TryUpdateServerResponse := TRUE;
 	RETURN;
 END_IF]]></ST>

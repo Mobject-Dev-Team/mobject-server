@@ -118,11 +118,16 @@ END_VAR
     <Method Name="Pending" Id="{98b7607b-50e5-434a-a5ec-86c02f0b4693}">
       <Declaration><![CDATA[METHOD PUBLIC Pending
 VAR_INPUT
-	ResponseId : T_MAXSTRING;
+	ResponseId : REFERENCE TO T_MAXSTRING;
 	RetryDelayInMs : UDINT;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF _sent THEN
+	RETURN;
+END_IF
+
+IF (NOT __ISVALIDREF(ResponseId)) OR_ELSE ResponseId = '' THEN
+	Error('Unable to mark response as pending without ResponseId');
 	RETURN;
 END_IF
 

@@ -32,13 +32,13 @@ VAR
 	chunkedResponsesMiddleware : ChunkedResponsesMiddleware(chunkedResponseManager);
 	
 	// ability to support pending responses
-	pendingResponseManager : PendingResponseManager(sessionManager, sequentialResponseIdGenerator, serverConfig);
-	pendingResponseMiddleware : PendingResponseMiddleware(pendingResponseManager);
+	asyncResponseManager : AsyncResponseManager(sessionManager, sequentialResponseIdGenerator, serverConfig);
+	asyncResponseMiddleware : AsyncResponseMiddleware(asyncResponseManager);
 	
 	// ability to support rpc
 	rpcHandlers : RpcHandlers;
-	rpcManager : RpcManager(rpcHandlers, serverConfig);
-	rpcMiddleware : RpcMiddleware(rpcManager);
+	rpcManager : RpcManager(rpcHandlers, asyncResponseManager, serverConfig);
+//	rpcMiddleware : RpcMiddleware(rpcManager);
 	
 END_VAR
 VAR CONSTANT
@@ -67,8 +67,8 @@ END_VAR
         <ST><![CDATA[MiddlewareStack.Use(sessionsMiddleware);
 MiddlewareStack.Use(chunkedRequestsMiddleware);
 MiddlewareStack.Use(chunkedResponsesMiddleware);
-MiddlewareStack.Use(pendingResponseMiddleware);
-MiddlewareStack.Use(rpcMiddleware);]]></ST>
+MiddlewareStack.Use(AsyncResponseMiddleware);
+//MiddlewareStack.Use(rpcMiddleware);]]></ST>
       </Implementation>
     </Method>
     <Method Name="HandleRequest" Id="{3d2e86e3-73ad-4c89-953c-3f77c56a6a58}">

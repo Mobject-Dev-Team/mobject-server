@@ -4,6 +4,7 @@
     <Declaration><![CDATA[FUNCTION_BLOCK RpcManager IMPLEMENTS I_RpcManager
 VAR
 	rpcHandlers : I_RpcHandlers;
+	asyncResponseManager : I_AsyncResponseManager;
 	headerAccessor : I_RpcHeaderAccessor;
 END_VAR
 ]]></Declaration>
@@ -17,11 +18,13 @@ VAR_INPUT
 	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
 	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
 	RpcHandlers : I_RpcHandlers;
+	AsyncResponseManager : I_AsyncResponseManager;
 	HeaderAccessor : I_RpcHeaderAccessor;
 END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[THIS^.rpcHandlers := RpcHandlers;
+THIS^.asyncResponseManager := AsyncResponseManager;
 THIS^.headerAccessor := HeaderAccessor;]]></ST>
       </Implementation>
     </Method>
@@ -41,7 +44,8 @@ VAR
 	// currently we only support json, however, this can become a factory in the future when used with contentType and acceptType.
 	rpcParameters : JsonRpcParameters(ClientRequest := Request);
 	jsonSerializer : JsonSerializer;
-	rpcSynchronousResponse : SynchronousRpcResponse(ServerResponse := Response, Serializer := jsonSerializer);
+//	asyncRpcResponseFactory : AsynchronousRpcResponseFactory(ServerResponse := Response, Serializer := jsonSerializer);
+	rpcSynchronousResponse : SynchronousRpcResponse(ServerResponse := Response, Serializer := jsonSerializer, AsynchronousRpcResponseFactory := 0);
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF NOT headerAccessor.TryGetTypeFromRequest(Request, requestType) THEN

@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="AsynchronousRpcResponseFactory" Id="{b223a85a-d69c-4d2f-a2dc-d0fcc4d733db}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'linkalways'} 
+{attribute 'no_explicit_call' := 'This FB is a CLASS and must be accessed using methods or properties'}
+{attribute 'enable_dynamic_creation'}
+FUNCTION_BLOCK AsynchronousRpcResponseFactory IMPLEMENTS I_AsynchronousRpcResponseFactory
+VAR
+	serverResponse : I_ServerResponse;
+	serializer : I_Serializer;
+	headerAccessor : I_RpcHeaderAccessor;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Constructor" Id="{2fb64e86-6352-48cd-8944-4ac2cb0adbf0}" />
+    <Method Name="Create" Id="{4bd2702f-306a-4df8-b559-bd2a56abe431}">
+      <Declaration><![CDATA[METHOD PUBLIC Create : I_AsynchronousRpcResponse
+VAR_INPUT
+END_VAR
+VAR
+	pAsynchronousRpcResponse : POINTER TO AsynchronousRpcResponse;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+
+pAsynchronousRpcResponse := __NEW(AsynchronousRpcResponse(
+	SessionStorage := THIS^.sessionStorage, 
+	SessionId :=  THIS^., 
+	ResponseId := T_MAXSTRING, 
+	Seralizer =: I_Serializer
+)]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{54122755-6a94-40a2-9414-6e074fca5570}" FolderPath="Constructor\">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	Serializer : I_Serializer;
+	HeaderAccessor : I_RpcHeaderAccessor;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.serverResponse := ServerResponse;
+THIS^.serializer := Serializer;
+THIS^.headerAccessor := HeaderAccessor;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

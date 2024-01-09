@@ -29,6 +29,9 @@
     <Compile Include="Library\RpcServer\RpcServer.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Library\_Internal\AsyncResponse\Proxy\AsyncResponseSessionDataProxy.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Library\_Internal\ChunkedRequests\ChunkedRequest\ChunkedRequest.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -83,22 +86,25 @@
     <Compile Include="Library\_Internal\Middleware\Interface\I_Middleware.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Library\_Internal\PendingResponse\HeaderAccessor\I_PendingResponseHeaderAccessor.TcIO">
+    <Compile Include="Library\_Internal\AsyncResponse\HeaderAccessor\I_AsyncResponseHeaderAccessor.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Library\_Internal\PendingResponse\Manager\PendingResponseManager.TcPOU">
+    <Compile Include="Library\_Internal\AsyncResponse\Manager\AsyncResponseManager.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Library\_Internal\PendingResponse\Manager\I_PendingResponseManager.TcIO">
+    <Compile Include="Library\_Internal\AsyncResponse\Manager\I_AsyncResponseManager.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Library\_Internal\PendingResponse\Middleware\PendingResponseMiddleware.TcPOU">
+    <Compile Include="Library\_Internal\AsyncResponse\Middleware\AsyncResponseMiddleware.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Library\_Internal\PendingResponse\SessionData\I_PendingResponseData.TcIO">
+    <Compile Include="Library\_Internal\AsyncResponse\ServerResponse\AsyncServerResponse.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Library\_Internal\PendingResponse\SessionData\PendingResponseData.TcPOU">
+    <Compile Include="Library\_Internal\AsyncResponse\SessionData\I_AsyncResponseSessionData.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\AsyncResponse\SessionData\AsyncResponseSessionData.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Library\_Internal\Request\Interface\I_Request.TcIO">
@@ -131,6 +137,12 @@
     <Compile Include="Library\_Internal\RPC\Parameters\Json\JsonRpcParameters.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Library\_Internal\RPC\Response\AsynchronousRpcResponseFactory.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\RPC\Response\I_AsynchronousRpcResponseFactory.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Library\_Internal\RPC\Response\I_SynchronousRpcResponse.TcIO">
       <SubType>Code</SubType>
     </Compile>
@@ -150,6 +162,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Library\_Internal\HeaderAccessor\HeaderAccessor.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\RPC\Response\AsynchronousRpcResponse.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Library\_Internal\ServerResponse\Data\ResponseData.TcDUT">
@@ -226,6 +241,7 @@
     <Folder Include="Library\RpcServer" />
     <Folder Include="Library\RpcHandler" />
     <Folder Include="Library\_Internal" />
+    <Folder Include="Library\_Internal\AsyncResponse\Proxy" />
     <Folder Include="Library\_Internal\ChunkedRequests" />
     <Folder Include="Library\_Internal\ChunkedRequests\Manager" />
     <Folder Include="Library\_Internal\ChunkedRequests\Middleware" />
@@ -242,11 +258,12 @@
     <Folder Include="Library\_Internal\Middleware\Stack" />
     <Folder Include="Library\_Internal\ChunkedResponses" />
     <Folder Include="Library\_Internal\Header" />
-    <Folder Include="Library\_Internal\PendingResponse\Manager" />
-    <Folder Include="Library\_Internal\PendingResponse\Middleware" />
-    <Folder Include="Library\_Internal\PendingResponse\HeaderAccessor" />
-    <Folder Include="Library\_Internal\PendingResponse\SessionData" />
-    <Folder Include="Library\_Internal\PendingResponse" />
+    <Folder Include="Library\_Internal\AsyncResponse\Manager" />
+    <Folder Include="Library\_Internal\AsyncResponse\Middleware" />
+    <Folder Include="Library\_Internal\AsyncResponse\HeaderAccessor" />
+    <Folder Include="Library\_Internal\AsyncResponse\ServerResponse" />
+    <Folder Include="Library\_Internal\AsyncResponse\SessionData" />
+    <Folder Include="Library\_Internal\AsyncResponse" />
     <Folder Include="Library\_Internal\Request\Interface" />
     <Folder Include="Library\_Internal\ResponseId" />
     <Folder Include="Library\_Internal\ResponseId\Interface" />

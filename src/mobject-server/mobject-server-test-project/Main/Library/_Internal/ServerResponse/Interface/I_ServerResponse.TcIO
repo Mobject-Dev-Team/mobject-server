@@ -34,7 +34,7 @@ END_VAR]]></Declaration>
     <Method Name="Pending" Id="{bdb38a65-0216-448e-94dc-5962ebc5f820}">
       <Declaration><![CDATA[METHOD PUBLIC Pending
 VAR_INPUT
-	ResponseId : T_MAXSTRING;
+	ResponseId : REFERENCE TO T_MAXSTRING;
 	RetryDelayInMs : UDINT;
 END_VAR]]></Declaration>
     </Method>
