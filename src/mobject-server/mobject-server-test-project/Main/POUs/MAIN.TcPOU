@@ -17,7 +17,7 @@ END_VAR
 
 IF NOT initialized THEN
 	initialized := TRUE;
-	server.Rpc.RegisterHandler('concat',concatStringRpcHandler);
+	server.RegisterRpcHandler('concat',concatStringRpcHandler);
 END_IF
 
 server.CyclicCall();]]></ST>

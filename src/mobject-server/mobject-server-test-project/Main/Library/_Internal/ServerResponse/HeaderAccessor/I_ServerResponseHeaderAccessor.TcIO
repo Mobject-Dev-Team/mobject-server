@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
-  <Itf Name="I_ServerResponseConfig" Id="{7bbdf4b5-2dfc-4158-a62c-7ac7f8bed0f1}">
-    <Declaration><![CDATA[INTERFACE I_ServerResponseConfig
+  <Itf Name="I_ServerResponseHeaderAccessor" Id="{7bbdf4b5-2dfc-4158-a62c-7ac7f8bed0f1}">
+    <Declaration><![CDATA[INTERFACE I_ServerResponseHeaderAccessor
 ]]></Declaration>
     <Method Name="UpdateResponseWithAccepted" Id="{55682826-e6fd-4c15-adc0-0d952235138a}">
       <Declaration><![CDATA[METHOD PUBLIC UpdateResponseWithAccepted

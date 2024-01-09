@@ -29,16 +29,13 @@
     <Compile Include="Library\RpcServer\RpcServer.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Library\Server\Server.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Library\_Internal\ChunkedRequests\ChunkedRequest\ChunkedRequest.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Library\_Internal\ChunkedRequests\Manager\ChunkedRequestsManager.TcPOU">
+    <Compile Include="Library\_Internal\ChunkedRequests\HeaderAccessor\I_ChunkedRequestsHeaderAccessor.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Library\_Internal\ChunkedRequests\Manager\I_ChunkedRequestsManagerConfig.TcIO">
+    <Compile Include="Library\_Internal\ChunkedRequests\Manager\ChunkedRequestsManager.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Library\_Internal\ChunkedRequests\Manager\I_ChunkedRequestsManager.TcIO">
@@ -47,10 +44,13 @@
     <Compile Include="Library\_Internal\ChunkedRequests\Middleware\ChunkedRequestsMiddleware.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Library\_Internal\ChunkedRequests\SessionData\ChunkedRequestData.TcPOU">
+    <Compile Include="Library\_Internal\ChunkedRequests\SessionData\ChunkedRequestSessionData.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Library\_Internal\ChunkedRequests\SessionData\I_ChunkedRequestData.TcIO">
+    <Compile Include="Library\_Internal\ChunkedRequests\SessionData\I_ChunkedRequestSessionData.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\ChunkedResponses\HeaderAccessor\I_ChunkedResponseHeaderAccessor.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Library\_Internal\ChunkedResponses\SessionData\ChunkedResponseData.TcPOU">
@@ -63,9 +63,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Library\_Internal\ChunkedResponses\Manager\I_ChunkedResponseManager.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Library\_Internal\ChunkedResponses\Manager\I_ChunkedResponseManagerConfig.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Library\_Internal\ChunkedResponses\Middleware\ChunkedResponsesMiddleware.TcPOU">
@@ -86,10 +83,10 @@
     <Compile Include="Library\_Internal\Middleware\Interface\I_Middleware.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Library\_Internal\PendingResponse\Manager\PendingResponseManager.TcPOU">
+    <Compile Include="Library\_Internal\PendingResponse\HeaderAccessor\I_PendingResponseHeaderAccessor.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Library\_Internal\PendingResponse\Manager\I_PendingResponseManagerConfig.TcIO">
+    <Compile Include="Library\_Internal\PendingResponse\Manager\PendingResponseManager.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Library\_Internal\PendingResponse\Manager\I_PendingResponseManager.TcIO">
@@ -104,16 +101,16 @@
     <Compile Include="Library\_Internal\PendingResponse\SessionData\PendingResponseData.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Library\_Internal\ResponseId\I_ResponseIdGenerator.TcIO">
+    <Compile Include="Library\_Internal\Request\Interface\I_Request.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\ResponseId\Interface\I_ResponseIdGenerator.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Library\_Internal\ResponseId\SequentialResponseIdGenerator.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Library\_Internal\RPC\Manager\I_RpcManager.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Library\_Internal\RPC\Manager\I_RpcManagerConfig.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Library\_Internal\RPC\Manager\RpcManager.TcPOU">
@@ -152,35 +149,28 @@
     <Compile Include="Library\_Internal\Middleware\Stack\MiddlewareStack.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Library\_Internal\Request\I_Request.TcIO">
-      <SubType>Code</SubType>
-      <ExcludeFromBuild>false</ExcludeFromBuild>
-    </Compile>
     <Compile Include="Library\_Internal\Request\Request.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Library\_Internal\RPC\ServerConfig\I_RpcServerConfig.TcIO">
+    <Compile Include="Library\_Internal\RPC\HeaderAccessor\I_RpcHeaderAccessor.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Library\_Internal\RPC\ServerConfig\V1\RpcServerConfigV1.TcPOU">
+    <Compile Include="Library\_Internal\HeaderAccessor\HeaderAccessor.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Library\_Internal\ServerConfig\I_ServerConfig.TcIO">
+    <Compile Include="Library\_Internal\ServerResponse\Data\ResponseData.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Library\_Internal\ServerConfig\V1\ServerConfigV1.TcPOU">
+    <Compile Include="Library\_Internal\ServerResponse\HeaderAccessor\I_ServerResponseHeaderAccessor.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Library\_Internal\ServerResponse\Config\I_ServerResponseConfig.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Library\_Internal\ServerResponse\I_ServerResponse.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Library\_Internal\ServerResponse\ResponseData.TcDUT">
+    <Compile Include="Library\_Internal\ServerResponse\Interface\I_ServerResponse.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Library\_Internal\ServerResponse\ServerResponse.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\Sessions\HeaderAccessor\I_SessionHeaderAccessor.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Library\_Internal\Sessions\SessionData\I_SessionData.TcIO">
@@ -196,9 +186,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Library\_Internal\Sessions\Manager\SessionManager.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Library\_Internal\Sessions\Middleware\I_SessionMiddlewareConfig.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Library\_Internal\Sessions\Middleware\SessionsMiddleware.TcPOU">
@@ -242,7 +229,6 @@
   <ItemGroup>
     <Folder Include="GVLs" />
     <Folder Include="Library" />
-    <Folder Include="Library\Server" />
     <Folder Include="Library\RpcServer" />
     <Folder Include="Library\RpcHandler" />
     <Folder Include="Library\_Internal" />
@@ -250,8 +236,10 @@
     <Folder Include="Library\_Internal\ChunkedRequests\Manager" />
     <Folder Include="Library\_Internal\ChunkedRequests\Middleware" />
     <Folder Include="Library\_Internal\ChunkedRequests\ChunkedRequest" />
+    <Folder Include="Library\_Internal\ChunkedRequests\HeaderAccessor" />
     <Folder Include="Library\_Internal\ChunkedRequests\SessionData" />
     <Folder Include="Library\_Internal\ChunkedResponses\Middleware" />
+    <Folder Include="Library\_Internal\ChunkedResponses\HeaderAccessor" />
     <Folder Include="Library\_Internal\ChunkedResponses\SessionData" />
     <Folder Include="Library\_Internal\ChunkedResponses\Manager" />
     <Folder Include="Library\_Internal\ChunkedResponses\ServerResponse" />
@@ -262,23 +250,27 @@
     <Folder Include="Library\_Internal\Header" />
     <Folder Include="Library\_Internal\PendingResponse\Manager" />
     <Folder Include="Library\_Internal\PendingResponse\Middleware" />
+    <Folder Include="Library\_Internal\PendingResponse\HeaderAccessor" />
     <Folder Include="Library\_Internal\PendingResponse\SessionData" />
     <Folder Include="Library\_Internal\PendingResponse" />
+    <Folder Include="Library\_Internal\Request\Interface" />
     <Folder Include="Library\_Internal\ResponseId" />
+    <Folder Include="Library\_Internal\ResponseId\Interface" />
     <Folder Include="Library\_Internal\RPC\Manager" />
     <Folder Include="Library\_Internal\RPC\Parameters\Json" />
     <Folder Include="Library\_Internal\RPC\ResponseBuilder" />
     <Folder Include="Library\_Internal\RPC\Response" />
     <Folder Include="Library\_Internal\RPC\Handlers" />
-    <Folder Include="Library\_Internal\RPC\ServerConfig" />
-    <Folder Include="Library\_Internal\RPC\ServerConfig\V1" />
-    <Folder Include="Library\_Internal\ServerConfig\V1" />
-    <Folder Include="Library\_Internal\ServerResponse\Config" />
+    <Folder Include="Library\_Internal\RPC\HeaderAccessor" />
+    <Folder Include="Library\_Internal\ServerResponse\HeaderAccessor" />
+    <Folder Include="Library\_Internal\ServerResponse\Interface" />
+    <Folder Include="Library\_Internal\ServerResponse\Data" />
     <Folder Include="Library\_Internal\Sessions" />
     <Folder Include="Library\_Internal\RPC" />
     <Folder Include="Library\_Internal\RPC\Parameters" />
     <Folder Include="Library\_Internal\RPC\Middleware" />
-    <Folder Include="Library\_Internal\ServerConfig" />
+    <Folder Include="Library\_Internal\HeaderAccessor" />
+    <Folder Include="Library\_Internal\Sessions\HeaderAccessor" />
     <Folder Include="Library\_Internal\Sessions\SessionData" />
     <Folder Include="Library\_Internal\Sessions\Storage" />
     <Folder Include="Library\_Internal\Sessions\Session" />

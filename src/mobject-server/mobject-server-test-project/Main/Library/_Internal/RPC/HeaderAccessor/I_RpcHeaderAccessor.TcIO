@@ -1,15 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
-  <Itf Name="I_RpcManagerConfig" Id="{4a4f0798-ed83-499b-b5a8-20a54d5c473a}">
-    <Declaration><![CDATA[INTERFACE I_RpcManagerConfig
-]]></Declaration>
-    <Property Name="ContentType_Json" Id="{c2359f88-ebc0-4bc5-bd89-97e2615909d5}">
+  <Itf Name="I_RpcHeaderAccessor" Id="{f1f1ac42-0ed5-4d02-93a4-3a3c64eacaab}">
+    <Declaration><![CDATA[INTERFACE I_RpcHeaderAccessor]]></Declaration>
+    <Property Name="ContentType_Json" Id="{ae780374-5207-4c7b-8cac-f743608a01f8}">
       <Declaration><![CDATA[PROPERTY PUBLIC ContentType_Json : T_MAXSTRING]]></Declaration>
-      <Get Name="Get" Id="{3d6b8bfc-8450-4f79-8aa0-01f67fb99dab}">
+      <Get Name="Get" Id="{60379507-d8ee-4101-8a76-49d4785ff62a}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>
     </Property>
-    <Method Name="TryGetAcceptResponseFormatFromRequest" Id="{e6b357e2-8223-477a-ab4e-7919087a405d}">
+    <Method Name="TryGetAcceptResponseFormatFromRequest" Id="{97529f92-ea6c-4e19-af04-1f89e853f35f}">
       <Declaration><![CDATA[METHOD PUBLIC TryGetAcceptResponseFormatFromRequest : BOOL
 VAR_INPUT
 	Request : I_Request;
@@ -17,7 +16,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
-    <Method Name="TryGetContentTypeFromRequest" Id="{bfab91a5-16ef-465f-8d15-2a8d8c434dfc}">
+    <Method Name="TryGetContentTypeFromRequest" Id="{39137155-f1f5-4510-8154-5d4e687fc0fb}">
       <Declaration><![CDATA[METHOD PUBLIC TryGetContentTypeFromRequest : BOOL
 VAR_INPUT
 	Request : I_Request;
@@ -25,7 +24,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
-    <Method Name="TryGetMethodNameFromRequest" Id="{5c2608d7-66af-4db9-bf73-ee9acebab690}">
+    <Method Name="TryGetMethodNameFromRequest" Id="{37a464cc-0950-4ccb-a0a7-1c05e3c2ea92}">
       <Declaration><![CDATA[METHOD PUBLIC TryGetMethodNameFromRequest : BOOL
 VAR_INPUT
 	Request : I_Request;
@@ -33,7 +32,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
-    <Method Name="TryGetTypeFromRequest" Id="{fb413ab0-893d-4594-a530-fabc1706787a}">
+    <Method Name="TryGetTypeFromRequest" Id="{ac6c1ba2-f2e7-46c2-a005-dc4916581629}">
       <Declaration><![CDATA[METHOD PUBLIC TryGetTypeFromRequest : BOOL
 VAR_INPUT
 	Request : I_Request;

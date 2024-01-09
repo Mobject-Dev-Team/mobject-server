@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
-  <POU Name="ChunkedRequestData" Id="{99b41408-4cca-4749-b5ea-cc34ac4e8cbd}" SpecialFunc="None">
+  <POU Name="ChunkedRequestSessionData" Id="{99b41408-4cca-4749-b5ea-cc34ac4e8cbd}" SpecialFunc="None">
     <Declaration><![CDATA[{attribute 'linkalways'} 
 {attribute 'no_explicit_call' := 'This FB is a CLASS and must be accessed using methods or properties'}
 {attribute 'enable_dynamic_creation'}
-FUNCTION_BLOCK ChunkedRequestData EXTENDS Disposable IMPLEMENTS I_ChunkedRequestData
+FUNCTION_BLOCK ChunkedRequestSessionData EXTENDS Disposable IMPLEMENTS I_ChunkedRequestSessionData
 VAR
 	maximumChunkSizeInBytes : UDINT;
 	totalReceivedChunks : UDINT;

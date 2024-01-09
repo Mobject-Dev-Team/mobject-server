@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
-  <Itf Name="I_RpcServerConfig" Id="{f1f1ac42-0ed5-4d02-93a4-3a3c64eacaab}">
-    <Declaration><![CDATA[INTERFACE I_RpcServerConfig EXTENDS I_ServerConfig, I_RpcManagerConfig
-]]></Declaration>
-  </Itf>
-</TcPlcObject>

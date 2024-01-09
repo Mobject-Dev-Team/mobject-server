@@ -8,7 +8,7 @@ FUNCTION_BLOCK PendingResponseManager IMPLEMENTS I_PendingResponseManager
 VAR
 	sessionStorage : I_SessionStorage;
 	responseIdGenerator : I_ResponseIdGenerator;
-	config : I_PendingResponseManagerConfig;
+	headerAccessor : I_PendingResponseHeaderAccessor;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -36,13 +36,13 @@ VAR_INPUT
 	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
 	SessionStorage : I_SessionStorage;
 	ResponseIdGenerator : I_ResponseIdGenerator;
-	Config : I_PendingResponseManagerConfig;
+	HeaderAccessor : I_PendingResponseHeaderAccessor;
 END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[THIS^.sessionStorage := SessionStorage;
 THIS^.responseIdGenerator := ResponseIdGenerator;
-THIS^.config := Config;]]></ST>
+THIS^.headerAccessor := HeaderAccessor;]]></ST>
       </Implementation>
     </Method>
     <Method Name="TryCreatePendingResponse" Id="{fab2cba9-29a7-40ae-840c-2912fb9461bb}">
@@ -58,7 +58,7 @@ VAR
 	pendingResponseData : I_PendingResponseData;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF NOT config.TryGetSessionIdFromResponse(OriginalResponse,sessionId) THEN
+        <ST><![CDATA[IF NOT headerAccessor.TryGetSessionIdFromResponse(OriginalResponse,sessionId) THEN
 	OriginalResponse.Error('Unable to create a pending response without a sessionId');
 	RETURN;
 END_IF
@@ -90,11 +90,11 @@ VAR
 	pendingResponseData : I_PendingResponseData;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF NOT config.TryGetResponseIdFromRequest(Request, responseId) THEN
+        <ST><![CDATA[IF NOT headerAccessor.TryGetResponseIdFromRequest(Request, responseId) THEN
 	RETURN;
 END_IF
 
-IF NOT config.TryGetSessionIdFromRequest(Request, sessionId) THEN
+IF NOT headerAccessor.TryGetSessionIdFromRequest(Request, sessionId) THEN
 	RETURN;
 END_IF
 

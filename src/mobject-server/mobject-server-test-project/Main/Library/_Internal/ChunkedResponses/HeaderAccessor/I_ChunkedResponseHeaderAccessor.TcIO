@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
-  <Itf Name="I_ChunkedResponseManagerConfig" Id="{2ab1b2b2-5d42-4352-9af9-83e67d269662}">
-    <Declaration><![CDATA[INTERFACE I_ChunkedResponseManagerConfig
+  <Itf Name="I_ChunkedResponseHeaderAccessor" Id="{2ab1b2b2-5d42-4352-9af9-83e67d269662}">
+    <Declaration><![CDATA[INTERFACE I_ChunkedResponseHeaderAccessor
 ]]></Declaration>
     <Method Name="TryGetResponseIdFromRequest" Id="{d5c64733-9d8b-4aee-b144-ef905db36ad0}">
       <Declaration><![CDATA[METHOD PUBLIC TryGetResponseIdFromRequest : BOOL

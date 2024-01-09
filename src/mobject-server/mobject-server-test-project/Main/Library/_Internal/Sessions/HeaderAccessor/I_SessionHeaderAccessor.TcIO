@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
-  <Itf Name="I_SessionMiddlewareConfig" Id="{eb3f87de-5aa8-44de-b748-33564e049b3c}">
-    <Declaration><![CDATA[INTERFACE I_SessionMiddlewareConfig
+  <Itf Name="I_SessionHeaderAccessor" Id="{eb3f87de-5aa8-44de-b748-33564e049b3c}">
+    <Declaration><![CDATA[INTERFACE I_SessionHeaderAccessor
 ]]></Declaration>
     <Method Name="TryGetSessionIdFromRequest" Id="{75eab0e8-3ede-4f43-952c-fb2d1910a92b}">
       <Declaration><![CDATA[METHOD PUBLIC TryGetSessionIdFromRequest : BOOL

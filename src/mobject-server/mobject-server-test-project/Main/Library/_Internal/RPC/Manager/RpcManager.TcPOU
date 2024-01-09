@@ -4,7 +4,7 @@
     <Declaration><![CDATA[FUNCTION_BLOCK RpcManager IMPLEMENTS I_RpcManager
 VAR
 	rpcHandlers : I_RpcHandlers;
-	config : I_RpcManagerConfig;
+	headerAccessor : I_RpcHeaderAccessor;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -17,12 +17,12 @@ VAR_INPUT
 	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
 	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
 	RpcHandlers : I_RpcHandlers;
-	Config : I_RpcManagerConfig;
+	HeaderAccessor : I_RpcHeaderAccessor;
 END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[THIS^.rpcHandlers := RpcHandlers;
-THIS^.config := Config;]]></ST>
+THIS^.headerAccessor := HeaderAccessor;]]></ST>
       </Implementation>
     </Method>
     <Method Name="TryHandleIncomingRequest" Id="{037660a9-555d-4498-9d9d-65500789aa7c}">
@@ -40,11 +40,11 @@ VAR
 
 	// currently we only support json, however, this can become a factory in the future when used with contentType and acceptType.
 	rpcParameters : JsonRpcParameters(ClientRequest := Request);
-	jsonSerializer : JsonSerializer;;
+	jsonSerializer : JsonSerializer;
 	rpcReturn : RpcSynchronousReply(ServerResponse := Response, Serializer := jsonSerializer);
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF NOT config.TryGetTypeFromRequest(Request, requestType) THEN
+        <ST><![CDATA[IF NOT headerAccessor.TryGetTypeFromRequest(Request, requestType) THEN
 	RETURN;
 END_IF
 
@@ -52,19 +52,19 @@ IF requestType <> 'RPC 1.0' THEN
 	RETURN;
 END_IF
 
-IF NOT(config.TryGetContentTypeFromRequest(Request, contentType)) OR_ELSE NOT(contentType = config.ContentType_Json) THEN
+IF NOT(headerAccessor.TryGetContentTypeFromRequest(Request, contentType)) OR_ELSE NOT(contentType = headerAccessor.ContentType_Json) THEN
 	Response.Error('RPC : Missing or unsupported content type in header');
 	TryHandleIncomingRequest := TRUE;
 	RETURN;
 END_IF
 
-IF (config.TryGetAcceptResponseFormatFromRequest(Request, acceptType)) AND_THEN NOT(acceptType = config.ContentType_Json) THEN
+IF (headerAccessor.TryGetAcceptResponseFormatFromRequest(Request, acceptType)) AND_THEN NOT(acceptType = headerAccessor.ContentType_Json) THEN
 	Response.Error('RPC : Unsupported accept type in header');
 	TryHandleIncomingRequest := TRUE;
 	RETURN;
 END_IF
 
-IF NOT config.TryGetMethodNameFromRequest(Request, methodName) THEN
+IF NOT headerAccessor.TryGetMethodNameFromRequest(Request, methodName) THEN
 	Response.Error('RPC : Missing RPC method name');
 	TryHandleIncomingRequest := TRUE;
 	RETURN;

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
-  <Itf Name="I_ChunkedRequestsManagerConfig" Id="{cdf74b0f-d21f-4451-b9ee-85eec7aa413a}">
-    <Declaration><![CDATA[INTERFACE I_ChunkedRequestsManagerConfig
+  <Itf Name="I_ChunkedRequestsHeaderAccessor" Id="{cdf74b0f-d21f-4451-b9ee-85eec7aa413a}">
+    <Declaration><![CDATA[INTERFACE I_ChunkedRequestsHeaderAccessor
 ]]></Declaration>
     <Method Name="TryGetChunkSequenceFromRequest" Id="{11f1b26f-e484-4358-9de5-2bcf4e4f6510}">
       <Declaration><![CDATA[METHOD PUBLIC TryGetChunkSequenceFromRequest : BOOL

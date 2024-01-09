@@ -22,7 +22,7 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[TEST('TestConcatRpcCallAndResponse');
 
-server.Rpc.RegisterHandler('concat',concatStringRpcHandler);
+server.RegisterRpcHandler('concat',concatStringRpcHandler);
 
 out := server.HandleRequest(header,payload);
 
@@ -49,7 +49,7 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[//TEST('TestConcatRpcCallAndResponseWithChunkedRequest');
 
-//server.Rpc.RegisterHandler('concat',concatStringRpcHandler);
+//server.RegisterRpcHandler('concat',concatStringRpcHandler);
 
 //out := server.HandleRequest(chunk1Header,chunk1payload);
 //out := server.HandleRequest(chunk2Header,chunk2payload);

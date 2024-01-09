@@ -8,8 +8,8 @@ FUNCTION_BLOCK ServerResponse IMPLEMENTS I_ServerResponse
 VAR
 	_header : Header(0);
 	_sent : BOOL := FALSE;
-	destination : REFERENCE TO ResponseData;
-	config : I_ServerResponseConfig;
+	responseData : ResponseData;
+	headerAccessor : I_ServerResponseHeaderAccessor;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -26,8 +26,8 @@ END_VAR]]></Declaration>
 	RETURN;
 END_IF
 
-config.UpdateResponseWithAccepted(THIS^);
-SendHeaderToDestination();]]></ST>
+headerAccessor.UpdateResponseWithAccepted(THIS^);
+CompleteResponseWithoutPayload();]]></ST>
       </Implementation>
     </Method>
     <Method Name="Busy" Id="{efb4c96f-8c99-484e-a56e-0f202efa6c3e}">
@@ -39,8 +39,32 @@ END_VAR]]></Declaration>
 	RETURN;
 END_IF
 
-config.UpdateResponseWithBusy(THIS^);
-SendHeaderToDestination();]]></ST>
+headerAccessor.UpdateResponseWithBusy(THIS^);
+CompleteResponseWithoutPayload();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="CompleteResponseWithoutPayload" Id="{c605e081-68c8-4516-bd6d-89fc22f16ff1}" FolderPath="Private\">
+      <Declaration><![CDATA[METHOD PRIVATE CompleteResponseWithoutPayload
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_sent := TRUE;
+_header.ToString(responseData.Header);
+memset(ADR(responseData.Payload),0,SIZEOF(responseData.Payload));]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="CompleteResponseWithPayload" Id="{12dfa0a0-4d82-449f-9e22-6f0f403e071b}" FolderPath="Private\">
+      <Declaration><![CDATA[METHOD PRIVATE CompleteResponseWithPayload
+VAR_INPUT
+	PayloadDataAddress : PVOID;
+	PayloadDataSize : UDINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_sent := TRUE;
+_header.ToString(responseData.Header);
+memcpy(ADR(responseData.Payload),PayloadDataAddress,PayloadDataSize);]]></ST>
       </Implementation>
     </Method>
     <Method Name="Error" Id="{4133beb7-3ac7-45de-a9b6-b0641db40855}">
@@ -53,8 +77,8 @@ END_VAR]]></Declaration>
 	RETURN;
 END_IF
 
-config.UpdateResponseWithError(THIS^, Message);
-SendHeaderToDestination();]]></ST>
+headerAccessor.UpdateResponseWithError(THIS^, Message);
+CompleteResponseWithoutPayload();]]></ST>
       </Implementation>
     </Method>
     <Method Name="FB_init" Id="{93971270-1190-4214-90ce-2458ab5b9410}" FolderPath="Constructor\">
@@ -62,13 +86,11 @@ SendHeaderToDestination();]]></ST>
 VAR_INPUT
 	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
 	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
-	Destination : REFERENCE TO ResponseData;
-	Config : I_ServerResponseConfig;
+	HeaderAccessor : I_ServerResponseHeaderAccessor;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[THIS^.destination REF= Destination;
-This^.config := Config;]]></ST>
+        <ST><![CDATA[THIS^.headerAccessor := HeaderAccessor;]]></ST>
       </Implementation>
     </Method>
     <Property Name="Header" Id="{1a5384de-2402-4919-b8b4-9eb07e9635aa}">
@@ -104,18 +126,8 @@ END_VAR]]></Declaration>
 	RETURN;
 END_IF
 
-config.UpdateResponseWithPending(THIS^, ResponseId, RetryDelayInMs);
-SendHeaderToDestination();]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="SendHeaderToDestination" Id="{c605e081-68c8-4516-bd6d-89fc22f16ff1}" FolderPath="Private\">
-      <Declaration><![CDATA[METHOD PRIVATE SendHeaderToDestination
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[_sent := TRUE;
-_header.ToString(destination.Header);]]></ST>
+headerAccessor.UpdateResponseWithPending(THIS^, ResponseId, RetryDelayInMs);
+CompleteResponseWithoutPayload();]]></ST>
       </Implementation>
     </Method>
     <Method Name="Success" Id="{e8ec9304-2bdf-4fd2-9723-3f3b826dd538}">
@@ -130,9 +142,8 @@ END_VAR]]></Declaration>
 	RETURN;
 END_IF
 
-config.UpdateResponseWithSuccess(THIS^);
-SendHeaderToDestination();
-memset(ADR(destination.Payload),0,SIZEOF(destination.Payload));]]></ST>
+headerAccessor.UpdateResponseWithSuccess(THIS^);
+CompleteResponseWithoutPayload();]]></ST>
       </Implementation>
     </Method>
     <Method Name="SuccessWithPayload" Id="{a0f936ba-3243-4794-876f-bbdda8e73d58}">
@@ -149,18 +160,36 @@ END_VAR]]></Declaration>
 	RETURN;
 END_IF
 
-IF PayloadDataSize > SIZEOF(destination.Payload) THEN
+IF PayloadDataSize > SIZEOF(responseData.Payload) THEN
 	errorMessage := 'Payload too big to transmit. Maximum : ';
-	errorMessage := concat(errorMessage, UDINT_TO_STRING(SIZEOF(destination.Payload)));
+	errorMessage := concat(errorMessage, UDINT_TO_STRING(SIZEOF(responseData.Payload)));
 	errorMessage := concat(errorMessage, ', Actual Size : ');
 	errorMessage := concat(errorMessage, UDINT_TO_STRING(SIZEOF(PayloadDataSize)));
 	Error(errorMessage);
 	RETURN;
 END_IF
 
-config.UpdateResponseWithSuccess(THIS^);
-SendHeaderToDestination();
-memcpy(ADR(destination.Payload),PayloadDataAddress,PayloadDataSize);]]></ST>
+headerAccessor.UpdateResponseWithSuccess(THIS^);
+CompleteResponseWithPayload(PayloadDataAddress, PayloadDataSize);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TryGetData" Id="{97b70004-635f-484d-98f5-204f5571577b}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetData : BOOL;
+VAR_INPUT
+	Destination : REFERENCE TO ResponseData;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT __ISVALIDREF(Destination) THEN
+	RETURN;
+END_IF
+
+IF SIZEOF(Destination) <> SIZEOF(responseData) THEN
+	RETURN;
+END_IF
+
+memcpy(ADR(Destination), ADR(responseData), SIZEOF(Destination));
+TryGetData := TRUE;]]></ST>
       </Implementation>
     </Method>
   </POU>

@@ -7,7 +7,7 @@
 FUNCTION_BLOCK SessionsMiddleware EXTENDS MiddlewareBase
 VAR
 	sessionManager: I_SessionManager;
-	config : I_SessionMiddlewareConfig;
+	headerAccessor : I_SessionHeaderAccessor;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -20,12 +20,12 @@ VAR_INPUT
 	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
 	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
 	SessionManager : I_SessionManager;
-	Config : I_SessionMiddlewareConfig;
+	HeaderAccessor : I_SessionHeaderAccessor;
 END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[THIS^.sessionManager := SessionManager;
-THIS^.config := Config;]]></ST>
+THIS^.headerAccessor := HeaderAccessor;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Handle" Id="{d2badea3-44aa-48aa-87d1-835b91359ac5}">
@@ -38,14 +38,14 @@ VAR
 	sessionId : T_MAXSTRING;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF (NOT config.TryGetSessionIdFromRequest(Request, sessionId)) OR_ELSE (NOT sessionManager.IsValidSession(sessionId)) THEN
+        <ST><![CDATA[IF (NOT headerAccessor.TryGetSessionIdFromRequest(Request, sessionId)) OR_ELSE (NOT sessionManager.IsValidSession(sessionId)) THEN
 	sessionId := sessionManager.CreateSession();
-	config.UpdateRequestWithSessionId(Request,sessionId);
+	headerAccessor.UpdateRequestWithSessionId(Request,sessionId);
 END_IF
 
 sessionManager.RefreshSession(sessionId);
 
-config.UpdateResponseWithSessionId(Response, sessionId);
+headerAccessor.UpdateResponseWithSessionId(Response, sessionId);
 Next(Request, Response);]]></ST>
       </Implementation>
     </Method>

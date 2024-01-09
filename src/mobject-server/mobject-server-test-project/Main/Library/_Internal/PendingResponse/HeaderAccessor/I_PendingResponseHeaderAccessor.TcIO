@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
-  <Itf Name="I_PendingResponseManagerConfig" Id="{17303ec9-1bec-4a17-ab1f-fe3910f2ac30}">
-    <Declaration><![CDATA[INTERFACE I_PendingResponseManagerConfig
+  <Itf Name="I_PendingResponseHeaderAccessor" Id="{17303ec9-1bec-4a17-ab1f-fe3910f2ac30}">
+    <Declaration><![CDATA[INTERFACE I_PendingResponseHeaderAccessor
 ]]></Declaration>
     <Method Name="TryGetResponseIdFromRequest" Id="{207b7440-4700-4749-a52a-b0c85f5c5d69}">
       <Declaration><![CDATA[METHOD PUBLIC TryGetResponseIdFromRequest : BOOL
