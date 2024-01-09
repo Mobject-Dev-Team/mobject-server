@@ -83,7 +83,7 @@ END_VAR
 VAR
 	header : Header(SerializedHeader);
 	request : Request(header, SerializedPayload);
-	serverResponse : ServerResponse(serverConfig);
+	serverResponse : ServerResponse(headerAccessor);
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[memset(ADR(HandleRequest),0,SIZEOF(HandleRequest));
