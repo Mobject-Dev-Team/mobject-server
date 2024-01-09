@@ -106,17 +106,18 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
-    <Method Name="MakeAsynchronous" Id="{9f94ce31-3632-4be2-8c34-3a8b909d7975}">
-      <Declaration><![CDATA[METHOD PUBLIC MakeAsynchronous : I_AsynchronousRpcResponse
-VAR_INPUT
-END_VAR
-]]></Declaration>
-    </Method>
     <Method Name="RejectWithMessage" Id="{e89b7f10-45cf-41d6-88a6-c6bd74b7b997}">
       <Declaration><![CDATA[METHOD PUBLIC RejectWithMessage
 VAR_INPUT
 	Message : T_MAXSTRING;
 END_VAR]]></Declaration>
+    </Method>
+    <Method Name="TryMakeAsynchronous" Id="{9f94ce31-3632-4be2-8c34-3a8b909d7975}">
+      <Declaration><![CDATA[METHOD PUBLIC TryMakeAsynchronous : BOOL
+VAR_INPUT
+	Destination : REFERENCE TO I_AsynchronousRpcResponse;
+END_VAR
+]]></Declaration>
     </Method>
   </Itf>
 </TcPlcObject>

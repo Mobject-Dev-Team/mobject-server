@@ -3,12 +3,12 @@
   <Itf Name="I_AsyncResponseManager" Id="{abe05406-b7ab-4a25-a70f-e90409730aeb}">
     <Declaration><![CDATA[INTERFACE I_AsyncResponseManager
 ]]></Declaration>
-    <Method Name="HandlePending" Id="{8380e3cc-5e13-46ae-aeba-58c11cb37c90}">
-      <Declaration><![CDATA[METHOD PUBLIC HandlePending
+    <Method Name="TryConvertResponseToAsyncResponseSessionData" Id="{32c68797-1e3f-4ba0-805b-b5c4e2259c26}">
+      <Declaration><![CDATA[METHOD TryConvertResponseToAsyncResponseSessionData : BOOL
 VAR_INPUT
-	OriginalResponse : I_ServerResponse;
-	ResponseId : REFERENCE TO T_MAXSTRING;
+	Response : I_ServerResponse;
 	RetryDelayInMs : UDINT;
+	Destination : REFERENCE TO I_AsyncResponseSessionData;
 END_VAR]]></Declaration>
     </Method>
     <Method Name="TryHandleIncomingRequest" Id="{dcc914a9-8a7f-4fe6-be9f-213c490e1a75}">

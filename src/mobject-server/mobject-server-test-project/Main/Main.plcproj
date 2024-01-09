@@ -47,10 +47,10 @@
     <Compile Include="Library\_Internal\ChunkedRequests\Middleware\ChunkedRequestsMiddleware.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Library\_Internal\ChunkedRequests\SessionData\ChunkedRequestSessionData.TcPOU">
+    <Compile Include="Library\_Internal\ChunkedRequests\SessionData\ChunkedRequestData.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Library\_Internal\ChunkedRequests\SessionData\I_ChunkedRequestSessionData.TcIO">
+    <Compile Include="Library\_Internal\ChunkedRequests\SessionData\I_ChunkedRequestData.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Library\_Internal\ChunkedResponses\HeaderAccessor\I_ChunkedResponseHeaderAccessor.TcIO">
@@ -98,9 +98,6 @@
     <Compile Include="Library\_Internal\AsyncResponse\Middleware\AsyncResponseMiddleware.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Library\_Internal\AsyncResponse\ServerResponse\AsyncServerResponse.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Library\_Internal\AsyncResponse\SessionData\I_AsyncResponseSessionData.TcIO">
       <SubType>Code</SubType>
     </Compile>
@@ -137,19 +134,16 @@
     <Compile Include="Library\_Internal\RPC\Parameters\Json\JsonRpcParameters.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Library\_Internal\RPC\Response\AsynchronousRpcResponseFactory.TcPOU">
+    <Compile Include="Library\_Internal\RPC\Response\Async\AsynchronousRpcResponse.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Library\_Internal\RPC\Response\I_AsynchronousRpcResponseFactory.TcIO">
+    <Compile Include="Library\_Internal\RPC\Response\Async\I_AsynchronousRpcResponse.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Library\_Internal\RPC\Response\I_SynchronousRpcResponse.TcIO">
+    <Compile Include="Library\_Internal\RPC\Response\Factory\AsynchronousRpcResponseFactory.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Library\_Internal\RPC\Response\I_AsynchronousRpcResponse.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Library\_Internal\RPC\Response\SynchronousRpcResponse.TcPOU">
+    <Compile Include="Library\_Internal\RPC\Response\Factory\I_AsynchronousRpcResponseFactory.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Library\_Internal\Middleware\Stack\MiddlewareStack.TcPOU">
@@ -164,7 +158,10 @@
     <Compile Include="Library\_Internal\HeaderAccessor\HeaderAccessor.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Library\_Internal\RPC\Response\AsynchronousRpcResponse.TcPOU">
+    <Compile Include="Library\_Internal\RPC\Response\Sync\I_SynchronousRpcResponse.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Library\_Internal\RPC\Response\Sync\SynchronousRpcResponse.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Library\_Internal\ServerResponse\Data\ResponseData.TcDUT">
@@ -228,10 +225,13 @@
     <Compile Include="Tests\Mocks\ConcatStringRpcHandler.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Tests\Mocks\AsyncEchoRpcHandler.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Tests\Server_IntegrationTestSuite.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tests\ChunkedRequestData_TestSuite.TcPOU">
+    <Compile Include="Tests\_Internal\ChunkedRequestData_TestSuite.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -261,7 +261,6 @@
     <Folder Include="Library\_Internal\AsyncResponse\Manager" />
     <Folder Include="Library\_Internal\AsyncResponse\Middleware" />
     <Folder Include="Library\_Internal\AsyncResponse\HeaderAccessor" />
-    <Folder Include="Library\_Internal\AsyncResponse\ServerResponse" />
     <Folder Include="Library\_Internal\AsyncResponse\SessionData" />
     <Folder Include="Library\_Internal\AsyncResponse" />
     <Folder Include="Library\_Internal\Request\Interface" />
@@ -272,6 +271,9 @@
     <Folder Include="Library\_Internal\RPC\Response" />
     <Folder Include="Library\_Internal\RPC\Handlers" />
     <Folder Include="Library\_Internal\RPC\HeaderAccessor" />
+    <Folder Include="Library\_Internal\RPC\Response\Async" />
+    <Folder Include="Library\_Internal\RPC\Response\Factory" />
+    <Folder Include="Library\_Internal\RPC\Response\Sync" />
     <Folder Include="Library\_Internal\ServerResponse\HeaderAccessor" />
     <Folder Include="Library\_Internal\ServerResponse\Interface" />
     <Folder Include="Library\_Internal\ServerResponse\Data" />
@@ -294,6 +296,7 @@
     <Folder Include="Tests" />
     <Folder Include="POUs" />
     <Folder Include="Tests\Mocks" />
+    <Folder Include="Tests\_Internal" />
   </ItemGroup>
   <ItemGroup>
     <PlaceholderReference Include="Tc2_Standard">

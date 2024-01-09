@@ -9,18 +9,25 @@ VAR
 	initialized : BOOL;
 	server : RpcServer;
 	concatStringRpcHandler : ConcatStringRpcHandler;	
+	asyncEchoRpcHandler : AsyncEchoRpcHandler;
 
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[TcUnit.RUN();
 
+// the code below is used by TwinCAT HMI implementation
+
 IF NOT initialized THEN
 	initialized := TRUE;
 	server.RegisterRpcHandler('concat',concatStringRpcHandler);
+	server.RegisterRpcHandler('asyncEcho',asyncEchoRpcHandler);
 END_IF
 
-server.CyclicCall();]]></ST>
+server.CyclicCall();
+
+// this has timers inside, so must be cyclic called.
+asyncEchoRpcHandler.CyclicCall();]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

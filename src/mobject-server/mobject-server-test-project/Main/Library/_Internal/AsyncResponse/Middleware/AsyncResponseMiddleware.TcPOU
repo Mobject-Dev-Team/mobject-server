@@ -27,16 +27,13 @@ END_VAR
 VAR_INPUT
 	Request : I_Request;
 	Response : I_ServerResponse;
-END_VAR
-VAR
-	asyncServerResponse : AsyncServerResponse(Response, asyncResponseManager);
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF asyncResponseManager.TryHandleIncomingRequest(Request, Response) THEN
 	RETURN;
 END_IF
 
-Next(Request, asyncServerResponse);]]></ST>
+Next(Request, Response);]]></ST>
       </Implementation>
     </Method>
   </POU>

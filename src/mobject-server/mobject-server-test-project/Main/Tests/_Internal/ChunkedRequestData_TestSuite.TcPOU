@@ -17,7 +17,7 @@ TestTryAddChunkedPayloadReturnsTrueWhenValid();]]></ST>
     <Method Name="TestChunkedPayloadStoredCorrectly_10Chunks" Id="{216291d5-8830-40d3-96a5-04ab61b10e06}">
       <Declaration><![CDATA[METHOD TestChunkedPayloadStoredCorrectly_10Chunks
 VAR
-	chunkedRequestData : ChunkedRequestSessionData(3,10); // results in 30 bytes
+	chunkedRequestData : ChunkedRequestData(3,10); // results in 30 bytes
 	dataChunk1 : STRING(2) := 'ab'; // results in 3 bytes
 	dataChunk2 : STRING(2) := 'cd'; // results in 3 bytes
 	dataChunk3 : STRING(2) := 'ef'; // results in 3 bytes
@@ -66,7 +66,7 @@ TEST_FINISHED();]]></ST>
     <Method Name="TestChunkedPayloadStoredCorrectly_2Chunks" Id="{7c47ebe3-8d1b-4014-8d3e-967c884e9f47}">
       <Declaration><![CDATA[METHOD TestChunkedPayloadStoredCorrectly_2Chunks
 VAR
-	chunkedRequestData : ChunkedRequestSessionData(4,2); // results in 8 bytes
+	chunkedRequestData : ChunkedRequestData(4,2); // results in 8 bytes
 	dataChunk1 : STRING(3) := 'foo'; // results in 4 bytes
 	dataChunk2 : STRING(3) := 'bar'; // results in 4 bytes
 	dataAddress : PVOID;
@@ -99,7 +99,7 @@ TEST_FINISHED();]]></ST>
     <Method Name="TestCorrectPayloadSizeInBytes_100Bytes" Id="{12e658ae-8be5-4bd8-b0c0-a9c774b6c472}">
       <Declaration><![CDATA[METHOD TestCorrectPayloadSizeInBytes_100Bytes
 VAR
-	chunkedRequestData : ChunkedRequestSessionData(20,5);
+	chunkedRequestData : ChunkedRequestData(20,5);
 	result : UDINT;
 	expected : UDINT := 100;
 END_VAR]]></Declaration>
@@ -120,7 +120,7 @@ TEST_FINISHED();]]></ST>
     <Method Name="TestCorrectPayloadSizeInBytes_20Bytes" Id="{312b4172-8a90-419a-9115-ccbe4031c356}">
       <Declaration><![CDATA[METHOD TestCorrectPayloadSizeInBytes_20Bytes
 VAR
-	chunkedRequestData : ChunkedRequestSessionData(2,10);
+	chunkedRequestData : ChunkedRequestData(2,10);
 	result : UDINT;
 	expected : UDINT := 20;
 END_VAR]]></Declaration>
@@ -141,7 +141,7 @@ TEST_FINISHED();]]></ST>
     <Method Name="TestIsCompleteOnceAllChunksAdded" Id="{ad28390d-dfaa-4495-b441-2f3c8b567e33}">
       <Declaration><![CDATA[METHOD TestIsCompleteOnceAllChunksAdded
 VAR
-	chunkedRequestData : ChunkedRequestSessionData(4,2);
+	chunkedRequestData : ChunkedRequestData(4,2);
 	dataChunk1 : STRING(3) := 'foo';
 	dataChunk2 : STRING(3) := 'bar';
 	isComplete : BOOL;
@@ -178,7 +178,7 @@ TEST_FINISHED();]]></ST>
     <Method Name="TestTryAddChunkedPayloadReturnsFalseWhenTooBig" Id="{268bd65c-853e-45ae-be79-d89a47f97f0e}">
       <Declaration><![CDATA[METHOD TestTryAddChunkedPayloadReturnsFalseWhenTooBig
 VAR
-	chunkedRequestData : ChunkedRequestSessionData(4,1);
+	chunkedRequestData : ChunkedRequestData(4,1);
 	dataChunk : STRING(10) := 'foo';
 	added : BOOL;
 END_VAR]]></Declaration>
@@ -198,7 +198,7 @@ TEST_FINISHED();]]></ST>
     <Method Name="TestTryAddChunkedPayloadReturnsTrueWhenValid" Id="{9a498d20-6c9a-4d02-89a0-d08117d9f4e5}">
       <Declaration><![CDATA[METHOD TestTryAddChunkedPayloadReturnsTrueWhenValid
 VAR
-	chunkedRequestData : ChunkedRequestSessionData(4,1);
+	chunkedRequestData : ChunkedRequestData(4,1);
 	dataChunk : STRING(3) := 'foo';
 	added : BOOL;
 END_VAR]]></Declaration>

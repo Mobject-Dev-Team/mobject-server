@@ -7,7 +7,7 @@
 FUNCTION_BLOCK ChunkedRequest EXTENDS Disposable IMPLEMENTS I_Request
 VAR
 	request : I_Request;
-	chunkedRequestData : REFERENCE TO I_ChunkedRequestSessionData;
+	chunkedRequestData : REFERENCE TO I_ChunkedRequestData;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -31,7 +31,7 @@ VAR_INPUT
 	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
 	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
 	Request : I_Request;
-	ChunkedRequestData : Reference to I_ChunkedRequestSessionData;
+	ChunkedRequestData : Reference to I_ChunkedRequestData;
 END_VAR
 ]]></Declaration>
       <Implementation>

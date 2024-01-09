@@ -4,112 +4,100 @@
   </div>
   <div id="TcHmiHtmlHost" data-tchmi-type="TcHmi.Controls.System.TcHmiHtmlHost" data-tchmi-height="300" data-tchmi-height-unit="px" data-tchmi-left="20" data-tchmi-left-unit="px" data-tchmi-top="87" data-tchmi-top-unit="px" data-tchmi-width="300" data-tchmi-width-unit="px">
 
-    <script>
-        // this is an async iife, just so I can used the async await in the code below
-        //(async () => {
+      <style>
+          .button-container div {
+              margin-bottom: 10px; /* Adjust the space as needed */
+          }
+      </style>
 
-        //    const client = new TcHmiAsyncClient('%s%PLC1.MAIN.api.HandleClientRequest%/s%');
-            
-        //    try {
+      <div class="button-container">
+          <div><button id="testConcat64kbPayload">Test Concat with 64kb Payload</button></div>
+          <div><button id="testConcat5mbPayload">Test Concat with 5mb Payload</button></div>
+          <div><button id="testConcat">Test Concat</button></div>
+          <div><button id="testAsyncEcho">Test Async Echo</button></div>
+      </div>
 
-        //        // used for performance check
-        //        console.warn('Start of successTest');
-        //        console.time('successTest');
-        //        const response1 = await client.rpcCall('successTest',{ foo : 'bar' });
-        //        console.timeEnd('successTest');
-        //        console.log(response1);
+      <script>
 
-        //        console.warn('Start of pendingTest');
-        //        console.time('pendingTest');
-        //        const response2 = await client.rpcCall('pendingTest',{ foo : 'bar' });
-        //        console.log(response2);
-        //        console.timeEnd('pendingTest');
-
-        //        console.warn('Start of busyTest');
-        //        console.time('busyTest');
-        //        const response3 = await client.rpcCall('busyTest',{ foo : 'bar' });
-        //        console.log(response3);
-
-        //    } catch (error) {
-        //        console.timeEnd('busyTest');
-        //        console.error(`Error: ${error}`);
-        //    } finally {
-
-        //    }
-
-        //})();
-
-        //async function callApi(apiName, client) {
-        //    try {
-        //        console.warn(`Start of ${apiName}`);
-        //        console.time(apiName);
-        //        const response = await client.rpcCall(apiName, {foo:'bar1',hello:'world1'});
-        //        console.timeEnd(apiName);
-        //        console.log(response);
-        //    } catch (error) {
-        //        console.timeEnd(apiName);
-        //        console.error(`Error in ${apiName}: ${error}`);
-        //    }
-        //}
-
-        //const client = new TcHmiAsyncClient('%s%PLC1.MAIN.server.HandleRequest%/s%');
-
-        //setInterval(async () => {
-        //    console.clear(); // Clears the console
-        //    await callApi('successTest', client);
-        //    //await callApi('pendingTest', client);
-        //    //await callApi('busyTest', client);
-        //}, 7000);
-
-        console.log('loading');
-
-
-
+        // Creating a new TcHmiAsyncClient instance
         const client = new TcHmiAsyncClient('%s%PLC1.MAIN.server.HandleRequest%/s%');
 
-        fetch('./Imports/payload64kb.json')
-        //fetch('./Imports/payload5mb.json')
-        //fetch('./Imports/payload10mb.json')
-        //fetch('./Imports/payload50mb.json') // only possible if you increase the router memory above 50mb!
-          .then(response => response.json())
-          .then(data => {
-              apiTestPayload(data);
-          })
-          .catch(error => {
-              console.error('Error loading JSON:', error);
-          });
-
-        async function apiTest(){
-            console.time('test');
-            client.rpcCall('concat', {STR1: 'foo', STR2: 'bar'})
-              .then(response => {
-                  console.log('Response:', response);
-                  console.timeEnd('test');
-                  //apiTest();
-              })
-              .catch(error => {
-                  console.error('Error:', error);
-                  console.timeEnd('test');
-              });
+        /**
+         * Function to call concat with payload
+         * @param {Object} payload - The payload for the RPC call
+         */
+        async function callConcatRpcWithPayload(payload) {
+            console.time('Duration, concat with payload');
+            try {
+                const response = await client.rpcCall('concat', payload);
+                console.log('Response:', response);
+            } catch (error) {
+                console.error('Error:', error);
+            } finally {
+                console.timeEnd('Duration, concat with payload');
+            }
         }
 
-        async function apiTestPayload(payload){
-            console.time('test');
-            client.rpcCall('concat', payload)
-              .then(response => {
-                  console.log('Response:', response);
-                  console.timeEnd('test');
-                  //apiTest();
-              })
-              .catch(error => {
-                  console.error('Error:', error);
-                  console.timeEnd('test');
-              });
+        /**
+         * Function to call concat with inline object
+         */
+        async function callConcatRpc() {
+            console.time('Duration, concat');
+            try {
+                const response = await client.rpcCall('concat', { STR1: 'foo', STR2: 'bar' });
+                console.log('Response:', response);
+            } catch (error) {
+                console.error('Error:', error);
+            } finally {
+                console.timeEnd('Duration, concat');
+            }
         }
 
-        //apiTest();
+        /**
+         * Function to call asyncConcat with inline object
+         */
+        async function callAsyncEchoRpc() {
+            console.time('Duration, async echo');
+            try {
+                const response = await client.rpcCall('asyncEcho', { Echo: 'hello'});
+                console.log('Response:', response);
+            } catch (error) {
+                console.error('Error:', error);
+            } finally {
+                console.timeEnd('Duration, async echo');
+            }
+        }
 
+        /**
+         * Fetches data from a JSON file and calls RPC with the payload
+         * @param {string} path - The path to the JSON file
+         */
+        async function fetchAndCallConcatRpcWithPayload(path) {
+            try {
+                const response = await fetch(path);
+                const data = await response.json();
+                await callConcatRpcWithPayload(data);
+            } catch (error) {
+                console.error('Error loading JSON:', error);
+            }
+        }
 
-    </script>
+        document.getElementById('testConcat64kbPayload').addEventListener('click', async () => {
+            await fetchAndCallConcatRpcWithPayload('./Imports/payload64kb.json');
+        });
+
+        document.getElementById('testConcat5mbPayload').addEventListener('click', async () => {
+            await fetchAndCallConcatRpcWithPayload('./Imports/payload5Mb.json');
+        });
+
+        document.getElementById('testConcat').addEventListener('click', async () => {
+            await callConcatRpc();
+        });
+
+        document.getElementById('testAsyncEcho').addEventListener('click', async () => {
+            await callAsyncEchoRpc();
+        });
+
+      </script>
   </div>
 </div>

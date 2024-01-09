@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="AsyncEchoRpcHandler" Id="{1e2412a2-f1b1-4465-80c2-0a0e7fcc5168}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK AsyncEchoRpcHandler IMPLEMENTS I_RpcHandler
+VAR
+	asyncResponse : I_AsynchronousRpcResponse;
+	result : T_MAXSTRING;
+	timer : TON;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="Busy" Id="{e084576c-3d84-48ad-b478-14feb8f6ed04}">
+      <Declaration><![CDATA[PROPERTY PUBLIC Busy : BOOL]]></Declaration>
+      <Get Name="Get" Id="{94ca94e5-a0e8-4bd8-b5a5-21e7b7ae0091}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Busy := asyncResponse <> 0;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="CyclicCall" Id="{600e73b5-f953-4466-967d-a80822e095b2}">
+      <Declaration><![CDATA[METHOD PUBLIC CyclicCall
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[timer(in := Busy, pt := T#10MS);
+
+IF timer.Q THEN
+	asyncResponse.CompleteWithString(result);
+	asyncResponse.Dispose();
+	asyncResponse := 0;
+	result := '';
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Handle" Id="{85791512-73b6-4c83-9c38-6e85292f49d0}">
+      <Declaration><![CDATA[METHOD Handle
+VAR_INPUT
+	Parameters : I_RpcParameters;
+	Response : I_SynchronousRpcResponse;
+END_VAR
+VAR
+	echo : T_MAXSTRING;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF Busy THEN
+	Response.RejectWithMessage('Already processing response');
+	RETURN;
+END_IF
+
+IF NOT Parameters.TryGetParameter('Echo',echo) THEN
+	Response.RejectWithMessage('Missing Echo parameter');
+	RETURN;
+END_IF
+
+result := echo;
+Response.TryMakeAsynchronous(asyncResponse);]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

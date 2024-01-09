@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
-  <Itf Name="I_ChunkedRequestSessionData" Id="{22300d9d-d667-4bc8-b0b3-5a4fa8f36f5d}">
-    <Declaration><![CDATA[INTERFACE I_ChunkedRequestSessionData EXTENDS I_SessionData
+  <Itf Name="I_ChunkedRequestData" Id="{22300d9d-d667-4bc8-b0b3-5a4fa8f36f5d}">
+    <Declaration><![CDATA[INTERFACE I_ChunkedRequestData EXTENDS I_SessionData
 
 ]]></Declaration>
     <Property Name="IsComplete" Id="{dec49cc7-3ada-4338-bf34-8f28fd7fa0b6}">

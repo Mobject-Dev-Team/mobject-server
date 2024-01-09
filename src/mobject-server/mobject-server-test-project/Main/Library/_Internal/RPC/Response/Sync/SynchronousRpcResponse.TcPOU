@@ -231,18 +231,6 @@ END_VAR
         <ST><![CDATA[GetSerializer := serializer.Clone();]]></ST>
       </Implementation>
     </Method>
-    <Method Name="MakeAsynchronous" Id="{e3d7ce72-9753-4130-a9b0-5dfe11ab3e76}">
-      <Declaration><![CDATA[METHOD PUBLIC MakeAsynchronous : I_AsynchronousRpcResponse
-VAR_INPUT
-END_VAR
-VAR
-	responseId : T_MAXSTRING;
-END_VAR]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[serverResponse.Pending(responseId,0);
-MakeAsynchronous := asynchronousRpcResponseFactory.Create(serverResponse, responseId);]]></ST>
-      </Implementation>
-    </Method>
     <Method Name="RejectWithMessage" Id="{d016a36c-5bb1-48bd-ab36-b1534a482e0e}">
       <Declaration><![CDATA[METHOD PUBLIC RejectWithMessage
 VAR_INPUT
@@ -278,6 +266,15 @@ END_IF
 
 serverResponse.SuccessWithPayload(pJsonString, jsonSize);
 __DELETE(pJsonString);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TryMakeAsynchronous" Id="{e3d7ce72-9753-4130-a9b0-5dfe11ab3e76}">
+      <Declaration><![CDATA[METHOD PUBLIC TryMakeAsynchronous : BOOL
+VAR_INPUT
+	Destination : REFERENCE TO I_AsynchronousRpcResponse;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TryMakeAsynchronous := asynchronousRpcResponseFactory.TryCreate(Destination);]]></ST>
       </Implementation>
     </Method>
   </POU>

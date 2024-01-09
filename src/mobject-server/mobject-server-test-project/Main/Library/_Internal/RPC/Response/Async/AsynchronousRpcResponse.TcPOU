@@ -6,9 +6,7 @@
 {attribute 'enable_dynamic_creation'}
 FUNCTION_BLOCK AsynchronousRpcResponse EXTENDS Disposable IMPLEMENTS I_AsynchronousRpcResponse
 VAR
-	sessionStorage : I_SessionStorage;
-	sessionId : T_MAXSTRING;
-	responseId : T_MAXSTRING;
+	asyncResponse : I_AsyncResponseSessionData;
 	serializer : I_Serializer;
 END_VAR]]></Declaration>
     <Implementation>
@@ -203,7 +201,11 @@ END_VAR
 	RETURN;
 END_IF
 
-serializer.Dispose();]]></ST>
+serializer.Dispose();
+
+IF asyncResponse <> 0 THEN				
+	asyncResponse.Dispose();
+END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="FB_init" Id="{05631e9a-17e1-4b66-8caf-a0ff3035ce47}" FolderPath="Constructor\">
@@ -211,16 +213,12 @@ serializer.Dispose();]]></ST>
 VAR_INPUT
 	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
 	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
-	SessionStorage : I_SessionStorage;
-	SessionId : T_MAXSTRING;
-	ResponseId : T_MAXSTRING;
-	Seralizer : I_Serializer;
+	AsyncResponse : I_AsyncResponseSessionData;
+	Serializer : I_Serializer;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[THIS^.sessionStorage := SessionStorage;
-THIS^.sessionId := SessionId;
-THIS^.responseId := ResponseId;
+        <ST><![CDATA[THIS^.asyncResponse := AsyncResponse;
 THIS^.serializer := Serializer.Clone();]]></ST>
       </Implementation>
     </Method>
@@ -242,11 +240,7 @@ VAR
 	asyncResponse : I_AsyncResponseSessionData;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF NOT TryGetAsyncResponseSessionData(asyncResponse) THEN
-	RETURN;
-END_IF
-
-asyncResponse.Error(Message);]]></ST>
+        <ST><![CDATA[asyncResponse.Error(Message);]]></ST>
       </Implementation>
     </Method>
     <Method Name="SendSuccessResponseUsingSeralizer" Id="{8fe3cbfc-5443-444d-8018-58227d206ef3}" FolderPath="Protected\">
@@ -255,12 +249,11 @@ VAR_INPUT
 	Serializer : I_Serializer;
 END_VAR
 VAR
-	asyncResponse : I_AsyncResponseSessionData;
 	jsonSize : UDINT;
 	pJsonString : POINTER TO STRING;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF NOT TryGetAsyncResponseSessionData(asyncResponse) THEN
+        <ST><![CDATA[IF asyncResponse = 0 THEN
 	RETURN;
 END_IF
 
@@ -280,28 +273,6 @@ END_IF
 
 asyncResponse.SuccessWithPayload(pJsonString, jsonSize);
 __DELETE(pJsonString);]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="TryGetAsyncResponseSessionData" Id="{c51b5140-fff5-4ba4-a821-e55dc4ad1637}" FolderPath="Protected\">
-      <Declaration><![CDATA[METHOD PROTECTED TryGetAsyncResponseSessionData : BOOL;
-VAR_INPUT
-	Destination : REFERENCE TO I_AsyncResponseSessionData;
-END_VAR
-VAR
-	sessionData : I_SessionData;
-	asyncSessionData : I_AsyncResponseSessionData;
-END_VAR]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[IF NOT sessionStorage.TryRetreiveSessionDataById(sessionId, responseId, sessionData) THEN
-	RETURN;
-END_IF
-
-IF NOT __QUERYINTERFACE(sessionData, asyncSessionData) THEN
-	RETURN;
-END_IF
-
-Destination := asyncSessionData;
-TryGetAsyncResponseSessionData := TRUE;]]></ST>
       </Implementation>
     </Method>
   </POU>

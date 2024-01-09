@@ -56,7 +56,7 @@ class AsyncClient {
   #timeout;
   #stackSize;
   #chunkSize;
-  #debug = false;
+  #debug = true;
   #sessionId = null;
   #nextRequestId = 0;
   #taskQueue = new TaskQueue();
@@ -84,7 +84,7 @@ class AsyncClient {
       this.#serverConnectionStrategy = serverConnectionStrategy;
       this.#stackSize = config.stackSize || 64000;
       this.#chunkSize = config.chunkSize || this.#stackSize / 8;
-    this.#timeout = config.timeout || 50000;
+    this.#timeout = config.timeout || 5000;
     this.#defaultRpcConfig.serializePayload =
       config.serializePayload || this.#defaultSerializePayload;
   }

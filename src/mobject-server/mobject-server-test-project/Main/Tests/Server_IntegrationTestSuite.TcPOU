@@ -3,13 +3,58 @@
   <POU Name="Server_IntegrationTestSuite" Id="{cdfabd45-d3f9-4657-b5eb-78ded2b6a8d3}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK Server_IntegrationTestSuite EXTENDS TcUnit.FB_TestSuite
 VAR
-	out : ResponseData;
+	// variables for TestAsyncEchoRpcCallAndResponse
+	testAsyncEchoRpcCallAndResponseSetup : BOOL;
+	testAsyncEchoRpcCallAndResponseServer : RpcServer;
+	testAsyncEchoRpcCallAndResponseAsyncEchoRpcHandler : AsyncEchoRpcHandler;
+	testAsyncEchoRpcCallAndResponseOutput : ResponseData;
+	
+	// variables for TestConcatRpcCallAndResponse
+	testConcatRpcCallAndResponseOutput : ResponseData;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[TestConcatRpcCallAndResponse();
+      <ST><![CDATA[TestAsyncEchoRpcCallAndResponse();
+TestConcatRpcCallAndResponse();
 TestConcatRpcCallAndResponseWithChunkedRequest();]]></ST>
     </Implementation>
+    <Method Name="TestAsyncEchoRpcCallAndResponse" Id="{73b639ff-8394-44c2-a577-ad68a5ad6e49}">
+      <Declaration><![CDATA[METHOD TestAsyncEchoRpcCallAndResponse
+VAR
+	header : T_MAXSTRING := '{"Type":"RPC 1.0","Accept":"application/json","Method-Name":"asyncEcho","Content-Type":"application/json"}';
+    payload : T_MAXSTRING := '{"Echo":"hello"}';
+	followupHeader : T_MAXSTRING := '{"Type":"RPC 1.0","Accept":"application/json","Method-Name":"asyncEcho","Response-Id":"1","Session-Id":"1"}';
+	followuPayload : T_MAXSTRING := '{"Echo":"hello"}';
+	expected : T_MAXSTRING := '"hello"';
+	actual : T_MAXSTRING;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('TestAsyncEchoRpcCallAndResponse');
+
+IF NOT testAsyncEchoRpcCallAndResponseSetup THEN
+	testAsyncEchoRpcCallAndResponseServer.RegisterRpcHandler('asyncEcho',testAsyncEchoRpcCallAndResponseAsyncEchoRpcHandler);
+	testAsyncEchoRpcCallAndResponseOutput := testAsyncEchoRpcCallAndResponseServer.HandleRequest(header,payload);
+	testAsyncEchoRpcCallAndResponseSetup := TRUE;	
+END_IF
+
+testAsyncEchoRpcCallAndResponseAsyncEchoRpcHandler.CyclicCall();
+
+IF testAsyncEchoRpcCallAndResponseAsyncEchoRpcHandler.Busy THEN
+	RETURN;
+END_IF
+
+testAsyncEchoRpcCallAndResponseOutput := testAsyncEchoRpcCallAndResponseServer.HandleRequest(followupHeader,followuPayload);
+actual := testAsyncEchoRpcCallAndResponseOutput.Payload;
+
+AssertEquals(
+	Expected := expected, 
+	Actual := actual,
+	Message := 'Did not produce the expected result'
+);
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="TestConcatRpcCallAndResponse" Id="{98853763-3f92-414f-a8ce-839282bd98fd}">
       <Declaration><![CDATA[METHOD TestConcatRpcCallAndResponse
 VAR
@@ -18,16 +63,19 @@ VAR
 	header : T_MAXSTRING := '{"Type":"RPC 1.0","Method-Name":"concat","Content-Type":"application/json"}';
     payload : T_MAXSTRING := '{"STR1":"hello", "STR2":"world"}';
 	expected : T_MAXSTRING := '"helloworld"';
+	actual : T_MAXSTRING;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[TEST('TestConcatRpcCallAndResponse');
 
 server.RegisterRpcHandler('concat',concatStringRpcHandler);
 
-out := server.HandleRequest(header,payload);
+testConcatRpcCallAndResponseOutput := server.HandleRequest(header,payload);
+actual := testConcatRpcCallAndResponseOutput.Payload;
 
-AssertTrue(
-	Condition := expected = out.Payload,
+AssertEquals(
+	Expected := expected, 
+	Actual := actual,
 	Message := 'Did not produce the expected result'
 );
 

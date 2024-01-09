@@ -31,7 +31,6 @@ IF NOT Parameters.TryGetParameter('STR2',str2) THEN
 END_IF
 
 result := CONCAT(str1, str2);
-
 Response.CompleteWithString(result);]]></ST>
       </Implementation>
     </Method>

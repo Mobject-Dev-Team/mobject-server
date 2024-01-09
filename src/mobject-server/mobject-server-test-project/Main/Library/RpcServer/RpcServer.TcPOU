@@ -7,8 +7,10 @@
 {attribute 'TcRpcEnable'}
 FUNCTION_BLOCK RpcServer
 VAR
+	// default header accessor.
+	headerAccessor : HeaderAccessor;
 	
-	serverConfig : HeaderAccessor;
+	// Payload size may be changed using the constants
 	payloadStringSizeIncludingNull : UDINT := Constants.PAYLOAD_STRING_SIZE + 1;
 	
 	// the middleware stack allows us to construct our server in any way needed.
@@ -21,24 +23,24 @@ VAR
 	// ability to support sessions...
 	sessionIdGenerator : SequentialSessionIdGenerator;
 	sessionManager : SessionManager(sessionIdGenerator, INACTIVE_SESSION_MAX_AGE);
-	sessionsMiddleware : SessionsMiddleware(sessionManager, serverConfig);
+	sessionsMiddleware : SessionsMiddleware(sessionManager, headerAccessor);
 	
 	// ability to suppoort chunked requests
-	chunkedRequestsManager : ChunkedRequestsManager(payloadStringSizeIncludingNull, sessionManager, serverConfig);
+	chunkedRequestsManager : ChunkedRequestsManager(payloadStringSizeIncludingNull, sessionManager, headerAccessor);
 	chunkedRequestsMiddleware : ChunkedRequestsMiddleware(chunkedRequestsManager);
 	
 	// ability to support chunked responses
-	chunkedResponseManager : ChunkedResponseManager(payloadStringSizeIncludingNull, sessionManager, sequentialResponseIdGenerator, serverConfig);
+	chunkedResponseManager : ChunkedResponseManager(payloadStringSizeIncludingNull, sessionManager, sequentialResponseIdGenerator, headerAccessor);
 	chunkedResponsesMiddleware : ChunkedResponsesMiddleware(chunkedResponseManager);
 	
 	// ability to support pending responses
-	asyncResponseManager : AsyncResponseManager(sessionManager, sequentialResponseIdGenerator, serverConfig);
+	asyncResponseManager : AsyncResponseManager(sessionManager, sequentialResponseIdGenerator, headerAccessor);
 	asyncResponseMiddleware : AsyncResponseMiddleware(asyncResponseManager);
 	
 	// ability to support rpc
 	rpcHandlers : RpcHandlers;
-	rpcManager : RpcManager(rpcHandlers, asyncResponseManager, serverConfig);
-//	rpcMiddleware : RpcMiddleware(rpcManager);
+	rpcManager : RpcManager(rpcHandlers, asyncResponseManager, headerAccessor);
+	rpcMiddleware : RpcMiddleware(rpcManager);
 	
 END_VAR
 VAR CONSTANT
@@ -68,7 +70,7 @@ END_VAR
 MiddlewareStack.Use(chunkedRequestsMiddleware);
 MiddlewareStack.Use(chunkedResponsesMiddleware);
 MiddlewareStack.Use(AsyncResponseMiddleware);
-//MiddlewareStack.Use(rpcMiddleware);]]></ST>
+MiddlewareStack.Use(rpcMiddleware);]]></ST>
       </Implementation>
     </Method>
     <Method Name="HandleRequest" Id="{3d2e86e3-73ad-4c89-953c-3f77c56a6a58}">

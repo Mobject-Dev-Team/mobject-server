@@ -17,16 +17,16 @@ END_VAR
     <Folder Name="Constructor" Id="{787a67cf-dc0a-443d-9817-3b18a2ceda27}" />
     <Folder Name="Private" Id="{acfb1dfb-c887-48ca-b1ff-66b7f833e05a}" />
     <Method Name="CreateChunkedRequestData" Id="{6b885866-582d-4bb7-88c4-4a0bbe21e20d}" FolderPath="Private\">
-      <Declaration><![CDATA[METHOD PRIVATE CreateChunkedRequestData : I_ChunkedRequestSessionData
+      <Declaration><![CDATA[METHOD PRIVATE CreateChunkedRequestData : I_ChunkedRequestData
 VAR_INPUT
 	RequestChunkSizeInBytes : UDINT;
 	RequestChunkCount : UDINT;
 END_VAR
 VAR
-	pChunkedRequestData : POINTER TO ChunkedRequestSessionData;
+	pChunkedRequestData : POINTER TO ChunkedRequestData;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[pChunkedRequestData := __NEW(ChunkedRequestSessionData(ChunkSizeInBytes := RequestChunkSizeInBytes, ChunkCount := RequestChunkCount));
+        <ST><![CDATA[pChunkedRequestData := __NEW(ChunkedRequestData(ChunkSizeInBytes := RequestChunkSizeInBytes, ChunkCount := RequestChunkCount));
 CreateChunkedRequestData := pChunkedRequestData^;]]></ST>
       </Implementation>
     </Method>
@@ -63,7 +63,7 @@ VAR
 	requestId : T_MAXSTRING;
 	sessionId : T_MAXSTRING;
 	sessionData : I_SessionData;
-	chunkedRequestData : I_ChunkedRequestSessionData;
+	chunkedRequestData : I_ChunkedRequestData;
 	chunkedRequest : ChunkedRequest(Request, chunkedRequestData);
 END_VAR]]></Declaration>
       <Implementation>

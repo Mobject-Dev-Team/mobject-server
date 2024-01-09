@@ -44,8 +44,8 @@ VAR
 	// currently we only support json, however, this can become a factory in the future when used with contentType and acceptType.
 	rpcParameters : JsonRpcParameters(ClientRequest := Request);
 	jsonSerializer : JsonSerializer;
-//	asyncRpcResponseFactory : AsynchronousRpcResponseFactory(ServerResponse := Response, Serializer := jsonSerializer);
-	rpcSynchronousResponse : SynchronousRpcResponse(ServerResponse := Response, Serializer := jsonSerializer, AsynchronousRpcResponseFactory := 0);
+	asyncRpcResponseFactory : AsynchronousRpcResponseFactory(ServerResponse := Response, Serializer := jsonSerializer, AsyncResponseManager := THIS^.asyncResponseManager);
+	rpcSynchronousResponse : SynchronousRpcResponse(ServerResponse := Response, Serializer := jsonSerializer, AsynchronousRpcResponseFactory := asyncRpcResponseFactory);
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF NOT headerAccessor.TryGetTypeFromRequest(Request, requestType) THEN
