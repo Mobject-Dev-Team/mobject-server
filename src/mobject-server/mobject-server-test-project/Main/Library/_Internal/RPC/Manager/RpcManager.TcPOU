@@ -41,7 +41,7 @@ VAR
 	// currently we only support json, however, this can become a factory in the future when used with contentType and acceptType.
 	rpcParameters : JsonRpcParameters(ClientRequest := Request);
 	jsonSerializer : JsonSerializer;
-	rpcReturn : RpcSynchronousReply(ServerResponse := Response, Serializer := jsonSerializer);
+	rpcSynchronousResponse : SynchronousRpcResponse(ServerResponse := Response, Serializer := jsonSerializer);
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF NOT headerAccessor.TryGetTypeFromRequest(Request, requestType) THEN
@@ -74,7 +74,7 @@ IF NOT rpcHandlers.TryGetByMethodName(methodName, rpcHandler) THEN
 	RETURN;
 END_IF
 
-rpcHandler.Handle(rpcParameters, rpcReturn);
+rpcHandler.Handle(rpcParameters, rpcSynchronousResponse);
 
 IF NOT Response.HeadersSent THEN
 	Response.Error('RPC : Handler did not return a valid response');

@@ -131,19 +131,13 @@
     <Compile Include="Library\_Internal\RPC\Parameters\Json\JsonRpcParameters.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Library\_Internal\RPC\ResponseBuilder\I_RpcResponseBuilder.TcIO">
+    <Compile Include="Library\_Internal\RPC\Response\I_SynchronousRpcResponse.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Library\_Internal\RPC\ResponseBuilder\RpcSynchronousResponseBuilder.TcPOU">
+    <Compile Include="Library\_Internal\RPC\Response\I_AsynchronousRpcResponse.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Library\_Internal\RPC\Response\I_RpcSynchronousReply.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Library\_Internal\RPC\Response\I_RpcSynchronousReplyReadyToSend.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Library\_Internal\RPC\Response\RpcSynchronousReply.TcPOU">
+    <Compile Include="Library\_Internal\RPC\Response\SynchronousRpcResponse.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Library\_Internal\Middleware\Stack\MiddlewareStack.TcPOU">
@@ -258,7 +252,6 @@
     <Folder Include="Library\_Internal\ResponseId\Interface" />
     <Folder Include="Library\_Internal\RPC\Manager" />
     <Folder Include="Library\_Internal\RPC\Parameters\Json" />
-    <Folder Include="Library\_Internal\RPC\ResponseBuilder" />
     <Folder Include="Library\_Internal\RPC\Response" />
     <Folder Include="Library\_Internal\RPC\Handlers" />
     <Folder Include="Library\_Internal\RPC\HeaderAccessor" />

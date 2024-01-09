@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="I_SynchronousRpcResponse" Id="{3904ec60-cfb1-4857-aef6-8006191526d2}">
+    <Declaration><![CDATA[INTERFACE I_SynchronousRpcResponse
+]]></Declaration>
+    <Method Name="CompleteWithBase64" Id="{915cb679-6bda-4892-acfe-93baabc2a03b}">
+      <Declaration><![CDATA[METHOD PUBLIC CompleteWithBase64
+VAR_INPUT
+	pBytes : POINTER TO BYTE;
+	nBytes : DINT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="CompleteWithBool" Id="{6b1b4a8a-b531-489d-b21d-8165bfea255c}">
+      <Declaration><![CDATA[METHOD PUBLIC CompleteWithBool
+VAR_INPUT
+	Value : BOOL;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="CompleteWithBytesAsHex" Id="{95eae297-784d-4f98-9a5f-fe7c51b4f23e}">
+      <Declaration><![CDATA[METHOD PUBLIC CompleteWithBytesAsHex
+VAR_INPUT
+	pBytes : POINTER TO BYTE;
+	nBytes : DINT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="CompleteWithDateTime" Id="{9d89d05f-4fd5-4e7f-a7d2-3687cf05ea71}">
+      <Declaration><![CDATA[METHOD PUBLIC CompleteWithDateTime
+VAR_INPUT
+	Value : DATE_AND_TIME;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="CompleteWithDcTime" Id="{00e33914-b354-4159-8bce-282e062041f4}">
+      <Declaration><![CDATA[METHOD PUBLIC CompleteWithDcTime
+VAR_INPUT
+	Value : DCTIME;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="CompleteWithDint" Id="{ff846c1c-4e2f-46ed-993f-f3b84e80333d}">
+      <Declaration><![CDATA[METHOD PUBLIC CompleteWithDint
+VAR_INPUT
+	Value : DINT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="CompleteWithFileTime" Id="{51b05405-198a-4887-8873-b2d057f55727}">
+      <Declaration><![CDATA[METHOD PUBLIC CompleteWithFileTime
+VAR_INPUT
+	Value : FILETIME;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="CompleteWithLint" Id="{53e6f406-072f-4c60-9707-fbbe77838e88}">
+      <Declaration><![CDATA[METHOD PUBLIC CompleteWithLint
+VAR_INPUT
+	Value : LINT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="CompleteWithLreal" Id="{5e9702a3-a846-4df5-a6c4-8876459a7e34}">
+      <Declaration><![CDATA[METHOD PUBLIC CompleteWithLreal
+VAR_INPUT
+	Value : LREAL;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="CompleteWithNull" Id="{01c1d345-2bb0-4630-b8ba-c02938da5440}">
+      <Declaration><![CDATA[METHOD PUBLIC CompleteWithNull
+VAR_INPUT
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="CompleteWithObject" Id="{2db0193c-d58d-4451-8ed8-25f7a6d7f8fd}">
+      <Declaration><![CDATA[METHOD PUBLIC CompleteWithObject
+VAR_INPUT
+	Object : I_Serializable;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="CompleteWithReal" Id="{10916026-31a1-4906-8720-115e088f5dbd}">
+      <Declaration><![CDATA[METHOD PUBLIC CompleteWithReal
+VAR_INPUT
+	Value : REAL;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="CompleteWithSerializer" Id="{faf6493a-0f4d-4f9f-9808-6f1ed86a443e}">
+      <Declaration><![CDATA[METHOD PUBLIC CompleteWithSerializer
+VAR_INPUT
+	Serializer : I_Serializer;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="CompleteWithString" Id="{441ca640-1500-46ca-bb82-168559bc653d}">
+      <Declaration><![CDATA[METHOD PUBLIC CompleteWithString
+VAR_INPUT
+	Value : T_MAXSTRING;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="CompleteWithUdint" Id="{1bff1d47-b3ae-425d-ba14-aa8fdcdf969b}">
+      <Declaration><![CDATA[METHOD PUBLIC CompleteWithUdint
+VAR_INPUT
+	Value : UDINT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="CompleteWithUlint" Id="{18770610-1893-4e68-8527-206aef021067}">
+      <Declaration><![CDATA[METHOD PUBLIC CompleteWithUlint
+VAR_INPUT
+	Value : ULINT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="GetSerializer" Id="{55d4d883-bb77-494e-81e4-2fc8596b5f7b}">
+      <Declaration><![CDATA[METHOD PUBLIC GetSerializer : I_Serializer
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="MakeAsynchronous" Id="{9f94ce31-3632-4be2-8c34-3a8b909d7975}">
+      <Declaration><![CDATA[METHOD PUBLIC MakeAsynchronous : I_AsynchronousRpcResponse
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="RejectWithMessage" Id="{e89b7f10-45cf-41d6-88a6-c6bd74b7b997}">
+      <Declaration><![CDATA[METHOD PUBLIC RejectWithMessage
+VAR_INPUT
+	Message : T_MAXSTRING;
+END_VAR]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>
