@@ -54,7 +54,7 @@ This^.chunkedResponseManager := ChunkedResponseManager;]]></ST>
       </Implementation>
     </Method>
     <Property Name="Header" Id="{1daa3846-b6e0-490b-bc19-d32f5a3f29c3}">
-      <Declaration><![CDATA[PROPERTY PUBLIC Header : I_ServerResponseHeader]]></Declaration>
+      <Declaration><![CDATA[PROPERTY PUBLIC Header : I_Header]]></Declaration>
       <Get Name="Get" Id="{e5d490d6-a712-4f8e-b259-d2aac6a82b77}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -78,21 +78,29 @@ END_VAR
     <Method Name="Pending" Id="{e682f307-3e49-4896-95ea-6f74ef047fe7}">
       <Declaration><![CDATA[METHOD PUBLIC Pending
 VAR_INPUT
-	ResponseId : T_MAXSTRING;
+	ResponseId : REFERENCE TO T_MAXSTRING;
 	RetryDelayInMs : UDINT;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[serverResponse.Pending(ResponseId, RetryDelayInMs);]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Success" Id="{900688fe-0167-4eee-bf11-e332ca2b544d}">
+    <Method Name="Success" Id="{74290220-d91b-4133-aac6-6ea71acd45ca}">
       <Declaration><![CDATA[METHOD PUBLIC Success
+VAR_INPUT
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[serverResponse.Success();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SuccessWithPayload" Id="{900688fe-0167-4eee-bf11-e332ca2b544d}">
+      <Declaration><![CDATA[METHOD PUBLIC SuccessWithPayload
 VAR_INPUT
 	PayloadDataAddress : PVOID;
 	PayloadDataSize : UDINT;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[chunkedResponseManager.HandleSuccess(serverResponse, PayloadDataAddress, PayloadDataSize);]]></ST>
+        <ST><![CDATA[chunkedResponseManager.HandleSuccessWithPayload(serverResponse, PayloadDataAddress, PayloadDataSize);]]></ST>
       </Implementation>
     </Method>
   </POU>

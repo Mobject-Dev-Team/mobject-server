@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="AsyncResponseSessionDataProxy" Id="{d218f0e2-61ed-476e-adcd-4da64d0bb237}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'linkalways'} 
+{attribute 'no_explicit_call' := 'This FB is a CLASS and must be accessed using methods or properties'}
+{attribute 'enable_dynamic_creation'}
+FUNCTION_BLOCK AsyncResponseSessionDataProxy EXTENDS Disposable IMPLEMENTS I_AsyncResponseSessionData
+VAR
+	sessionStorage : I_SessionStorage;
+	sessionId : T_MAXSTRING;
+	responseId : T_MAXSTRING;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Constructor" Id="{529146bd-f9e1-4784-87d1-616d5da773e1}" />
+    <Folder Name="Protected" Id="{cc0c9c67-e7d3-4dc1-9d00-23f151a3ff84}" />
+    <Method Name="Error" Id="{6c2243e9-e18c-49b1-b209-970917a8f861}">
+      <Declaration><![CDATA[METHOD PUBLIC Error
+VAR_INPUT
+	Message : T_MAXSTRING;
+END_VAR
+VAR
+	asyncReponseSessionData : I_AsyncResponseSessionData;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT TryGetAsyncResponseSessionData(asyncReponseSessionData) THEN
+	RETURN;
+END_IF
+
+asyncReponseSessionData.Error(Message);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{11d4a8e0-97b9-43d1-b86e-60c4a4a17e62}" FolderPath="Constructor\">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	SessionStorage : I_SessionStorage;
+	SessionId : T_MAXSTRING;
+	ResponseId : T_MAXSTRING;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.sessionStorage := SessionStorage;
+THIS^.sessionId := SessionId;
+THIS^.responseId := ResponseId;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="IsPending" Id="{61860a83-377a-41ea-a9cb-d72cef0b6895}">
+      <Declaration><![CDATA[PROPERTY PUBLIC IsPending : BOOL]]></Declaration>
+      <Get Name="Get" Id="{2fffd1b1-1951-4600-8866-742159501248}">
+        <Declaration><![CDATA[VAR
+	asyncReponseSessionData : I_AsyncResponseSessionData;
+END_VAR]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IF NOT TryGetAsyncResponseSessionData(asyncReponseSessionData) THEN
+	RETURN;
+END_IF
+
+IsPending := asyncReponseSessionData.IsPending;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Success" Id="{c019c2cb-aef6-4cb2-a4bd-4e53c8772d51}">
+      <Declaration><![CDATA[METHOD PUBLIC Success
+VAR_INPUT
+END_VAR
+VAR
+	asyncReponseSessionData : I_AsyncResponseSessionData;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT TryGetAsyncResponseSessionData(asyncReponseSessionData) THEN
+	RETURN;
+END_IF
+
+asyncReponseSessionData.Success();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SuccessWithPayload" Id="{68c79395-d725-4324-86a4-a1c522cfdeeb}">
+      <Declaration><![CDATA[METHOD PUBLIC SuccessWithPayload
+VAR_INPUT
+	PayloadDataAddress : PVOID;
+	PayloadDataSize : UDINT;
+END_VAR
+VAR
+	asyncReponseSessionData : I_AsyncResponseSessionData;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT TryGetAsyncResponseSessionData(asyncReponseSessionData) THEN
+	RETURN;
+END_IF
+
+asyncReponseSessionData.SuccessWithPayload(PayloadDataAddress, PayloadDataSize);]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="SuggestedRetryDelayInMs" Id="{ecfb88db-ef84-4878-bd19-e21b70cc3d9e}">
+      <Declaration><![CDATA[PROPERTY PUBLIC SuggestedRetryDelayInMs : UDINT]]></Declaration>
+      <Get Name="Get" Id="{c93769c6-159a-4682-ac2e-ccc1ac9beb80}">
+        <Declaration><![CDATA[VAR
+	asyncReponseSessionData : I_AsyncResponseSessionData;
+END_VAR]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IF NOT TryGetAsyncResponseSessionData(asyncReponseSessionData) THEN
+	RETURN;
+END_IF
+
+SuggestedRetryDelayInMs := asyncReponseSessionData.SuggestedRetryDelayInMs;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{2c2e50ea-9710-4e83-9456-57413032b13e}">
+        <Declaration><![CDATA[PUBLIC 
+VAR
+	asyncReponseSessionData : I_AsyncResponseSessionData;
+END_VAR]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IF NOT TryGetAsyncResponseSessionData(asyncReponseSessionData) THEN
+	RETURN;
+END_IF
+
+asyncReponseSessionData.SuggestedRetryDelayInMs := SuggestedRetryDelayInMs;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="TryGetAsyncResponseSessionData" Id="{f128bc72-5ba5-4410-bd74-87c4991ceaa2}" FolderPath="Protected\">
+      <Declaration><![CDATA[METHOD PROTECTED TryGetAsyncResponseSessionData : BOOL;
+VAR_INPUT
+	Destination : REFERENCE TO I_AsyncResponseSessionData;
+END_VAR
+VAR
+	sessionData : I_SessionData;
+	asyncSessionData : I_AsyncResponseSessionData;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT sessionStorage.TryRetreiveSessionDataById(sessionId, responseId, sessionData) THEN
+	RETURN;
+END_IF
+
+IF NOT __QUERYINTERFACE(sessionData, asyncSessionData) THEN
+	RETURN;
+END_IF
+
+Destination := asyncSessionData;
+TryGetAsyncResponseSessionData := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TryUpdateServerResponse" Id="{060ff17e-66e4-4c66-ad0e-c11709271780}">
+      <Declaration><![CDATA[METHOD PUBLIC TryUpdateServerResponse : BOOL
+VAR_INPUT
+	Response : I_ServerResponse;
+END_VAR
+VAR
+	asyncReponseSessionData : I_AsyncResponseSessionData;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT TryGetAsyncResponseSessionData(asyncReponseSessionData) THEN
+	RETURN;
+END_IF
+
+TryUpdateServerResponse := asyncReponseSessionData.TryUpdateServerResponse(Response);]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

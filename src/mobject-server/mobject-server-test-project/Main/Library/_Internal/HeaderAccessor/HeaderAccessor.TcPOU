@@ -1,0 +1,625 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="HeaderAccessor" Id="{a010cce2-94c9-4df4-b4cc-eb2746c15f07}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK HeaderAccessor IMPLEMENTS I_SessionHeaderAccessor, I_ServerResponseHeaderAccessor, I_AsyncResponseHeaderAccessor, I_ChunkedResponseHeaderAccessor, I_ChunkedRequestsHeaderAccessor, I_RpcHeaderAccessor]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Constants" Id="{167ef397-49e9-4415-a3de-4a1baa676bc1}" />
+    <Property Name="ContentType_Json" Id="{d03a35ff-e82e-4de3-b8b8-3e836f681b5f}" FolderPath="Constants\">
+      <Declaration><![CDATA[PROPERTY PUBLIC ContentType_Json : T_MAXSTRING]]></Declaration>
+      <Get Name="Get" Id="{2efe6cb2-e8e5-4258-89ac-aebce3cfea8c}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ContentType_Json := 'application/json';]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{5b5607d0-0168-4afd-b4a6-0a3129fef6de}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="HeaderKey_Accept" Id="{792cfe87-6628-4932-aaf2-f38d72ae422a}" FolderPath="Constants\">
+      <Declaration><![CDATA[PROPERTY PUBLIC HeaderKey_Accept : T_MAXSTRING]]></Declaration>
+      <Get Name="Get" Id="{de8dc017-cb1d-49dc-8dc4-8a06d54f6be7}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[HeaderKey_Accept := 'Accept';]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{bcd5a6f8-bb74-43f8-8714-74f65a07bb6b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="HeaderKey_ChunkSequence" Id="{46d19b85-496d-4c44-b303-fb8fb93901e5}" FolderPath="Constants\">
+      <Declaration><![CDATA[PROPERTY PUBLIC HeaderKey_ChunkSequence : T_MAXSTRING]]></Declaration>
+      <Get Name="Get" Id="{66c7d0e6-32b9-48ad-bfd0-0f7cdf455ffd}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[HeaderKey_ChunkSequence := 'Chunk-Sequence';]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{c6a49c1a-89be-464f-9487-61e0cc1bf5f0}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="HeaderKey_ChunkTotal" Id="{1359d1dd-3b58-472a-a89b-a88d40b8d230}" FolderPath="Constants\">
+      <Declaration><![CDATA[PROPERTY PUBLIC HeaderKey_ChunkTotal : T_MAXSTRING]]></Declaration>
+      <Get Name="Get" Id="{33988837-753c-4829-9beb-9d6149a08c2f}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[HeaderKey_ChunkTotal := 'Chunk-Total';]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{e73cd27a-9c46-4711-8ce7-623b33126d94}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="HeaderKey_ContentType" Id="{e8890c4e-782e-482f-9d0d-b8126c826fa5}" FolderPath="Constants\">
+      <Declaration><![CDATA[PROPERTY PUBLIC HeaderKey_ContentType : T_MAXSTRING]]></Declaration>
+      <Get Name="Get" Id="{0e4eeb9e-0a97-407e-ac7d-002f6fbe535b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[HeaderKey_ContentType := 'Content-Type';]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{cf83bb26-2f3f-4dd3-a5a0-82f60936ba94}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="HeaderKey_HasMoreChunks" Id="{71ed0ec8-6d2d-4acc-877c-1826895e07a7}" FolderPath="Constants\">
+      <Declaration><![CDATA[PROPERTY PUBLIC HeaderKey_HasMoreChunks : T_MAXSTRING]]></Declaration>
+      <Get Name="Get" Id="{26cc5234-e37f-4573-b932-d4cc706091eb}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[HeaderKey_HasMoreChunks := 'Has-More-Chunks';]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{893e134d-866e-4734-85cf-60092a03b285}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="HeaderKey_Message" Id="{4338629b-9674-4c47-8c2d-19bc8f8f0464}" FolderPath="Constants\">
+      <Declaration><![CDATA[PROPERTY PUBLIC HeaderKey_Message : T_MAXSTRING]]></Declaration>
+      <Get Name="Get" Id="{456513fe-7494-4688-9bbd-94103f6c84c0}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[HeaderKey_Message := 'Message';]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{c0a4baa5-af4d-4025-9a0e-56259be2cd9d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="HeaderKey_MethodName" Id="{a4055f22-3435-4604-83e4-1ca6a8f3e4fe}" FolderPath="Constants\">
+      <Declaration><![CDATA[PROPERTY PUBLIC HeaderKey_MethodName : T_MAXSTRING]]></Declaration>
+      <Get Name="Get" Id="{31128fdf-1462-495e-ae22-9f220df429be}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[HeaderKey_MethodName := 'Method-Name';]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{af3c6e14-1115-4478-b7fd-b48d2aed2865}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="HeaderKey_RequestId" Id="{c1fbe171-d879-452d-b2a7-b08e5b0bd058}" FolderPath="Constants\">
+      <Declaration><![CDATA[PROPERTY PUBLIC HeaderKey_RequestId : T_MAXSTRING]]></Declaration>
+      <Get Name="Get" Id="{4141ecee-7660-4f0f-87e1-392bfb0d23df}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[HeaderKey_RequestId := 'Request-Id';]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{5d6c91fc-abab-4bb2-920f-293a2c737303}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="HeaderKey_ResponseId" Id="{fd242df4-3408-40a8-ace7-312393e11255}" FolderPath="Constants\">
+      <Declaration><![CDATA[PROPERTY PUBLIC HeaderKey_ResponseId : T_MAXSTRING]]></Declaration>
+      <Get Name="Get" Id="{653e0a43-a6f3-4740-a004-4216b35df088}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[HeaderKey_ResponseId := 'Response-Id';]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{24ece282-dd0e-4582-aff7-39e860889307}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="HeaderKey_RetryDelay" Id="{6fe1001a-42d9-422e-a38b-a21ccd76aa2f}" FolderPath="Constants\">
+      <Declaration><![CDATA[PROPERTY PUBLIC HeaderKey_RetryDelay : T_MAXSTRING]]></Declaration>
+      <Get Name="Get" Id="{4ee3affe-28b0-46b4-b5c9-37c4ece96e97}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[HeaderKey_RetryDelay := 'Retry-Delay';]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{da3e3791-d470-40d3-ac44-2ea3514ded2e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="HeaderKey_SessionId" Id="{a1a690d5-3ed0-4aec-b53c-0cf7b892685a}" FolderPath="Constants\">
+      <Declaration><![CDATA[PROPERTY PUBLIC HeaderKey_SessionId : T_MAXSTRING]]></Declaration>
+      <Get Name="Get" Id="{19b80481-e949-4a3c-b644-0aa8e2e918ba}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[HeaderKey_SessionId := 'Session-Id';]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{ab5a71be-3930-466c-a0ce-60c047d446ea}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="HeaderKey_Status" Id="{eb1b5ccf-c857-4369-ab47-6554e7978d55}" FolderPath="Constants\">
+      <Declaration><![CDATA[PROPERTY PUBLIC HeaderKey_Status : T_MAXSTRING]]></Declaration>
+      <Get Name="Get" Id="{fd96cf8a-c3df-4511-a9b3-a924e7c2a6d9}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[HeaderKey_Status := 'Status';]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{69795e5b-94e9-486c-9d0b-d2a1a9a922bf}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="HeaderKey_Type" Id="{f980b932-46b6-436a-af71-b62a81c2eff3}" FolderPath="Constants\">
+      <Declaration><![CDATA[PROPERTY PUBLIC HeaderKey_Type : T_MAXSTRING]]></Declaration>
+      <Get Name="Get" Id="{2561d380-804f-4520-8d1f-8815789e0a32}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[HeaderKey_Type := 'Type';]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{ca9dcb6d-12ba-44c7-92e9-9e341f2e0f48}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="StatusValue_Accepted" Id="{d1add569-f226-46c2-94ed-e25bbb6f9764}" FolderPath="Constants\">
+      <Declaration><![CDATA[PROPERTY PUBLIC StatusValue_Accepted : T_MAXSTRING]]></Declaration>
+      <Get Name="Get" Id="{963d875f-bff5-4bdd-8bd0-f14ce9eae5c2}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[StatusValue_Accepted := 'Accepted';]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{7616a820-3304-4a65-a716-3f09422dc43b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="StatusValue_Busy" Id="{33dc8a98-6732-4f37-9cc1-8b859d0a85de}" FolderPath="Constants\">
+      <Declaration><![CDATA[PROPERTY PUBLIC StatusValue_Busy : T_MAXSTRING]]></Declaration>
+      <Get Name="Get" Id="{8eccc04a-e6dc-42ba-9305-2ca8e41c5a67}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[StatusValue_Busy := 'Busy';]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{52e8e361-915a-4788-98f9-c4f23b3549b1}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="StatusValue_Error" Id="{567583a5-6838-4aad-9064-f8c65216b5d1}" FolderPath="Constants\">
+      <Declaration><![CDATA[PROPERTY PUBLIC StatusValue_Error : T_MAXSTRING]]></Declaration>
+      <Get Name="Get" Id="{8893971e-3725-478e-9a9d-dd917143923a}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[StatusValue_Error := 'Error';]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{86ac0a50-555c-4fb5-9593-47a5d7efa9bb}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="StatusValue_Pending" Id="{2ba9e3bb-bd01-4e5c-82fa-d0f876f90b6a}" FolderPath="Constants\">
+      <Declaration><![CDATA[PROPERTY PUBLIC StatusValue_Pending : T_MAXSTRING]]></Declaration>
+      <Get Name="Get" Id="{18430665-a564-4c7e-a280-afc736fd0514}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[StatusValue_Pending := 'Pending';]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{c8a28e52-db5b-4cb8-82d5-ebca0ca9469d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="StatusValue_Success" Id="{c5721e59-fa9a-4cc0-8a10-cfdf8d2a8fee}" FolderPath="Constants\">
+      <Declaration><![CDATA[PROPERTY PUBLIC StatusValue_Success : T_MAXSTRING]]></Declaration>
+      <Get Name="Get" Id="{a5b9931a-5cc8-4ca0-be5d-ddae52f4ad0d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[StatusValue_Success := 'Success';]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{643c9d7f-fb08-41cb-a0b9-23f5fa212ef5}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="TryGetAcceptResponseFormatFromRequest" Id="{9f98acfb-781d-44c8-a5d4-ae59b93c0b57}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetAcceptResponseFormatFromRequest : BOOL
+VAR_INPUT
+	Request : I_Request;
+	Destination : ANY;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TryGetAcceptResponseFormatFromRequest := Request.Header.TryGetField(HeaderKey_Accept,Destination);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TryGetChunkSequenceFromRequest" Id="{abd949fa-741d-4310-899d-5574d0d916ce}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetChunkSequenceFromRequest : BOOL
+VAR_INPUT
+	Request : I_Request;
+	Destination : REFERENCE TO DINT;
+END_VAR
+VAR
+	chunkSequence : DINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT Request.Header.TryGetField(HeaderKey_ChunkSequence,chunkSequence) THEN
+	RETURN;
+END_IF
+
+Destination := chunkSequence;
+TryGetChunkSequenceFromRequest := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TryGetChunkTotalFromRequest" Id="{fc66068f-cef7-42a7-a4f4-3662bbe3c4bc}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetChunkTotalFromRequest : BOOL
+VAR_INPUT
+	Request : I_Request;
+	Destination : REFERENCE TO DINT;
+END_VAR
+VAR
+	chunkTotal : DINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT Request.Header.TryGetField(HeaderKey_ChunkTotal,chunkTotal) THEN
+	RETURN;
+END_IF
+
+Destination := chunkTotal;
+TryGetChunkTotalFromRequest := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TryGetContentTypeFromRequest" Id="{bfc2f968-6804-4b0d-be31-582c5988f399}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetContentTypeFromRequest : BOOL
+VAR_INPUT
+	Request : I_Request;
+	Destination : ANY;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TryGetContentTypeFromRequest := Request.Header.TryGetField(HeaderKey_ContentType,Destination);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TryGetHasMoreChunksFromRequest" Id="{a6fd5b5d-572f-4b12-ba85-babb0355453c}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetHasMoreChunksFromRequest : BOOL
+VAR_INPUT
+	Request : I_Request;
+	Destination : REFERENCE TO BOOL;
+END_VAR
+VAR
+	hasMoreChunks : BOOL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT Request.Header.TryGetField(HeaderKey_HasMoreChunks,hasMoreChunks) THEN
+	RETURN;
+END_IF
+
+Destination := hasMoreChunks;
+TryGetHasMoreChunksFromRequest := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TryGetMethodNameFromRequest" Id="{796af428-620d-4d8c-8b43-c33f86aea09a}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetMethodNameFromRequest : BOOL
+VAR_INPUT
+	Request : I_Request;
+	Destination : ANY;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TryGetMethodNameFromRequest := Request.Header.TryGetField(HeaderKey_MethodName,Destination);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TryGetRequestIdFromRequest" Id="{c05ae6bc-8c69-4d16-9066-4fe4e9e97dc3}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetRequestIdFromRequest : BOOL
+VAR_INPUT
+	Request : I_Request;
+	Destination : REFERENCE TO T_MAXSTRING;
+END_VAR
+VAR
+	requestId : T_MAXSTRING;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT Request.Header.TryGetField(HeaderKey_RequestId,requestId) THEN
+	RETURN;
+END_IF
+
+Destination := requestId;
+TryGetRequestIdFromRequest := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TryGetResponseIdFromRequest" Id="{3f5e3861-3088-43c1-8db2-7c4a461570ec}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetResponseIdFromRequest : BOOL
+VAR_INPUT
+	Request : I_Request;
+	Destination : ANY;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TryGetResponseIdFromRequest := Request.Header.TryGetField(HeaderKey_ResponseId,Destination);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TryGetSessionIdFromRequest" Id="{b3fc1553-7501-4e75-a559-67c9e774e971}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetSessionIdFromRequest : BOOL
+VAR_INPUT
+	Request : I_Request;
+	Destination : REFERENCE TO T_MAXSTRING;
+END_VAR
+VAR
+	sessionId : T_MAXSTRING;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT Request.Header.TryGetField(HeaderKey_SessionId, sessionId) THEN
+	RETURN;
+END_IF
+
+Destination := sessionId;
+TryGetSessionIdFromRequest := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TryGetSessionIdFromResponse" Id="{99f15cca-8910-4c79-be2a-74dff847fd21}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetSessionIdFromResponse : BOOL
+VAR_INPUT
+	Response : I_ServerResponse;
+	Destination : ANY;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TryGetSessionIdFromResponse := Response.Header.TryGetField(HeaderKey_SessionId,Destination);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TryGetTypeFromRequest" Id="{015306ba-127b-434c-b992-5185a59c0c41}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetTypeFromRequest : BOOL
+VAR_INPUT
+	Request : I_Request;
+	Destination : ANY;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TryGetTypeFromRequest := Request.Header.TryGetField(HeaderKey_Type,Destination);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="UpdateRequestWithSessionId" Id="{efa97519-3a2b-4d80-b64a-77b84b57b0d7}">
+      <Declaration><![CDATA[METHOD PUBLIC UpdateRequestWithSessionId
+VAR_INPUT
+	Request : I_Request;
+	SessionId : T_MAXSTRING;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Request.Header.TryWriteField(HeaderKey_SessionId,SessionId);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="UpdateResponseWithAccepted" Id="{b9ac81cf-e4f7-4bfb-8130-c94070253b07}">
+      <Declaration><![CDATA[METHOD PUBLIC UpdateResponseWithAccepted
+VAR_INPUT
+	Response : I_ServerResponse;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Response.Header.TryWriteField(HeaderKey_Status,StatusValue_Accepted);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="UpdateResponseWithBusy" Id="{b93888c3-35d1-4f8d-af1f-258661ea5231}">
+      <Declaration><![CDATA[METHOD PUBLIC UpdateResponseWithBusy
+VAR_INPUT
+	Response : I_ServerResponse;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Response.Header.TryWriteField(HeaderKey_Status,StatusValue_Busy);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="UpdateResponseWithError" Id="{17f2745b-dfbf-4ddd-b624-e0acbc1d5812}">
+      <Declaration><![CDATA[METHOD PUBLIC UpdateResponseWithError
+VAR_INPUT
+	Response : I_ServerResponse;
+	Message : T_MAXSTRING;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Response.Header.TryWriteField(HeaderKey_Status,StatusValue_Error);
+Response.Header.TryWriteField(HeaderKey_Message,Message);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="UpdateResponseWithHasMoreChunks" Id="{ba5ac913-95c3-4624-827b-2016393b8f42}">
+      <Declaration><![CDATA[METHOD PUBLIC UpdateResponseWithHasMoreChunks
+VAR_INPUT
+	Response : I_ServerResponse;
+	ResponseId : T_MAXSTRING;
+END_VAR
+VAR
+	hasMoreChunks : BOOL := TRUE;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Response.Header.TryWriteField(HeaderKey_ResponseId,ResponseId);
+Response.Header.TryWriteField(HeaderKey_HasMoreChunks,hasMoreChunks);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="UpdateResponseWithPending" Id="{edc9fb7d-829d-4720-b283-c2ade08a7913}">
+      <Declaration><![CDATA[METHOD PUBLIC UpdateResponseWithPending
+VAR_INPUT
+	Response : I_ServerResponse;
+	ResponseId : T_MAXSTRING;
+	RetryDelayInMs : UDINT;
+END_VAR
+VAR
+	retryDelayInMsString : T_MAXSTRING;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Response.Header.TryWriteField(HeaderKey_Status,StatusValue_Pending);
+Response.Header.TryWriteField(HeaderKey_ResponseId, ResponseId);
+
+IF RetryDelayInMs > 0 THEN
+	retryDelayInMsString := UDINT_TO_STRING(RetryDelayInMs);
+	Response.Header.TryWriteField(HeaderKey_RetryDelay, retryDelayInMsString);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="UpdateResponseWithSessionId" Id="{ae90e5e2-0f65-477c-ac60-a71b49487f6c}">
+      <Declaration><![CDATA[METHOD PUBLIC UpdateResponseWithSessionId
+VAR_INPUT
+	Response : I_ServerResponse;
+	SessionId : T_MAXSTRING;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Response.Header.TryWriteField(HeaderKey_SessionId,SessionId);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="UpdateResponseWithSuccess" Id="{45bdc25d-fa63-43b2-bca5-8d26141512fc}">
+      <Declaration><![CDATA[METHOD PUBLIC UpdateResponseWithSuccess
+VAR_INPUT
+	Response : I_ServerResponse;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Response.Header.TryWriteField(HeaderKey_Status,StatusValue_Success);]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

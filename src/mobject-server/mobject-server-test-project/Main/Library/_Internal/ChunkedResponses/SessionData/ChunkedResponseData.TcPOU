@@ -79,7 +79,7 @@ IF Size > remainingLengthToSendInBytes THEN
 	sendSize := remainingLengthToSendInBytes;
 END_IF
 
-Response.Success(currentPointerLocation, sendSize);
+Response.SuccessWithPayload(currentPointerLocation, sendSize);
 
 currentPointerLocation := currentPointerLocation + sendSize;
 remainingLengthToSendInBytes := remainingLengthToSendInBytes - sendSize;]]></ST>

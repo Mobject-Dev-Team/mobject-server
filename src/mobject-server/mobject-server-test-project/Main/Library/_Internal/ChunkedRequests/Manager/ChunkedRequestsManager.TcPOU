@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <POU Name="ChunkedRequestsManager" Id="{d60679ab-47a7-4db9-808f-1b091389a559}" SpecialFunc="None">
     <Declaration><![CDATA[{attribute 'linkalways'} 
@@ -8,7 +8,7 @@ FUNCTION_BLOCK ChunkedRequestsManager IMPLEMENTS I_ChunkedRequestsManager
 VAR
 	maximumChunkSizeInBytes : UDINT;
 	sessionStorage : I_SessionStorage;
-	config : I_ChunkedRequestsManagerConfig;
+	headerAccessor : I_ChunkedRequestsHeaderAccessor;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -37,13 +37,13 @@ VAR_INPUT
 	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
 	MaximumChunkSizeInBytes : UDINT;
 	SessionStorage : I_SessionStorage;
-	Config : I_ChunkedRequestsManagerConfig;
+	HeaderAccessor : I_ChunkedRequestsHeaderAccessor;
 END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[THIS^.maximumChunkSizeInBytes := MaximumChunkSizeInBytes;
 THIS^.sessionStorage := SessionStorage;
-THIS^.config := Config;]]></ST>
+THIS^.headerAccessor := HeaderAccessor;]]></ST>
       </Implementation>
     </Method>
     <Method Name="TryHandleIncomingRequest" Id="{e2f4624f-76bc-46b3-aab8-c4659f29cdb0}">
@@ -67,9 +67,9 @@ VAR
 	chunkedRequest : ChunkedRequest(Request, chunkedRequestData);
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[hasChunkSequenceHeader := config.TryGetChunkSequenceFromRequest(Request, chunkSequence);
-hasChunkTotalHeader := config.TryGetChunkTotalFromRequest(Request, chunkTotal);
-hasMoreChunksHeader := config.TryGetHasMoreChunksFromRequest(Request, hasMoreChunks);
+        <ST><![CDATA[hasChunkSequenceHeader := headerAccessor.TryGetChunkSequenceFromRequest(Request, chunkSequence);
+hasChunkTotalHeader := headerAccessor.TryGetChunkTotalFromRequest(Request, chunkTotal);
+hasMoreChunksHeader := headerAccessor.TryGetHasMoreChunksFromRequest(Request, hasMoreChunks);
 
 IF (NOT hasChunkSequenceHeader) AND (NOT hasChunkTotalHeader) AND (NOT hasMoreChunksHeader) THEN
 	// this is not a chunked request, simply return and it will be handled by the next middleware automatically.
@@ -109,13 +109,13 @@ IF NOT hasMoreChunksHeader THEN
 	RETURN;
 END_IF
 
-IF NOT config.TryGetRequestIdFromRequest(Request, requestId) THEN
+IF NOT headerAccessor.TryGetRequestIdFromRequest(Request, requestId) THEN
 	response.Error('Chunked Request found, but request id header data is missing');
 	TryHandleIncomingRequest := TRUE;
 	RETURN;
 END_IF
 
-IF NOT config.TryGetSessionIdFromRequest(Request, sessionId) THEN
+IF NOT headerAccessor.TryGetSessionIdFromRequest(Request, sessionId) THEN
 	response.Error('Chunked Request found, but session id header data is missing');
 	TryHandleIncomingRequest := TRUE;
 	RETURN;
@@ -124,7 +124,7 @@ END_IF
 // at this point we know we have all of the data required for handling a chunked request
 
 IF NOT sessionStorage.TryRetreiveSessionDataById(sessionId, requestId, sessionData) THEN	
-	chunkedRequestData := CreateChunkedRequestData(maximumChunkSizeInBytes, chunkTotal);
+	chunkedRequestData := CreateChunkedRequestData(maximumChunkSizeInBytes, DINT_TO_UDINT(chunkTotal));
 	sessionStorage.TryStoreSessionDataById(sessionId, requestId, chunkedRequestData);
 ELSIF NOT __QUERYINTERFACE(sessionData, chunkedRequestData) THEN
 	response.Error('Server was unable to retreive previous session data as chunked request data');
