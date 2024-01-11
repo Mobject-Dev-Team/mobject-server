@@ -73,7 +73,7 @@ END_VAR]]></Declaration>
 	RETURN;
 END_IF
 
-sendSize := Size;
+sendSize := Size - 1;
 
 IF Size > remainingLengthToSendInBytes THEN 
 	sendSize := remainingLengthToSendInBytes;

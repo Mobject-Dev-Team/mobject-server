@@ -47,14 +47,14 @@
   },
   "dependencyFiles": [
     {
-      "name": "Scripts/JsonRpcApi.js",
-      "description": "",
-      "type": "JavaScript"
-    },
-    {
       "name": "Fonts/Fonts.css",
       "description": "",
       "type": "Stylesheet"
+    },
+    {
+      "name": "Scripts/mobject-client.js",
+      "description": "",
+      "type": "JavaScript"
     }
   ],
   "userControls": [],

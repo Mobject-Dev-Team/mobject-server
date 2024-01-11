@@ -28,7 +28,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[timer(in := Busy, pt := T#10MS);
+        <ST><![CDATA[timer(in := Busy, pt := T#1S);
 
 IF timer.Q THEN
 	asyncResponse.CompleteWithString(result);

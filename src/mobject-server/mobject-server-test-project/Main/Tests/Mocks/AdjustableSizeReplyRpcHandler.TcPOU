@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="AdjustableSizeReplyRpcHandler" Id="{9299e15a-1853-4d5c-887c-44fb5a606abe}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK AdjustableSizeReplyRpcHandler IMPLEMENTS I_RpcHandler
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Handle" Id="{9f2bbb3b-e3e7-4379-9b54-5579b5c73f06}">
+      <Declaration><![CDATA[METHOD Handle
+VAR_INPUT
+	Parameters : I_RpcParameters;
+	Response : I_SynchronousRpcResponse;
+END_VAR
+VAR
+	size : UDINT;
+	pBytes : POINTER TO BYTE;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT Parameters.TryGetParameter('Size',size) THEN
+	Response.RejectWithMessage('Missing Size parameter');
+	RETURN;
+END_IF
+
+IF size = 0 THEN 
+	Response.CompleteWithNull();
+END_IF
+
+pBytes := __NEW(BYTE, size);
+memset(pBytes, 1, size);
+
+Response.CompleteWithBytesAsHex(pBytes, size);
+
+__Delete(pBytes);]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

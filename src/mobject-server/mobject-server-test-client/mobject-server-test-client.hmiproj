@@ -142,7 +142,7 @@
     <Content Include="Imports\payload64kb.json">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="Scripts\JsonRpcApi.js">
+    <Content Include="Scripts\mobject-client.js">
       <SubType>Content</SubType>
     </Content>
     <Content Include="Server\ADS\ADS.Config.default.json">

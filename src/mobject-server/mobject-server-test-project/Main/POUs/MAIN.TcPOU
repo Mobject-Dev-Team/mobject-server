@@ -10,6 +10,7 @@ VAR
 	server : RpcServer;
 	concatStringRpcHandler : ConcatStringRpcHandler;	
 	asyncEchoRpcHandler : AsyncEchoRpcHandler;
+	adjustableSizeReplyRpcHandler : AdjustableSizeReplyRpcHandler;
 
 END_VAR
 ]]></Declaration>
@@ -22,6 +23,7 @@ IF NOT initialized THEN
 	initialized := TRUE;
 	server.RegisterRpcHandler('concat',concatStringRpcHandler);
 	server.RegisterRpcHandler('asyncEcho',asyncEchoRpcHandler);
+	server.RegisterRpcHandler('adjustableSizeReply',adjustableSizeReplyRpcHandler);
 END_IF
 
 server.CyclicCall();

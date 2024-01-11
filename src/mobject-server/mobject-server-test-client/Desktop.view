@@ -15,12 +15,13 @@
           <div><button id="testConcat5mbPayload">Test Concat with 5mb Payload</button></div>
           <div><button id="testConcat">Test Concat</button></div>
           <div><button id="testAsyncEcho">Test Async Echo</button></div>
+          <div><button id="testAdjustableSizeReply">Test Adjustable Size Reply with 200kb return</button></div>
       </div>
 
       <script>
 
-        // Creating a new TcHmiAsyncClient instance
-        const client = new TcHmiAsyncClient('%s%PLC1.MAIN.server.HandleRequest%/s%');
+        // Creating a new RpcClient instance
+        const client = new TcHmiRpcClient('%s%PLC1.MAIN.server.HandleRequest%/s%');
 
         /**
          * Function to call concat with payload
@@ -29,10 +30,11 @@
         async function callConcatRpcWithPayload(payload) {
             console.time('Duration, concat with payload');
             try {
+                console.log('RPC Call Started');
                 const response = await client.rpcCall('concat', payload);
-                console.log('Response:', response);
+                console.log('RPC Call Final Reply:', response);
             } catch (error) {
-                console.error('Error:', error);
+                console.error('RPC Call Error:', error);
             } finally {
                 console.timeEnd('Duration, concat with payload');
             }
@@ -44,34 +46,48 @@
         async function callConcatRpc() {
             console.time('Duration, concat');
             try {
+                console.log('RPC Call Started');
                 const response = await client.rpcCall('concat', { STR1: 'foo', STR2: 'bar' });
-                console.log('Response:', response);
+                console.log('RPC Call Final Reply:', response);
             } catch (error) {
-                console.error('Error:', error);
+                console.error('RPC Call Error:', error);
             } finally {
                 console.timeEnd('Duration, concat');
             }
         }
 
         /**
-         * Function to call asyncConcat with inline object
+         * Function to call asyncEcho with inline object
          */
         async function callAsyncEchoRpc() {
             console.time('Duration, async echo');
             try {
+                console.log('RPC Call Started');
                 const response = await client.rpcCall('asyncEcho', { Echo: 'hello'});
-                console.log('Response:', response);
+                console.log('RPC Call Final Reply:', response);
             } catch (error) {
-                console.error('Error:', error);
+                console.error('RPC Call Error:', error);
             } finally {
                 console.timeEnd('Duration, async echo');
             }
         }
 
         /**
-         * Fetches data from a JSON file and calls RPC with the payload
-         * @param {string} path - The path to the JSON file
-         */
+        * Function to call asyncEcho with payload
+        */
+        async function callAdjustableSizeReplyRpc(size) {
+            console.time('Duration, adjustable size reply');
+            try {
+                console.log('RPC Call Started');
+                const response = await client.rpcCall('adjustableSizeReply', { Size: size});
+                console.log('RPC Call Final Reply:', response);
+            } catch (error) {
+                console.error('RPC Call Error:', error);
+            } finally {
+                console.timeEnd('Duration, adjustable size reply');
+            }
+        }
+
         async function fetchAndCallConcatRpcWithPayload(path) {
             try {
                 const response = await fetch(path);
@@ -80,6 +96,10 @@
             } catch (error) {
                 console.error('Error loading JSON:', error);
             }
+        }
+
+        function createStringOfAs(byteSize) {
+            return 'a'.repeat(byteSize);
         }
 
         document.getElementById('testConcat64kbPayload').addEventListener('click', async () => {
@@ -96,6 +116,10 @@
 
         document.getElementById('testAsyncEcho').addEventListener('click', async () => {
             await callAsyncEchoRpc();
+        });
+
+        document.getElementById('testAdjustableSizeReply').addEventListener('click', async () => {
+            await callAdjustableSizeReplyRpc(100000);
         });
 
       </script>
