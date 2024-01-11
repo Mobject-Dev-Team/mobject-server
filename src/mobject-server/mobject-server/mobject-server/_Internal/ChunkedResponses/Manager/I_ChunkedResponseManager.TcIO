@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="I_ChunkedResponseManager" Id="{e36d7fcb-d0c1-0900-036c-9d8ca6c807d1}">
+    <Declaration><![CDATA[INTERFACE I_ChunkedResponseManager
+]]></Declaration>
+    <Method Name="HandleSuccessWithPayload" Id="{5cd4e017-b693-038f-203a-bd7210c0aaeb}">
+      <Declaration><![CDATA[METHOD PUBLIC HandleSuccessWithPayload;
+VAR_INPUT
+	OriginalResponse : I_ServerResponse;
+	SourceAddress : PVOID;
+	SourceSize : UDINT;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="TryHandleIncomingRequest" Id="{970004ae-420d-0c9c-0b44-a7a3044b1eb1}">
+      <Declaration><![CDATA[METHOD PUBLIC TryHandleIncomingRequest : BOOL
+VAR_INPUT
+	Request : I_Request;
+	Response : I_ServerResponse;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

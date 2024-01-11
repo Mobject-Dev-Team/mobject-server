@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="I_SessionHeaderAccessor" Id="{2d1dce30-eb78-0293-331d-481e9066be23}">
+    <Declaration><![CDATA[INTERFACE I_SessionHeaderAccessor
+]]></Declaration>
+    <Method Name="TryGetSessionIdFromRequest" Id="{9d51c638-f9ed-08e2-2323-78794f6e0d82}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetSessionIdFromRequest : BOOL
+VAR_INPUT
+	Request : I_Request;
+	Destination : REFERENCE TO T_MAXSTRING;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="UpdateRequestWithSessionId" Id="{e6801f14-5d46-0a10-1b69-078e5cf73e75}">
+      <Declaration><![CDATA[METHOD PUBLIC UpdateRequestWithSessionId
+VAR_INPUT
+	Request : I_Request;
+	SessionId : T_MAXSTRING;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="UpdateResponseWithSessionId" Id="{132ddb2b-519c-020a-351b-92159d5a1957}">
+      <Declaration><![CDATA[METHOD PUBLIC UpdateResponseWithSessionId
+VAR_INPUT
+	Response : I_ServerResponse;
+	SessionId : T_MAXSTRING;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

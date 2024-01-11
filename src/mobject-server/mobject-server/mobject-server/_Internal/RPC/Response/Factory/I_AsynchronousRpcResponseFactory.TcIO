@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="I_AsynchronousRpcResponseFactory" Id="{ab248955-460c-0f24-2716-43d11523fb38}">
+    <Declaration><![CDATA[INTERFACE I_AsynchronousRpcResponseFactory
+]]></Declaration>
+    <Method Name="TryCreate" Id="{464f5bb9-b0f7-0531-192b-1aca7824cae7}">
+      <Declaration><![CDATA[METHOD PUBLIC TryCreate : BOOL
+VAR_INPUT
+	Destination : REFERENCE TO I_AsynchronousRpcResponse;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

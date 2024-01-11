@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="I_Timestamp" Id="{cda42b70-ee0a-01ec-339c-c264e0149db9}">
+    <Declaration><![CDATA[INTERFACE I_Timestamp
+]]></Declaration>
+    <Method Name="IsDurationElapsed" Id="{ee250b15-aa7f-064a-29b9-5b21e87a7149}">
+      <Declaration><![CDATA[METHOD PUBLIC IsDurationElapsed : BOOL
+VAR_INPUT
+	Duration : TIME;
+END_VAR]]></Declaration>
+    </Method>
+    <Property Name="TimeSince" Id="{798c4094-5997-0a6a-04ca-7eee52ed2a40}">
+      <Declaration><![CDATA[PROPERTY PUBLIC TimeSince : TIME]]></Declaration>
+      <Get Name="Get" Id="{0df1e69a-e95d-0b42-2ff7-a939ec21dbe4}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+  </Itf>
+</TcPlcObject>

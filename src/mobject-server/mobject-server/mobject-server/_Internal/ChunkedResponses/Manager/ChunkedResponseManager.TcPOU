@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="ChunkedResponseManager" Id="{3d8bc4c1-afb6-0b3d-2d8b-2af974c01b7e}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'linkalways'} 
+{attribute 'no_explicit_call' := 'This FB is a CLASS and must be accessed using methods or properties'}
+{attribute 'enable_dynamic_creation'}
+FUNCTION_BLOCK ChunkedResponseManager IMPLEMENTS I_ChunkedResponseManager
+VAR
+	maximumChunkSizeInBytes : UDINT;
+	sessionStorage : I_SessionStorage;
+	responseIdGenerator : I_ResponseIdGenerator;
+	headerAccessor : I_ChunkedResponseHeaderAccessor;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Constructor" Id="{b6e129af-bee2-09ad-34f1-94ddf5ae279b}" />
+    <Folder Name="Private" Id="{a25c9801-e2ae-005a-0df6-10314690013d}" />
+    <Method Name="CreateChunkedResponseData" Id="{02312ad0-fdef-05e4-3ce0-ab954b876ba8}" FolderPath="Private\">
+      <Declaration><![CDATA[METHOD PUBLIC CreateChunkedResponseData : I_ChunkedResponseData
+VAR_INPUT
+	DataAddress : PVOID;
+	DataSize : UDINT;
+END_VAR
+VAR
+	pChunkedResponseData : POINTER TO ChunkedResponseData;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[pChunkedResponseData := __NEW(ChunkedResponseData(Address := DataAddress, Size:=DataSize));
+CreateChunkedResponseData := pChunkedResponseData^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{0b8650a0-c820-057f-05f5-721d47016003}" FolderPath="Constructor\">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	MaximumChunkSizeInBytes : UDINT;
+	SessionStorage : I_SessionStorage;
+	ResponseIdGenerator : I_ResponseIdGenerator;
+	HeaderAccessor : I_ChunkedResponseHeaderAccessor;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.maximumChunkSizeInBytes := MaximumChunkSizeInBytes;
+THIS^.sessionStorage := SessionStorage;
+THIS^.responseIdGenerator := ResponseIdGenerator;
+This^.headerAccessor := HeaderAccessor;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="HandleSuccessWithPayload" Id="{8ef07f49-7c88-03ec-10fd-2784852bcb18}">
+      <Declaration><![CDATA[METHOD PUBLIC HandleSuccessWithPayload
+VAR_INPUT
+	OriginalResponse : I_ServerResponse;
+	SourceAddress : PVOID;
+	SourceSize : UDINT;
+END_VAR
+VAR
+	sessionId : T_MAXSTRING;
+	responseId : T_MAXSTRING;
+	chunkedResponseData : I_ChunkedResponseData;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF SourceSize <= maximumChunkSizeInBytes THEN
+	OriginalResponse.SuccessWithPayload(SourceAddress, SourceSize);
+	RETURN;
+END_IF
+
+IF NOT headerAccessor.TryGetSessionIdFromResponse(OriginalResponse,sessionId) THEN
+	OriginalResponse.Error('Unable to chunk oversized response without a sessionId');
+	RETURN;
+END_IF
+
+chunkedResponseData := CreateChunkedResponseData(SourceAddress, SourceSize);
+responseId := responseIdGenerator.Generate();
+
+IF NOT sessionStorage.TryStoreSessionDataById(sessionId, responseId, chunkedResponseData) THEN
+	OriginalResponse.Error('Unable to store oversized response');
+	chunkedResponseData.Dispose();
+	RETURN;
+END_IF
+
+headerAccessor.UpdateResponseWithHasMoreChunks(OriginalResponse, responseId);
+chunkedResponseData.SendNextChunk(OriginalResponse, maximumChunkSizeInBytes);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TryHandleIncomingRequest" Id="{59223c85-07ae-005b-1aff-d9509e3bf3ff}">
+      <Declaration><![CDATA[METHOD PUBLIC TryHandleIncomingRequest : BOOL
+VAR_INPUT
+	Request : I_Request;
+	Response : I_ServerResponse;
+END_VAR
+VAR
+	responseId : T_MAXSTRING;
+	sessionId : T_MAXSTRING;
+	sessionData : I_SessionData;
+	chunkedResponseData : I_ChunkedResponseData;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT headerAccessor.TryGetResponseIdFromRequest(Request, responseId) THEN
+	RETURN;
+END_IF
+
+IF NOT headerAccessor.TryGetSessionIdFromRequest(Request, sessionId) THEN
+	RETURN;
+END_IF
+
+IF NOT sessionStorage.TryRetreiveSessionDataById(sessionId, responseId, sessionData) THEN
+	RETURN;
+END_IF
+
+IF NOT __QUERYINTERFACE(sessionData, chunkedResponseData) THEN
+	RETURN;
+END_IF
+
+IF chunkedResponseData.SizeRemaining > maximumChunkSizeInBytes THEN
+	headerAccessor.UpdateResponseWithHasMoreChunks(Response, responseId);
+END_IF
+
+chunkedResponseData.SendNextChunk(Response, maximumChunkSizeInBytes);
+
+IF chunkedResponseData.SendComplete THEN
+	sessionStorage.DisposeSessionDataById(sessionId, responseId);
+END_IF
+
+TryHandleIncomingRequest := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

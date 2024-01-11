@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="I_ResponseIdGenerator" Id="{a3a52b48-80d7-0738-0a64-e09497b0074b}">
+    <Declaration><![CDATA[INTERFACE I_ResponseIdGenerator
+]]></Declaration>
+    <Method Name="Generate" Id="{844835a0-bc52-08f6-3590-ccb12681aaa7}">
+      <Declaration><![CDATA[METHOD PUBLIC Generate : T_MAXSTRING
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="I_RpcHeaderAccessor" Id="{6414b0e5-9074-0b26-03d1-a04f0b89079c}">
+    <Declaration><![CDATA[INTERFACE I_RpcHeaderAccessor]]></Declaration>
+    <Property Name="ContentType_Json" Id="{ffaae006-0a92-01ea-18b6-79163d0161fc}">
+      <Declaration><![CDATA[PROPERTY PUBLIC ContentType_Json : T_MAXSTRING]]></Declaration>
+      <Get Name="Get" Id="{51bcc622-d17a-06b1-3ead-130353ea8005}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="TryGetAcceptResponseFormatFromRequest" Id="{d3ae43a2-119f-0a41-107d-2e2ad23b1703}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetAcceptResponseFormatFromRequest : BOOL
+VAR_INPUT
+	Request : I_Request;
+	Destination : ANY;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="TryGetContentTypeFromRequest" Id="{2f69c95c-26fc-0a8c-1da9-f3f352d247b3}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetContentTypeFromRequest : BOOL
+VAR_INPUT
+	Request : I_Request;
+	Destination : ANY;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="TryGetMethodNameFromRequest" Id="{ac2b8339-0d89-0afc-3b1c-59acdf85cb26}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetMethodNameFromRequest : BOOL
+VAR_INPUT
+	Request : I_Request;
+	Destination : ANY;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="TryGetTypeFromRequest" Id="{ba171ff9-3d29-0ad0-3be8-b1e2e45b0255}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetTypeFromRequest : BOOL
+VAR_INPUT
+	Request : I_Request;
+	Destination : ANY;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

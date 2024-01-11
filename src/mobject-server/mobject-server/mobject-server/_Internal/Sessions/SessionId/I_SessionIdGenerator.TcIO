@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="I_SessionIdGenerator" Id="{ad7f292d-bd17-06c4-00f1-6e77a025a762}">
+    <Declaration><![CDATA[INTERFACE I_SessionIdGenerator
+]]></Declaration>
+    <Method Name="Generate" Id="{b5bb1dfd-ab5d-0b34-0d79-b9b26e879888}">
+      <Declaration><![CDATA[METHOD PUBLIC Generate : T_MAXSTRING
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

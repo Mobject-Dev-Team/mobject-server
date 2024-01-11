@@ -1,5 +1,5 @@
 # Changelog
 
-## 0.0.1
+## v0.1.0-alpha
 
-Initial
+- Initial

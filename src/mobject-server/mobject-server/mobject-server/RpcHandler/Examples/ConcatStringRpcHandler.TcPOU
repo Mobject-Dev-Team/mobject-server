@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="ConcatStringRpcHandler" Id="{6b570563-90ca-0168-02e7-bdb7639403ed}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ConcatStringRpcHandler IMPLEMENTS I_RpcHandler
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Handle" Id="{c47d4b37-7d63-0cb6-0d96-0ea952bbbe7f}">
+      <Declaration><![CDATA[METHOD Handle
+VAR_INPUT
+	Parameters : I_RpcParameters;
+	Response : I_SynchronousRpcResponse;
+END_VAR
+VAR
+	str1 : T_MAXSTRING;
+	str2 : T_MAXSTRING;
+	result : T_MAXSTRING;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT Parameters.TryGetParameter('STR1',str1) THEN
+	Response.RejectWithMessage('Missing STR1 parameter');
+	RETURN;
+END_IF
+
+IF NOT Parameters.TryGetParameter('STR2',str2) THEN
+	Response.RejectWithMessage('Missing STR2 parameter');
+	RETURN;
+END_IF
+
+result := CONCAT(str1, str2);
+Response.CompleteWithString(result);]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

@@ -1,10 +1,14 @@
 <p align="center">
-  <img width="460"  src="./docs/images/logo.svg">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./docs/images/logo-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="./docs/images/logo-light.svg">
+    <img alt="Mobject logo" img width="460" src="/docs/images/logo-light.svg">
+  </picture>
 </p>
 
-## The mobject-server Library
+## The mobject-collections Library
 
-This is one of the many libraries of mobject. This library focuses on the creation of extendable servers in TwinCAT.
+This is one of the many libraries of [mobject](http://mobject.org). This library focuses on the creation of extendable servers in TwinCAT.
 
 ## What is mobject?
 
@@ -16,8 +20,8 @@ mobject's goal is to be a lightweight solution to typical oop problems.
 
 ## Documentation
 
-The documentation for this project can be found [here](https://mobject-dev-team.github.io/mobject-server/#/).
+The documentation for this project can be found [here](http://server.mobject.org/#/).
 
 ## Versions
 
-- TcXaeShell 3.1.4024.44
+- TcXaeShell 3.1.4024.53

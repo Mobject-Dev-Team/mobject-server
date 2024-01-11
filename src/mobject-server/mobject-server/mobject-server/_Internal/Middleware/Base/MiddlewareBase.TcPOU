@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="MiddlewareBase" Id="{f079e261-3062-0032-3da6-829156793f75}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'linkalways'} 
+{attribute 'no_explicit_call' := 'This FB is a CLASS and must be accessed using methods or properties'}
+{attribute 'enable_dynamic_creation'}
+FUNCTION_BLOCK ABSTRACT MiddlewareBase implements I_Middleware
+VAR
+	_next : I_Middleware;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Protected" Id="{11b3499e-3abf-0f80-03f6-7ce049c763c8}" />
+    <Method Name="Handle" Id="{1506778d-63a2-02df-14c6-b17fb4f98dd0}">
+      <Declaration><![CDATA[METHOD PUBLIC ABSTRACT Handle
+VAR_INPUT
+	Request : I_Request;
+	Response : I_ServerResponse;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// Call next to pass the request and response to the next handler
+// Next(Request, Response);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Next" Id="{d935684f-088c-0a64-36b6-db3d974ae1b9}" FolderPath="Protected\">
+      <Declaration><![CDATA[METHOD PROTECTED Next
+VAR_INPUT
+	Request : I_Request;
+	Response : I_ServerResponse;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _next = 0 THEN
+	RETURN;
+END_IF
+
+_next.Handle(Request, Response);]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="NextMiddleware" Id="{f062a2f6-ce95-0cbd-2e08-b7b1d9ef2c23}">
+      <Declaration><![CDATA[PROPERTY PUBLIC NextMiddleware : I_Middleware]]></Declaration>
+      <Get Name="Get" Id="{4d7854f8-73ef-0ef2-2cfd-e588fa391506}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[NextMiddleware := _next;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{0d90c841-c420-0c22-10f2-fa3f1c51e8cf}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_next := NextMiddleware;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+  </POU>
+</TcPlcObject>

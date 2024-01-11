@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="SessionsMiddleware" Id="{af3b2fe2-9d52-05f1-0178-396270883369}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'linkalways'} 
+{attribute 'no_explicit_call' := 'This FB is a CLASS and must be accessed using methods or properties'}
+{attribute 'enable_dynamic_creation'}
+FUNCTION_BLOCK SessionsMiddleware EXTENDS MiddlewareBase
+VAR
+	sessionManager: I_SessionManager;
+	headerAccessor : I_SessionHeaderAccessor;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Constructor" Id="{6bed4879-dc4f-08a5-0861-661a741e1e2e}" />
+    <Method Name="FB_init" Id="{b718027e-bd4d-023e-024d-4829b665ff3a}" FolderPath="Constructor\">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	SessionManager : I_SessionManager;
+	HeaderAccessor : I_SessionHeaderAccessor;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.sessionManager := SessionManager;
+THIS^.headerAccessor := HeaderAccessor;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Handle" Id="{0d004770-0432-0a5a-0eaa-201601bcce0b}">
+      <Declaration><![CDATA[METHOD PUBLIC Handle
+VAR_INPUT
+	Request : I_Request;
+	Response : I_ServerResponse;
+END_VAR
+VAR
+	sessionId : T_MAXSTRING;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (NOT headerAccessor.TryGetSessionIdFromRequest(Request, sessionId)) OR_ELSE (NOT sessionManager.IsValidSession(sessionId)) THEN
+	sessionId := sessionManager.CreateSession();
+	headerAccessor.UpdateRequestWithSessionId(Request,sessionId);
+END_IF
+
+sessionManager.RefreshSession(sessionId);
+
+headerAccessor.UpdateResponseWithSessionId(Response, sessionId);
+Next(Request, Response);]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

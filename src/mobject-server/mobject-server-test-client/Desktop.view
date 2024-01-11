@@ -3,6 +3,30 @@
 
   </div>
   <div id="TcHmiHtmlHost" data-tchmi-type="TcHmi.Controls.System.TcHmiHtmlHost" data-tchmi-height="300" data-tchmi-height-unit="px" data-tchmi-left="20" data-tchmi-left-unit="px" data-tchmi-top="87" data-tchmi-top-unit="px" data-tchmi-width="300" data-tchmi-width-unit="px">
+      <script>
+
+        /* To use the mobject-client in your TwinCAT HMI project, follow these steps.
+        1. Copy mobject-client.js located in the Scripts folder to your project
+        2. Add an instance of RpcServer to your PLC program (in this example we'll add it as MAIN.server)
+        3. Register the example ConcatStringRpcHandler with the server (instructions found in the documentation)
+        3. Using TwinCAT HMI server configuration, map the HandleRequest method of Main.server.  This will map as %s%PLC1.MAIN.server.HandleRequest%/s%
+        4. Add the following code to Desktop.view in a script tag. 
+
+        // Creating a new RpcClient instance
+        const client = new TcHmiRpcClient('%s%PLC1.MAIN.server.HandleRequest%/s%');
+
+        // call the rpc and console log the response
+        client.rpcCall('concat', { STR1: 'foo', STR2: 'bar' })
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+        */
+
+      </script>
 
       <style>
           .button-container div {

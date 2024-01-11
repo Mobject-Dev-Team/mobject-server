@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <GVL Name="Constants" Id="{95db9f6b-fa1f-074c-05c1-befeeaf8be6a}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL CONSTANT
+	STACK_SIZE : UDINT := 64000;
+	HEADER_STRING_SIZE : UDINT := 1024;
+	PAYLOAD_STRING_SIZE : UDINT := STACK_SIZE/8;	
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

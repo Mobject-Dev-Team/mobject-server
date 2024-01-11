@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="AsyncResponseManager" Id="{2300ef51-b6f6-0afc-3adc-e871aa496f4f}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'linkalways'} 
+{attribute 'no_explicit_call' := 'This FB is a CLASS and must be accessed using methods or properties'}
+{attribute 'enable_dynamic_creation'}
+FUNCTION_BLOCK AsyncResponseManager IMPLEMENTS I_AsyncResponseManager
+VAR
+	sessionStorage : I_SessionStorage;
+	responseIdGenerator : I_ResponseIdGenerator;
+	headerAccessor : I_AsyncResponseHeaderAccessor;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Constructor" Id="{020f134b-57ae-0e36-2210-385d00ec69ff}" />
+    <Folder Name="Protected" Id="{54d04fe6-29e6-0bf0-31ee-681ae2d60d95}" />
+    <Method Name="CreateAsyncResponseSessionData" Id="{d2793cdd-2127-0083-07f3-24ea31a60c71}" FolderPath="Protected\">
+      <Declaration><![CDATA[METHOD PROTECTED CreateAsyncResponseSessionData : I_AsyncResponseSessionData
+VAR_INPUT
+	RetryDelayInMs : UDINT;
+END_VAR
+VAR
+	pAsyncResponseSessionData : POINTER TO AsyncResponseSessionData;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[pAsyncResponseSessionData := __NEW(AsyncResponseSessionData(SuggestedRetryDelayInMs := RetryDelayInMs));
+CreateAsyncResponseSessionData := pAsyncResponseSessionData^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="CreateAsyncResponseSessionDataProxy" Id="{66e4178d-a7ec-0866-3af1-622d947a79f7}" FolderPath="Protected\">
+      <Declaration><![CDATA[METHOD PROTECTED CreateAsyncResponseSessionDataProxy : I_AsyncResponseSessionData
+VAR_INPUT
+	ProxySessionId : T_MAXSTRING;
+	ProxyResponseId : T_MAXSTRING;
+END_VAR
+VAR
+	pAsyncResponseSessionDataProxy : POINTER TO AsyncResponseSessionDataProxy;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[pAsyncResponseSessionDataProxy := __NEW(AsyncResponseSessionDataProxy(SessionStorage := THIS^.sessionStorage, SessionId := ProxySessionId, ResponseId := ProxyResponseId));
+CreateAsyncResponseSessionDataProxy := pAsyncResponseSessionDataProxy^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{b6773d02-e3d6-0537-19d1-a4e84c102dfc}" FolderPath="Constructor\">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	SessionStorage : I_SessionStorage;
+	ResponseIdGenerator : I_ResponseIdGenerator;
+	HeaderAccessor : I_AsyncResponseHeaderAccessor;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.sessionStorage := SessionStorage;
+THIS^.responseIdGenerator := ResponseIdGenerator;
+THIS^.headerAccessor := HeaderAccessor;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TryConvertResponseToAsyncResponseSessionData" Id="{fe67bbf4-65b0-013a-22e2-e2f4951cc4e9}">
+      <Declaration><![CDATA[METHOD TryConvertResponseToAsyncResponseSessionData : BOOL
+VAR_INPUT
+	Response : I_ServerResponse;
+	RetryDelayInMs : UDINT;
+	Destination : REFERENCE TO I_AsyncResponseSessionData;
+END_VAR
+VAR
+	sessionId : T_MAXSTRING;
+	responseId : T_MAXSTRING;
+	newResponseId : T_MAXSTRING;
+	asyncResponseSessionData : I_AsyncResponseSessionData;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT headerAccessor.TryGetSessionIdFromResponse(Response,sessionId) THEN
+	Response.Error('Unable to create a pending response without a sessionId');
+	RETURN;
+END_IF
+
+asyncResponseSessionData := CreateAsyncResponseSessionData(RetryDelayInMs);
+responseId := responseIdGenerator.Generate();
+
+IF NOT sessionStorage.TryStoreSessionDataById(sessionId, responseId, asyncResponseSessionData) THEN
+	Response.Error('Unable to store pending response');
+	asyncResponseSessionData.Dispose();
+	RETURN;
+END_IF
+
+Response.Pending(responseId, RetryDelayInMs);
+Destination := CreateAsyncResponseSessionDataProxy(sessionId, responseId);
+TryConvertResponseToAsyncResponseSessionData := true;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TryHandleIncomingRequest" Id="{e7b06477-e2bd-00f7-13fb-1893935257f2}">
+      <Declaration><![CDATA[METHOD PUBLIC TryHandleIncomingRequest : BOOL
+VAR_INPUT
+	Request : I_Request;
+	Response : I_ServerResponse;
+END_VAR
+VAR
+	responseId : T_MAXSTRING;
+	sessionId : T_MAXSTRING;
+	sessionData : I_SessionData;
+	asyncResponseData : I_AsyncResponseSessionData;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT headerAccessor.TryGetResponseIdFromRequest(Request, responseId) THEN
+	RETURN;
+END_IF
+
+IF NOT headerAccessor.TryGetSessionIdFromRequest(Request, sessionId) THEN
+	RETURN;
+END_IF
+
+IF NOT sessionStorage.TryRetreiveSessionDataById(sessionId, responseId, sessionData) THEN
+	RETURN;
+END_IF
+
+IF NOT __QUERYINTERFACE(sessionData, asyncResponseData) THEN
+	RETURN;
+END_IF
+
+IF asyncResponseData.IsPending THEN
+	Response.Pending(responseId, asyncResponseData.SuggestedRetryDelayInMs);
+	TryHandleIncomingRequest := TRUE;
+	RETURN;
+END_IF
+
+IF NOT asyncResponseData.TryUpdateServerResponse(Response) THEN	
+	Response.Error('Unable to update server response with pending data');
+	TryHandleIncomingRequest := TRUE;
+	RETURN;
+END_IF
+
+sessionStorage.DisposeSessionDataById(sessionId, responseId);
+TryHandleIncomingRequest := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

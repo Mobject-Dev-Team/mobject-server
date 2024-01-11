@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="I_ChunkedResponseHeaderAccessor" Id="{b246829b-ad0e-0487-2916-fa5cd6b59d81}">
+    <Declaration><![CDATA[INTERFACE I_ChunkedResponseHeaderAccessor
+]]></Declaration>
+    <Method Name="TryGetResponseIdFromRequest" Id="{7174fd48-963f-0167-2a66-02ec0fa76b22}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetResponseIdFromRequest : BOOL
+VAR_INPUT
+	Request : I_Request;
+	Destination : ANY;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="TryGetSessionIdFromRequest" Id="{9f38dc28-064f-0a47-0879-9cbcb4914b8b}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetSessionIdFromRequest : BOOL
+VAR_INPUT
+	Request : I_Request;
+	Destination : REFERENCE TO T_MAXSTRING;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="TryGetSessionIdFromResponse" Id="{fa6bb3cd-a85f-0d0e-1717-8597ec0fc26c}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetSessionIdFromResponse : BOOL
+VAR_INPUT
+	Response : I_ServerResponse;
+	Destination : ANY;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="UpdateResponseWithHasMoreChunks" Id="{6e83bd19-b966-0a04-0c5c-bc1de5ced6cb}">
+      <Declaration><![CDATA[METHOD PUBLIC UpdateResponseWithHasMoreChunks
+VAR_INPUT
+	Response : I_ServerResponse;
+	ResponseId : T_MAXSTRING;
+END_VAR]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

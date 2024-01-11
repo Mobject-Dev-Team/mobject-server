@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="RpcServer" Id="{d0c543ee-285c-0d92-3327-6786bf152970}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'linkalways'} 
+{attribute 'no_explicit_call' := 'This FB is a CLASS and must be accessed using methods or properties'}
+{attribute 'enable_dynamic_creation'}
+{attribute 'TcRpcEnable'}
+FUNCTION_BLOCK RpcServer
+VAR
+	// default header accessor.
+	headerAccessor : HeaderAccessor;
+	
+	// Payload size may be changed using the constants
+	payloadStringSizeIncludingNull : UDINT := Constants.PAYLOAD_STRING_SIZE + 1;
+	
+	// the middleware stack allows us to construct our server in any way needed.
+	// by default we will support sessions, async polling and chunked requests/
+	middlewareStack : MiddlewareStack;
+	
+	// responseId generation required for pending or chunked data
+	sequentialResponseIdGenerator : SequentialResponseIdGenerator;
+	
+	// ability to support sessions...
+	sessionIdGenerator : SequentialSessionIdGenerator;
+	sessionManager : SessionManager(sessionIdGenerator, INACTIVE_SESSION_MAX_AGE);
+	sessionsMiddleware : SessionsMiddleware(sessionManager, headerAccessor);
+	
+	// ability to suppoort chunked requests
+	chunkedRequestsManager : ChunkedRequestsManager(payloadStringSizeIncludingNull, sessionManager, headerAccessor);
+	chunkedRequestsMiddleware : ChunkedRequestsMiddleware(chunkedRequestsManager);
+	
+	// ability to support chunked responses
+	chunkedResponseManager : ChunkedResponseManager(payloadStringSizeIncludingNull, sessionManager, sequentialResponseIdGenerator, headerAccessor);
+	chunkedResponsesMiddleware : ChunkedResponsesMiddleware(chunkedResponseManager);
+	
+	// ability to support pending responses
+	asyncResponseManager : AsyncResponseManager(sessionManager, sequentialResponseIdGenerator, headerAccessor);
+	asyncResponseMiddleware : AsyncResponseMiddleware(asyncResponseManager);
+	
+	// ability to support rpc
+	rpcHandlers : RpcHandlers;
+	rpcManager : RpcManager(rpcHandlers, asyncResponseManager, headerAccessor);
+	rpcMiddleware : RpcMiddleware(rpcManager);
+	
+END_VAR
+VAR CONSTANT
+	INACTIVE_SESSION_MAX_AGE : TIME := T#10S;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Constructor" Id="{cd2fe0ed-3f15-0d44-2e60-cbb6443221c1}" />
+    <Method Name="CyclicCall" Id="{539be5bf-e9a8-0ab6-0cd5-7dcc722256e0}">
+      <Declaration><![CDATA[METHOD PUBLIC CyclicCall
+VAR_INPUT
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[sessionManager.CyclicCall();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{76a0002b-f61d-0a35-104c-169abb3c3728}" FolderPath="Constructor\">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[MiddlewareStack.Use(sessionsMiddleware);
+MiddlewareStack.Use(chunkedRequestsMiddleware);
+MiddlewareStack.Use(chunkedResponsesMiddleware);
+MiddlewareStack.Use(AsyncResponseMiddleware);
+MiddlewareStack.Use(rpcMiddleware);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="HandleRequest" Id="{be6d2e0b-d137-0db3-37e1-f18d6e642bd1}">
+      <Declaration><![CDATA[{attribute 'TcRpcEnable'}
+METHOD PUBLIC HandleRequest : ResponseData;
+VAR_INPUT
+	SerializedHeader : STRING(Constants.HEADER_STRING_SIZE);
+	SerializedPayload : STRING(Constants.PAYLOAD_STRING_SIZE);
+END_VAR
+VAR
+	header : Header(SerializedHeader);
+	request : Request(header, SerializedPayload);
+	serverResponse : ServerResponse(headerAccessor);
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[memset(ADR(HandleRequest),0,SIZEOF(HandleRequest));
+
+middlewareStack.Handle(request, serverResponse);
+
+IF NOT serverResponse.HeadersSent THEN
+	serverResponse.Error('Unhandled Request');
+END_IF
+
+serverResponse.TryGetData(HandleRequest);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="RegisterRpcHandler" Id="{f2c983c5-0460-0ac4-0ab1-c7c405c22fdf}">
+      <Declaration><![CDATA[METHOD PUBLIC RegisterRpcHandler
+VAR_INPUT
+	MethodName : T_MAXSTRING;
+	Handler : I_RpcHandler;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[rpcHandlers.RegisterHandler(MethodName, Handler);]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="SessionCount" Id="{012b8c48-2d55-070c-2dc8-5f5a01686af8}">
+      <Declaration><![CDATA[PROPERTY PUBLIC SessionCount : DINT]]></Declaration>
+      <Get Name="Get" Id="{ba5c5b9c-dd7d-09eb-32f7-db461311522c}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[SessionCount := sessionManager.SessionCount;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Use" Id="{5e295ea9-33ae-0561-0e53-6a8e1bcf642c}">
+      <Declaration><![CDATA[METHOD PUBLIC Use
+VAR_INPUT
+	Middleware : I_Middleware;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[middlewareStack.Use(Middleware);]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

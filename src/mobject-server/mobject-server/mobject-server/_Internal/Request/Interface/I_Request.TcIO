@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="I_Request" Id="{bbe5c3e3-282c-0b95-03ec-2f91b02573a7}">
+    <Declaration><![CDATA[INTERFACE I_Request EXTENDS I_Disposable
+]]></Declaration>
+    <Property Name="CreatedTimestamp" Id="{a125f5ac-6b94-06e9-28a6-40f783f1f01c}">
+      <Declaration><![CDATA[PROPERTY PUBLIC CreatedTimestamp : I_Timestamp]]></Declaration>
+      <Get Name="Get" Id="{6d623bd0-919d-0543-0060-77b4100af55f}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="Header" Id="{f7024f20-5c72-06e1-3653-6fab0f8ea0c1}">
+      <Declaration><![CDATA[PROPERTY PUBLIC Header : I_Header]]></Declaration>
+      <Get Name="Get" Id="{171c1529-f942-0beb-12d2-6c9cba2dfebe}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="PayloadAddress" Id="{a1e27b07-c91a-0410-3f66-72405e0766c8}">
+      <Declaration><![CDATA[PROPERTY PUBLIC PayloadAddress : POINTER TO STRING]]></Declaration>
+      <Get Name="Get" Id="{6e2621cd-1042-0f01-1b9d-20f7bb99f879}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="PayloadSizeInBytes" Id="{52dd94d9-0ec1-0930-305a-d23eec5f6209}">
+      <Declaration><![CDATA[PROPERTY PUBLIC PayloadSizeInBytes : UDINT]]></Declaration>
+      <Get Name="Get" Id="{2bd70307-aff7-0dba-1e42-064e536403cd}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+  </Itf>
+</TcPlcObject>

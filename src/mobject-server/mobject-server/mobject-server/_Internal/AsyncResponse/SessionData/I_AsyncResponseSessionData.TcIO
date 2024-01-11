@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="I_AsyncResponseSessionData" Id="{a08a9dea-a80a-0ef0-0fd9-859e178535e4}">
+    <Declaration><![CDATA[INTERFACE I_AsyncResponseSessionData EXTENDS I_SessionData]]></Declaration>
+    <Method Name="Error" Id="{e455a056-627c-0b2c-0610-56ca0c23ea4a}">
+      <Declaration><![CDATA[METHOD PUBLIC Error
+VAR_INPUT
+	Message : T_MAXSTRING;
+END_VAR]]></Declaration>
+    </Method>
+    <Property Name="IsPending" Id="{16f74dd1-5793-0c40-090c-6134363ac5b1}">
+      <Declaration><![CDATA[PROPERTY PUBLIC IsPending : BOOL]]></Declaration>
+      <Get Name="Get" Id="{a34b0d10-5c56-0b2d-2495-647bae8e99d1}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="Success" Id="{75cd3cb1-57be-07d1-219d-964b01e7dc95}">
+      <Declaration><![CDATA[METHOD PUBLIC Success
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="SuccessWithPayload" Id="{07315348-1ab1-0d14-1318-d3376dc52dba}">
+      <Declaration><![CDATA[METHOD PUBLIC SuccessWithPayload
+VAR_INPUT
+	PayloadDataAddress : PVOID;
+	PayloadDataSize : UDINT;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Property Name="SuggestedRetryDelayInMs" Id="{1ada00b3-979f-07a4-1392-5c7c34d98b11}">
+      <Declaration><![CDATA[PROPERTY PUBLIC SuggestedRetryDelayInMs : UDINT]]></Declaration>
+      <Get Name="Get" Id="{048adede-699a-06f5-2c28-ba5adca76381}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{6dcbd7f2-c809-0bd3-0cce-fc87ad0cfbe4}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Method Name="TryUpdateServerResponse" Id="{b5a26c58-eb42-0a78-205f-c0411c9b0741}">
+      <Declaration><![CDATA[METHOD PUBLIC TryUpdateServerResponse : BOOL
+VAR_INPUT
+	Response : I_ServerResponse;
+END_VAR]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

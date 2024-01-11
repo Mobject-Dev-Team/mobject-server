@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="ChunkedResponsesMiddleware" Id="{cf8f5378-d3f4-051e-1534-38f0d8ffa3a3}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'linkalways'} 
+{attribute 'no_explicit_call' := 'This FB is a CLASS and must be accessed using methods or properties'}
+{attribute 'enable_dynamic_creation'}
+FUNCTION_BLOCK ChunkedResponsesMiddleware EXTENDS MiddlewareBase
+VAR
+	chunkedResponseManager : I_ChunkedResponseManager;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Constructor" Id="{bb5f4a93-6926-0dac-1f27-b7df529f4da4}" />
+    <Method Name="FB_init" Id="{32023458-9807-0651-1738-a46a9ba369b0}" FolderPath="Constructor\">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	ChunkedResponseManager : I_ChunkedResponseManager;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.chunkedResponseManager := ChunkedResponseManager;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Handle" Id="{d832a048-6826-0c69-25fa-c7f2ce606800}">
+      <Declaration><![CDATA[METHOD PUBLIC Handle
+VAR_INPUT
+	Request : I_Request;
+	Response : I_ServerResponse;
+END_VAR
+VAR
+	chunkableServerResponse : ChunkableServerResponse(Response, chunkedResponseManager);
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF chunkedResponseManager.TryHandleIncomingRequest(Request, Response) THEN
+	RETURN;
+END_IF
+
+Next(Request, chunkableServerResponse);]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

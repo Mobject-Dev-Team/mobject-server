@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="Session" Id="{dc893d80-001c-0432-282c-2031ac3cf2c1}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'linkalways'} 
+{attribute 'no_explicit_call' := 'This FB is a CLASS and must be accessed using methods or properties'}
+{attribute 'enable_dynamic_creation'}
+FUNCTION_BLOCK Session EXTENDS Disposable IMPLEMENTS I_Session
+VAR
+	_id : T_MAXSTRING;
+	_lastAccessedTimestamp : SystemTimestamp;
+	sessionStorage : Dictionary;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Constructor" Id="{c2a1fc72-b779-0673-3e14-f35c61ae51d0}" />
+    <Folder Name="Destructor" Id="{ec7f9341-6488-0e65-1036-613ebb9bf0ac}" />
+    <Method Name="AddOrUpdateStorage" Id="{afc67cb0-d360-0d99-0988-4c146c0ce805}">
+      <Declaration><![CDATA[METHOD PUBLIC AddOrUpdateStorage
+VAR_INPUT
+	StorageId : T_MAXSTRING;
+	Source : I_SessionData;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[sessionStorage.AddOrUpdate(StorageId, Source);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="DisposeAllDataFromStorage" Id="{8a6c5779-1368-0954-126f-e291e6b2ff7a}">
+      <Declaration><![CDATA[METHOD PUBLIC DisposeAllDataFromStorage
+VAR_INPUT
+END_VAR
+VAR
+	enumerator : I_ForwardEnumerator;
+	sessionData : I_SessionData;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[enumerator := sessionStorage.GetEnumerator();
+
+WHILE enumerator.MoveNext() DO
+	IF enumerator.TryGet(sessionData) THEN
+		sessionData.Dispose();
+	END_IF
+END_WHILE
+
+enumerator.Dispose();
+sessionStorage.Clear();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="DisposeDataFromStorage" Id="{1d4a66d1-cd79-0563-0a05-eb32943e2977}">
+      <Declaration><![CDATA[METHOD PUBLIC DisposeDataFromStorage
+VAR_INPUT
+	StorageId : T_MAXSTRING;
+END_VAR
+VAR
+	sessionData : I_SessionData;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT sessionStorage.TryGetValue(StorageId,sessionData) THEN
+	RETURN;
+END_IF
+
+sessionData.Dispose();
+sessionStorage.Remove(StorageId);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_exit" Id="{6dc69cf5-f7ae-0e42-2cba-1c6d0aa20592}" FolderPath="Destructor\">
+      <Declaration><![CDATA[METHOD FB_exit : BOOL
+VAR_INPUT
+	bInCopyCode : BOOL; // if TRUE, the exit method is called for exiting an instance that is copied afterwards (online change).
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF bInCopyCode THEN
+	RETURN;
+END_IF
+
+DisposeAllDataFromStorage();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{7dca8727-0db7-0ed6-0e80-88e544397ad3}" FolderPath="Constructor\">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	SessionId : T_MAXSTRING;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_id := SessionId;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Id" Id="{dcfb7953-5fef-015f-3827-7ebdd268e7b5}">
+      <Declaration><![CDATA[PROPERTY PUBLIC Id : T_MAXSTRING]]></Declaration>
+      <Get Name="Get" Id="{ee886ace-15dc-06ad-31d8-c447d377f50b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Id := _id;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="LastAccessedTimestamp" Id="{6ae8e0fa-f398-044b-0522-fede2eababc1}">
+      <Declaration><![CDATA[PROPERTY PUBLIC LastAccessedTimestamp : I_TimeStamp]]></Declaration>
+      <Get Name="Get" Id="{7decb6cf-55cb-05a3-186d-cb1a653febd6}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[LastAccessedTimestamp := _lastAccessedTimestamp;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Refresh" Id="{0674f60f-af84-0c03-061a-f0b6dc67598c}">
+      <Declaration><![CDATA[METHOD PUBLIC Refresh
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_lastAccessedTimestamp.SetNow();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TryGetDataFromStorage" Id="{43ce750e-acb3-0b7f-2b91-2ab3115909d2}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetDataFromStorage : BOOL
+VAR_INPUT
+	StorageId : T_MAXSTRING;
+	Destination : REFERENCE TO I_SessionData;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TryGetDataFromStorage := sessionStorage.TryGetValue(StorageId, Destination);]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

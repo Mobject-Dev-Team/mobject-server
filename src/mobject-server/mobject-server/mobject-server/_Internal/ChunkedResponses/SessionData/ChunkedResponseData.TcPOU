@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="ChunkedResponseData" Id="{ef55a9f1-3b8c-06ed-15e0-b077345d2960}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'linkalways'} 
+{attribute 'no_explicit_call' := 'This FB is a CLASS and must be accessed using methods or properties'}
+{attribute 'enable_dynamic_creation'}
+FUNCTION_BLOCK ChunkedResponseData EXTENDS Disposable IMPLEMENTS I_ChunkedResponseData
+VAR
+	pData : POINTER TO BYTE;
+	size : UDINT;
+	currentPointerLocation : PVOID;
+	remainingLengthToSendInBytes : UDINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Constructor" Id="{5f468b87-ceaa-00e3-206c-a4cf3eb420c2}" />
+    <Folder Name="Destructor" Id="{5fe36add-80f1-005a-355c-77409acaf17d}" />
+    <Folder Name="Private" Id="{3dc10bbd-0603-0b42-3941-3fed0d5c2431}" />
+    <Method Name="FB_exit" Id="{b1efac32-96b9-0d4a-0cdb-3d881329afad}" FolderPath="Destructor\">
+      <Declaration><![CDATA[METHOD FB_exit : BOOL
+VAR_INPUT
+	bInCopyCode : BOOL; // if TRUE, the exit method is called for exiting an instance that is copied afterwards (online change).
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF bInCopyCode THEN
+	RETURN;
+END_IF
+
+IF pData <> 0 THEN
+	__DELETE(pData);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{5ff6e344-a0f0-0936-245a-7926d0a4b514}" FolderPath="Constructor\">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	Address : PVOID;
+	Size : UDINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[StoreData(Address, Size);]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="SendComplete" Id="{9974c76d-3c1b-021b-3125-289d45c81dac}">
+      <Declaration><![CDATA[PROPERTY PUBLIC SendComplete : BOOL]]></Declaration>
+      <Get Name="Get" Id="{b6d93e18-2a86-066f-1f28-7277f64a4e6b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[SendComplete := remainingLengthToSendInBytes = 0;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="SendNextChunk" Id="{f22cc2e3-ce3d-098e-10fa-4cb26a8709c8}">
+      <Declaration><![CDATA[METHOD PUBLIC SendNextChunk
+VAR_INPUT
+	Response : I_ServerResponse;
+	Size : UDINT;
+END_VAR
+VAR
+	sendSize : UDINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF SendComplete THEN 
+	Response.Error('No further data to send');
+	RETURN;
+END_IF
+
+sendSize := Size - 1;
+
+IF Size > remainingLengthToSendInBytes THEN 
+	sendSize := remainingLengthToSendInBytes;
+END_IF
+
+Response.SuccessWithPayload(currentPointerLocation, sendSize);
+
+currentPointerLocation := currentPointerLocation + sendSize;
+remainingLengthToSendInBytes := remainingLengthToSendInBytes - sendSize;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="SizeRemaining" Id="{4d73c771-700d-0d0d-035b-058e4a09863a}">
+      <Declaration><![CDATA[PROPERTY SizeRemaining : UDINT]]></Declaration>
+      <Get Name="Get" Id="{c58cd3ba-8102-015e-037a-65276ede4a64}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[SizeRemaining := remainingLengthToSendInBytes;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="StoreData" Id="{92b450d3-cf87-0654-1890-264169e40171}" FolderPath="Private\">
+      <Declaration><![CDATA[METHOD PRIVATE StoreData
+VAR_INPUT
+	Address : PVOID;
+	Size : UDINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[pData := __NEW(BYTE, Size);
+THIS^.size := Size;
+memcpy(pData, Address, Size);
+currentPointerLocation := pData;
+remainingLengthToSendInBytes := Size;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

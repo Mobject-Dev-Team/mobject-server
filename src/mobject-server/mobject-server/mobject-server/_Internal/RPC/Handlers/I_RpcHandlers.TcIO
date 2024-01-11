@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="I_RpcHandlers" Id="{80025cfc-f7e6-0fd1-30c9-e00b0ba7ba6b}">
+    <Declaration><![CDATA[INTERFACE I_RpcHandlers
+]]></Declaration>
+    <Method Name="RegisterHandler" Id="{4e04ee42-0430-098e-3f2e-50fec9957d1d}">
+      <Declaration><![CDATA[METHOD PUBLIC RegisterHandler
+VAR_INPUT
+	MethodName : T_MAXSTRING;
+	Handler : I_RpcHandler;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="TryGetByMethodName" Id="{be929ac2-bf47-0767-3f83-858d5787a6e3}">
+      <Declaration><![CDATA[METHOD PUBLIC TryGetByMethodName : BOOL
+VAR_INPUT
+	MethodName : T_MAXSTRING;
+	Destination : REFERENCE TO I_RpcHandler;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

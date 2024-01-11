@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="ChunkedRequestData" Id="{7f5881bf-8a05-0b27-0aed-d7991d25f607}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'linkalways'} 
+{attribute 'no_explicit_call' := 'This FB is a CLASS and must be accessed using methods or properties'}
+{attribute 'enable_dynamic_creation'}
+FUNCTION_BLOCK ChunkedRequestData EXTENDS Disposable IMPLEMENTS I_ChunkedRequestData
+VAR
+	maximumChunkSizeInBytes : UDINT;
+	totalReceivedChunks : UDINT;
+	totalExpectedChunks : UDINT;
+	pPayloadBuffer : POINTER TO STRING;
+	payloadBufferSize : UDINT;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Constructor" Id="{da25c027-5015-05bb-26a1-8f0167b8cc26}" />
+    <Folder Name="Destructor" Id="{611eebce-0bd8-05ea-20e8-f733449d4aac}" />
+    <Folder Name="Private" Id="{5dc5b110-b221-0389-0193-5300ad47d73e}" />
+    <Method Name="CreateBuffer" Id="{8996c178-6fd7-08dc-241e-865d4561c8b8}" FolderPath="Private\">
+      <Declaration><![CDATA[METHOD PRIVATE CreateBuffer
+VAR_INPUT
+	SizeInBytes : UDINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[payloadBufferSize := SizeInBytes;
+pPayloadBuffer := __NEW(BYTE, SizeInBytes);
+memset(pPayloadBuffer, 0, SizeInBytes);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="DestroyBuffer" Id="{8e95d4e2-c36d-0403-14b6-2b3c556cc786}" FolderPath="Private\">
+      <Declaration><![CDATA[METHOD PRIVATE DestroyBuffer
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF pPayloadBuffer = 0 THEN
+	RETURN;
+END_IF
+
+__DELETE(pPayloadBuffer);
+pPayloadBuffer := 0;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_exit" Id="{fa1bb8f4-32ce-0721-26a6-bd31aa2e5062}" FolderPath="Destructor\">
+      <Declaration><![CDATA[METHOD FB_exit : BOOL
+VAR_INPUT
+	bInCopyCode : BOOL; // if TRUE, the exit method is called for exiting an instance that is copied afterwards (online change).
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF bInCopyCode THEN
+	RETURN;
+END_IF
+
+DestroyBuffer();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{7ca372bb-7a32-0bba-1d3e-9ca3233f191a}" FolderPath="Constructor\">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	ChunkSizeInBytes : UDINT;
+	ChunkCount : UDINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[maximumChunkSizeInBytes := ChunkSizeInBytes;
+totalExpectedChunks := ChunkCount;
+CreateBuffer(ChunkSizeInBytes * ChunkCount);]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="IsComplete" Id="{b54c81e6-2980-0997-0ad6-4dc775a2e6e0}">
+      <Declaration><![CDATA[PROPERTY PUBLIC IsComplete : BOOL]]></Declaration>
+      <Get Name="Get" Id="{81b9c058-72bc-06b7-0425-c3bd424038a2}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsComplete := totalReceivedChunks = totalExpectedChunks;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="PayloadAddress" Id="{fd5155a8-71ce-030c-3ccb-c20dce8c1414}">
+      <Declaration><![CDATA[PROPERTY PUBLIC PayloadAddress : POINTER TO STRING]]></Declaration>
+      <Get Name="Get" Id="{c4fc4d05-ce0d-0410-0bb6-d484af2f2b92}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[PayloadAddress := pPayloadBuffer;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="PayloadSizeInBytes" Id="{f9ff873e-6d8b-0c47-2996-a51051d7fb31}">
+      <Declaration><![CDATA[PROPERTY PUBLIC PayloadSizeInBytes : UDINT]]></Declaration>
+      <Get Name="Get" Id="{60cf9f56-a0a5-0f80-042a-7e0c41481657}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[PayloadSizeInBytes := payloadBufferSize;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="TryAddChunkedPayload" Id="{9fba7f24-853d-0cce-2be8-cc19d59d1bb2}">
+      <Declaration><![CDATA[METHOD PUBLIC TryAddChunkedPayload : BOOL;
+VAR_INPUT
+	PayloadAddress : POINTER TO STRING;
+	PayloadSize : DINT;
+	ChunkSequence : DINT;
+END_VAR
+VAR
+	offset : UDINT;
+	pBufferChunkLocation : POINTER TO BYTE;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF totalReceivedChunks >= totalExpectedChunks THEN
+	RETURN;
+END_IF
+
+IF DINT_TO_UDINT(PayloadSize) > maximumChunkSizeInBytes THEN
+	RETURN;
+END_IF
+
+IF ChunkSequence <= 0 THEN
+	RETURN;
+END_IF
+
+concat2(pPayloadBuffer, PayloadAddress, pPayloadBuffer, payloadBufferSize);
+totalReceivedChunks := totalReceivedChunks + 1;
+
+TryAddChunkedPayload := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

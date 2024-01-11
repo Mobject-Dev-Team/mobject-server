@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="SystemTimestamp" Id="{fdb5fd16-ae0e-0c07-0e8b-d5b9d53796dc}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK SystemTimestamp Implements I_Timestamp
+VAR
+	recordedTime : ULINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Constructor" Id="{214391b6-b52c-0a8b-0772-c8ee1a9ea55c}" />
+    <Method Name="FB_init" Id="{9fcce6c9-a78e-0079-28ee-58d91c18053d}" FolderPath="Constructor\">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[SetNow();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="IsDurationElapsed" Id="{02c30844-4c61-0eab-2476-a632573ac301}">
+      <Declaration><![CDATA[METHOD PUBLIC IsDurationElapsed : BOOL
+VAR_INPUT
+	Duration : TIME;
+END_VAR
+VAR
+	currentTime : ULINT;
+	elapsedDuration : ULINT;
+	durationInHundredNs : ULINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[currentTime := F_GetSystemTime();
+
+// Convert duration from milliseconds to 100-nanosecond intervals.
+// Since 1 ms = 10,000 * 100 ns.
+durationInHundredNs := TIME_TO_ULINT(duration) * 10000; 
+
+// Calculate the time that must elapse before the timestamp is considered 'expired'.
+elapsedDuration := recordedTime + durationInHundredNs;
+
+// Check if the current time is beyond the elapsed duration.
+IsDurationElapsed := currentTime > elapsedDuration;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetNow" Id="{69a16787-2233-0386-3037-73ff1b17a89d}">
+      <Declaration><![CDATA[METHOD PUBLIC SetNow
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[recordedTime := F_GetSystemTime();]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="TimeSince" Id="{f877b270-bfef-0f41-1672-935323f3354b}">
+      <Declaration><![CDATA[PROPERTY PUBLIC TimeSince : TIME]]></Declaration>
+      <Get Name="Get" Id="{47b9a637-e2d8-094d-2746-dd055ff984d1}">
+        <Declaration><![CDATA[VAR
+	currentTime : ULINT;
+	elapsedDurationInHundredNs : ULINT;
+	convertTime : ULINT;
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[currentTime := F_GetSystemTime();
+
+elapsedDurationInHundredNs := currentTime - recordedTime;
+convertTime := elapsedDurationInHundredNs / 10000;
+TimeSince := ULINT_TO_TIME(convertTime);]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

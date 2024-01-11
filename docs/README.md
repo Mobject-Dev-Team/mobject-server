@@ -1,12 +1,14 @@
 <p align="center">
-  <img width="460" src="./images/logo.svg">
+  <picture>
+    <img class="top-logo" alt="mobject main logo" src='./images/logo-light.svg'>
+  </picture>
 </p>
 
 > A framework and guide for writing object oriented programs in structured text.
 
 ## The mobject-server Library
 
-This is one of the many libraries of mobject. This library focuses on the creation of extendable servers in TwinCAT.
+This is one of the many libraries of [mobject](http://mobject.org). This library focuses on the creation of extendable servers in TwinCAT.
 
 ## What is mobject?
 
@@ -16,6 +18,6 @@ A sprinkling of OOP is usually enough to simplify and unclutter procedural code.
 
 mobject's goal is to be a lightweight solution to typical oop problems.
 
-## Why use mobject-api?
+## Why use mobject-server?
 
-The mobject-reports library and applications provides a consistent way to handle the generation and use of client server setups in the PLC.
+The mobject-server library provides a consistent way to handle the creation of synchronous and asynchronous client and servers. This overcomes limitations with typical ADS RPC calls, and provides a robust OOP style solution.

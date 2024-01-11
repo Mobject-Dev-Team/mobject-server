@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="I_ServerResponse" Id="{e40a3331-8557-094a-10a6-a8155fda0cd7}">
+    <Declaration><![CDATA[INTERFACE I_ServerResponse
+]]></Declaration>
+    <Method Name="Accepted" Id="{f50cccf4-f9bd-06f6-2a09-f50e48c83f8e}">
+      <Declaration><![CDATA[METHOD PUBLIC Accepted
+VAR_INPUT
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="Busy" Id="{2510a061-c35e-00b3-03db-2bc618421e85}">
+      <Declaration><![CDATA[METHOD PUBLIC Busy
+VAR_INPUT
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="Error" Id="{457d175b-7c57-09cf-2d6a-81bb7a2d9875}">
+      <Declaration><![CDATA[METHOD PUBLIC Error
+VAR_INPUT
+	Message : T_MAXSTRING;
+END_VAR]]></Declaration>
+    </Method>
+    <Property Name="Header" Id="{18b6640e-6fe8-0c08-3f00-501baa1837ec}">
+      <Declaration><![CDATA[PROPERTY PUBLIC Header : I_Header]]></Declaration>
+      <Get Name="Get" Id="{69dcb55f-a337-0aeb-00b0-5925e28f5a31}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="HeadersSent" Id="{fe5f2030-992b-0c19-33b4-53749d4c7c11}">
+      <Declaration><![CDATA[PROPERTY PUBLIC HeadersSent : BOOL]]></Declaration>
+      <Get Name="Get" Id="{e0842237-f2ab-0ae7-14af-4777f0154a29}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="Pending" Id="{95467046-a172-01c8-3341-28dc1b8903c9}">
+      <Declaration><![CDATA[METHOD PUBLIC Pending
+VAR_INPUT
+	ResponseId : REFERENCE TO T_MAXSTRING;
+	RetryDelayInMs : UDINT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="Success" Id="{5ae10595-e0eb-0002-1860-1a946943d841}">
+      <Declaration><![CDATA[METHOD PUBLIC Success
+VAR_INPUT
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="SuccessWithPayload" Id="{470d5faa-cb78-00b4-1128-929187ae46da}">
+      <Declaration><![CDATA[METHOD PUBLIC SuccessWithPayload
+VAR_INPUT
+	PayloadDataAddress : PVOID;
+	PayloadDataSize : UDINT;
+END_VAR]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

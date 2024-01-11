@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="ChunkableServerResponse" Id="{2fe2454c-a3f1-0dae-05f0-d9a275bb7efe}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'linkalways'} 
+{attribute 'no_explicit_call' := 'This FB is a CLASS and must be accessed using methods or properties'}
+{attribute 'enable_dynamic_creation'}
+FUNCTION_BLOCK ChunkableServerResponse IMPLEMENTS I_ServerResponse
+VAR
+	serverResponse : I_ServerResponse;
+	chunkedResponseManager : I_ChunkedResponseManager;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Constructor" Id="{97f632d6-5e51-040c-3eb1-fe42fade6fe1}" />
+    <Method Name="Accepted" Id="{a7354322-c96d-0504-03f0-8a61280228f7}">
+      <Declaration><![CDATA[METHOD PUBLIC Accepted
+VAR_INPUT
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[serverResponse.Accepted();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Busy" Id="{dc194327-1054-09c4-1d3c-a5bd62a06f5f}">
+      <Declaration><![CDATA[METHOD PUBLIC Busy
+VAR_INPUT
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[serverResponse.Busy();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Error" Id="{cdb1f046-0dbf-0f4a-1a04-825152a18feb}">
+      <Declaration><![CDATA[METHOD PUBLIC Error
+VAR_INPUT
+	Message : T_MAXSTRING;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[serverResponse.Error(Message);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{f147299a-b64c-085b-1319-2bb7394bb5ef}" FolderPath="Constructor\">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	ServerResponse : I_ServerResponse;
+	ChunkedResponseManager : I_ChunkedResponseManager;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.serverResponse := ServerResponse;
+This^.chunkedResponseManager := ChunkedResponseManager;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Header" Id="{b4164af5-e8d3-04a2-0204-ce4113b939bb}">
+      <Declaration><![CDATA[PROPERTY PUBLIC Header : I_Header]]></Declaration>
+      <Get Name="Get" Id="{ddcd17fb-7a3a-040d-3c52-6398234501c9}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Header := serverResponse.Header;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="HeadersSent" Id="{f3778ec9-42cd-0ec9-0dac-4d3a79b8686f}">
+      <Declaration><![CDATA[PROPERTY PUBLIC HeadersSent : BOOL]]></Declaration>
+      <Get Name="Get" Id="{476cd823-6b65-0c7f-23d4-14c7c4e5db37}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[HeadersSent := serverResponse.HeadersSent;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Pending" Id="{aedde6f8-2a14-001e-1c13-aa18243a34cb}">
+      <Declaration><![CDATA[METHOD PUBLIC Pending
+VAR_INPUT
+	ResponseId : REFERENCE TO T_MAXSTRING;
+	RetryDelayInMs : UDINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[serverResponse.Pending(ResponseId, RetryDelayInMs);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Success" Id="{ffdac1be-9606-0956-036c-ef54603ebe09}">
+      <Declaration><![CDATA[METHOD PUBLIC Success
+VAR_INPUT
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[serverResponse.Success();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SuccessWithPayload" Id="{27433e92-5bf9-0fd0-048b-a68ac0f6f956}">
+      <Declaration><![CDATA[METHOD PUBLIC SuccessWithPayload
+VAR_INPUT
+	PayloadDataAddress : PVOID;
+	PayloadDataSize : UDINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[chunkedResponseManager.HandleSuccessWithPayload(serverResponse, PayloadDataAddress, PayloadDataSize);]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

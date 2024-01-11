@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="I_ChunkedRequestData" Id="{d6d9650a-3b8f-0f35-30e2-315a5480f9d9}">
+    <Declaration><![CDATA[INTERFACE I_ChunkedRequestData EXTENDS I_SessionData
+
+]]></Declaration>
+    <Property Name="IsComplete" Id="{05254a89-32fd-0863-364a-f86b5302016e}">
+      <Declaration><![CDATA[PROPERTY PUBLIC IsComplete : BOOL]]></Declaration>
+      <Get Name="Get" Id="{c73ea561-9454-0512-1793-f1afca724b37}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="PayloadAddress" Id="{3f79f664-186a-00c1-3063-4fe27b637d8f}">
+      <Declaration><![CDATA[PROPERTY PUBLIC PayloadAddress : POINTER TO STRING]]></Declaration>
+      <Get Name="Get" Id="{d44e22f6-668d-0d57-1862-de4d030f68c0}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="PayloadSizeInBytes" Id="{5854569a-304a-0faa-35b5-a0b581a26e4c}">
+      <Declaration><![CDATA[PROPERTY PUBLIC PayloadSizeInBytes : UDINT]]></Declaration>
+      <Get Name="Get" Id="{766b1610-02ec-0fe6-087b-42d53cd45cae}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="TryAddChunkedPayload" Id="{a2456111-d73b-02d0-0426-e73fdc45cea9}">
+      <Declaration><![CDATA[METHOD PUBLIC TryAddChunkedPayload : BOOL;
+VAR_INPUT
+	PayloadAddress : POINTER TO STRING;
+	PayloadSize : DINT;
+	ChunkSequence : DINT;
+END_VAR]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="I_SessionStorage" Id="{ff50d8e8-2d2d-099c-390d-c58418d13f2c}">
+    <Declaration><![CDATA[INTERFACE I_SessionStorage
+]]></Declaration>
+    <Method Name="DisposeSessionDataById" Id="{c931bb2d-f784-0e79-084b-aea262f76cd8}">
+      <Declaration><![CDATA[METHOD PUBLIC DisposeSessionDataById
+VAR_INPUT
+	SessionId : T_MAXSTRING;
+	StorageId : T_MAXSTRING;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="TryRetreiveSessionDataById" Id="{1eda72ab-7f0e-0c78-3c5d-0f63b73b1f21}">
+      <Declaration><![CDATA[METHOD PUBLIC TryRetreiveSessionDataById : BOOL
+VAR_INPUT
+	SessionId : T_MAXSTRING;
+	StorageId : T_MAXSTRING;
+	Destination : REFERENCE TO I_SessionData;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="TryStoreSessionDataById" Id="{c9e10e94-f18d-0b50-1099-b163288b45fa}">
+      <Declaration><![CDATA[METHOD PUBLIC TryStoreSessionDataById : BOOL
+VAR_INPUT
+	SessionId : T_MAXSTRING;
+	StorageId : T_MAXSTRING;
+	Source : I_SessionData;
+END_VAR]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="MiddlewareStack" Id="{2cd1e3ce-c3a8-0d5a-3026-1a38f7edc71a}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'linkalways'} 
+{attribute 'no_explicit_call' := 'This FB is a CLASS and must be accessed using methods or properties'}
+{attribute 'enable_dynamic_creation'}
+FUNCTION_BLOCK MiddlewareStack
+VAR
+	InitialHandler : I_Middleware;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Handle" Id="{bcb5de60-0890-084d-38c3-5f8aa7585a89}">
+      <Declaration><![CDATA[METHOD PUBLIC Handle
+VAR_INPUT
+	Request : I_Request;
+	Response : I_ServerResponse;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF initialHandler = 0 THEN
+	RETURN;
+END_IF
+
+initialHandler.Handle(Request, Response);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Use" Id="{8663e9e8-4f0d-01d9-36f9-3b81ea5d155c}">
+      <Declaration><![CDATA[METHOD PUBLIC Use
+VAR_INPUT
+	Handler : I_Middleware;
+END_VAR
+VAR
+	currentHandler : I_Middleware;
+END_VAR;]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF initialHandler = 0 THEN
+	initialHandler := Handler;
+	RETURN;
+END_IF
+
+currentHandler := InitialHandler;
+
+WHILE currentHandler.NextMiddleware <> 0 DO
+	currentHandler := currentHandler.NextMiddleware;
+END_WHILE
+
+currentHandler.NextMiddleware := Handler;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

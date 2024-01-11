@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="RpcMiddleware" Id="{5252e7b1-e6be-0c67-2b3e-e2289ec172b2}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'linkalways'} 
+{attribute 'no_explicit_call' := 'This FB is a CLASS and must be accessed using methods or properties'}
+{attribute 'enable_dynamic_creation'}
+FUNCTION_BLOCK RpcMiddleware EXTENDS MiddlewareBase
+VAR
+	rpcManager : I_RpcManager;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Constructor" Id="{6cb17467-3bf8-0060-0300-552fee5c6b8f}" />
+    <Method Name="FB_init" Id="{8e4f7fff-b148-04c1-0da2-452ec85089dd}" FolderPath="Constructor\">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	RpcManager : I_RpcManager;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.rpcManager := RpcManager;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Handle" Id="{35f6f1ac-d0b5-07ee-3034-f8ba6a135693}">
+      <Declaration><![CDATA[METHOD PUBLIC Handle
+VAR_INPUT
+	Request : I_Request;
+	Response : I_ServerResponse;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF rpcManager.TryHandleIncomingRequest(Request, Response) THEN
+	RETURN;
+END_IF
+
+Next(Request, Response);]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>
