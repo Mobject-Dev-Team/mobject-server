@@ -6,7 +6,7 @@
   </picture>
 </p>
 
-## The mobject-collections Library
+## The mobject-server Library
 
 This is one of the many libraries of [mobject](http://mobject.org). This library focuses on the creation of extendable servers in TwinCAT.
 
