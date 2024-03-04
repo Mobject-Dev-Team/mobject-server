@@ -12,7 +12,7 @@
     <HmiTitle>Please enter your Title...</HmiTitle>
     <HmiVerboseLevel>2</HmiVerboseLevel>
     <HmiVersion>1.0.0.0</HmiVersion>
-    <HmiCommunicationServerPort>3001</HmiCommunicationServerPort>
+    <HmiCommunicationServerPort>3002</HmiCommunicationServerPort>
     <HmiLogTcHmiServerMessages>false</HmiLogTcHmiServerMessages>
     <HmiLogDesignerModeComMessages>false</HmiLogDesignerModeComMessages>
     <HmiServerVersion>Latest</HmiServerVersion>
@@ -28,9 +28,9 @@
     <HmiPostProcessing>True</HmiPostProcessing>
     <Name>mobject-server-test-client</Name>
     <HmiCommunicationRouterPort>10108</HmiCommunicationRouterPort>
-    <HmiCommunicationServerAuthPort>13000</HmiCommunicationServerAuthPort>
+    <HmiCommunicationServerAuthPort>13002</HmiCommunicationServerAuthPort>
     <HmiInitial>1.12.760.44</HmiInitial>
-    <HmiRecent>1.12.760.44</HmiRecent>
+    <HmiRecent>1.12.760.59</HmiRecent>
     <HmiServerNodeAdvancedView>True</HmiServerNodeAdvancedView>
   </PropertyGroup>
   <PropertyGroup>

@@ -6,7 +6,7 @@
     <Method Name="Handle" Id="{71f049d1-00ad-0d90-1574-4cd39735e8f5}">
       <Declaration><![CDATA[METHOD Handle
 VAR_INPUT
-	Parameters : I_RpcParameters;
+	Parameters : I_Deserializer;
 	Response : I_SynchronousRpcResponse;
 END_VAR
 ]]></Declaration>

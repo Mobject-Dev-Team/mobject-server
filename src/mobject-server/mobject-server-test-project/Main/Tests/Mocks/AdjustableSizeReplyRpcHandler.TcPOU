@@ -11,7 +11,7 @@ END_VAR
     <Method Name="Handle" Id="{9f2bbb3b-e3e7-4379-9b54-5579b5c73f06}">
       <Declaration><![CDATA[METHOD Handle
 VAR_INPUT
-	Parameters : I_RpcParameters;
+	Parameters : I_Deserializer;
 	Response : I_SynchronousRpcResponse;
 END_VAR
 VAR
@@ -19,7 +19,7 @@ VAR
 	pBytes : POINTER TO BYTE;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF NOT Parameters.TryGetParameter('Size',size) THEN
+        <ST><![CDATA[IF NOT Parameters.TryGetKeyUdint('Size',size) THEN
 	Response.RejectWithMessage('Missing Size parameter');
 	RETURN;
 END_IF

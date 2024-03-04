@@ -1,0 +1,11 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "definitions": {
+    "TcHmi.Controls.mobject_tchmi_client.mobjecttchmiclientControl": {
+      "type": "object",
+      "frameworkInstanceOf": "TcHmi.Controls.System.TcHmiControl",
+      "frameworkControlType": "mobjecttchmiclientControl",
+      "frameworkControlNamespace": "TcHmi.Controls.mobject_tchmi_client"
+    }
+  }
+}

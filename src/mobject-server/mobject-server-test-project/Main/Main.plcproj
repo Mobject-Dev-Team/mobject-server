@@ -80,7 +80,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <LibraryReference Include="mobject-server,0.1.0,mobject">
+    <LibraryReference Include="mobject-serialization,0.4.0,mobject">
+      <Namespace>mobject_serialization</Namespace>
+    </LibraryReference>
+    <LibraryReference Include="mobject-server,0.2.0,mobject">
       <Namespace>mobject_server</Namespace>
     </LibraryReference>
   </ItemGroup>

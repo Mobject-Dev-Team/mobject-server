@@ -42,8 +42,10 @@ VAR
 	rpcHandler : I_RpcHandler;
 
 	// currently we only support json, however, this can become a factory in the future when used with contentType and acceptType.
-	rpcParameters : JsonRpcParameters(ClientRequest := Request);
+	pJson : POINTER TO STRING;
+	jsonDeserializer : JsonDeserializer;
 	jsonSerializer : JsonSerializer;
+	
 	asyncRpcResponseFactory : AsynchronousRpcResponseFactory(ServerResponse := Response, Serializer := jsonSerializer, AsyncResponseManager := THIS^.asyncResponseManager);
 	rpcSynchronousResponse : SynchronousRpcResponse(ServerResponse := Response, Serializer := jsonSerializer, AsynchronousRpcResponseFactory := asyncRpcResponseFactory);
 END_VAR]]></Declaration>
@@ -78,7 +80,10 @@ IF NOT rpcHandlers.TryGetByMethodName(methodName, rpcHandler) THEN
 	RETURN;
 END_IF
 
-rpcHandler.Handle(rpcParameters, rpcSynchronousResponse);
+pJson := request.PayloadAddress;
+jsonDeserializer.TryLoad(pJson^);
+
+rpcHandler.Handle(jsonDeserializer, rpcSynchronousResponse);
 
 IF NOT Response.HeadersSent THEN
 	Response.Error('RPC : Handler did not return a valid response');
