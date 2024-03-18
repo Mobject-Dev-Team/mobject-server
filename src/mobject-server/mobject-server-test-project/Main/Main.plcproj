@@ -80,6 +80,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <LibraryReference Include="mobject-deserialization,0.1.0,mobject">
+      <Namespace>mobject_deserialization</Namespace>
+    </LibraryReference>
     <LibraryReference Include="mobject-serialization,0.4.0,mobject">
       <Namespace>mobject_serialization</Namespace>
     </LibraryReference>

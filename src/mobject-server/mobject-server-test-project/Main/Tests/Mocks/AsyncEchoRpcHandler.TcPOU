@@ -45,6 +45,7 @@ VAR_INPUT
 	Response : I_SynchronousRpcResponse;
 END_VAR
 VAR
+	deserializerFeedback : DeserializerFeedback;
 	echo : T_MAXSTRING;
 END_VAR]]></Declaration>
       <Implementation>
@@ -53,7 +54,7 @@ END_VAR]]></Declaration>
 	RETURN;
 END_IF
 
-IF NOT Parameters.TryGetKeyString('Echo',echo) THEN
+IF NOT Parameters.TryGetKeyString('Echo', echo, deserializerFeedback) THEN
 	Response.RejectWithMessage('Missing Echo parameter');
 	RETURN;
 END_IF

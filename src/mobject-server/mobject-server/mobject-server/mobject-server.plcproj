@@ -288,6 +288,9 @@
     <LibraryReference Include="mobject-collections,1.0.0,mobject">
       <Namespace>mobject_collections</Namespace>
     </LibraryReference>
+    <LibraryReference Include="mobject-deserialization,0.1.0,mobject">
+      <Namespace>mobject_deserialization</Namespace>
+    </LibraryReference>
     <LibraryReference Include="mobject-disposable,1.0.0,mobject">
       <Namespace>mobject_disposable</Namespace>
     </LibraryReference>

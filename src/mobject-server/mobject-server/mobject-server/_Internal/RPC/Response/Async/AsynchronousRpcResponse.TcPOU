@@ -257,7 +257,7 @@ END_VAR]]></Declaration>
 	RETURN;
 END_IF
 
-jsonSize := Serializer.GetSeralizedDataLength();
+jsonSize := Serializer.GetSerializedDataLength();
 
 IF jsonSize = 0 THEN
 	asyncResponse.Success();
@@ -265,7 +265,7 @@ END_IF
 
 pJsonString := __NEW(BYTE, jsonSize);
 
-IF NOT Serializer.TryGetSerialziedData(pJsonString, jsonSize) THEN
+IF NOT Serializer.TryGetSerializedData(pJsonString, jsonSize) THEN
 	asyncResponse.Error('RPC Handler unable to get serialized data');
 	__DELETE(pJsonString);
 	RETURN;
