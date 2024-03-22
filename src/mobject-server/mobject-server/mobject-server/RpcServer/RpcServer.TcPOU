@@ -5,7 +5,7 @@
 {attribute 'no_explicit_call' := 'This FB is a CLASS and must be accessed using methods or properties'}
 {attribute 'enable_dynamic_creation'}
 {attribute 'TcRpcEnable'}
-FUNCTION_BLOCK RpcServer
+FUNCTION_BLOCK RpcServer IMPLEMENTS I_RpcServer
 VAR
 	// default header accessor.
 	headerAccessor : HeaderAccessor;

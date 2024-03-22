@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="I_RpcApi" Id="{80fab5d3-ab3c-4589-b1a4-d073091048f6}">
+    <Declaration><![CDATA[INTERFACE I_RpcApi
+]]></Declaration>
+    <Method Name="RegisterWith" Id="{8fc48272-b4eb-4ab8-91a9-2766e712e51a}">
+      <Declaration><![CDATA[METHOD RegisterWith
+VAR_INPUT
+	Server : I_RpcServer;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

@@ -37,6 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="GVLs" />
+    <Folder Include="RpcApi" />
     <Folder Include="RpcHandler" />
     <Folder Include="RpcHandler\Examples" />
     <Folder Include="RpcServer" />
@@ -97,10 +98,16 @@
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
+    <Compile Include="RpcApi\I_RpcApi.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="RpcHandler\Examples\ConcatStringRpcHandler.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="RpcHandler\I_RpcHandler.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RpcServer\I_RpcServer.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="RpcServer\RpcServer.TcPOU">
