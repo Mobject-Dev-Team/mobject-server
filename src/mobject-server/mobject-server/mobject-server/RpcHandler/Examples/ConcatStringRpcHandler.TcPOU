@@ -11,22 +11,23 @@ END_VAR
     <Method Name="Handle" Id="{c47d4b37-7d63-0cb6-0d96-0ea952bbbe7f}">
       <Declaration><![CDATA[METHOD Handle
 VAR_INPUT
-	Parameters : I_RpcParameters;
+	Parameters : I_Deserializer;
 	Response : I_SynchronousRpcResponse;
 END_VAR
 VAR
 	str1 : T_MAXSTRING;
 	str2 : T_MAXSTRING;
 	result : T_MAXSTRING;
+	feedback : DeserializerFeedback;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF NOT Parameters.TryGetParameter('STR1',str1) THEN
-	Response.RejectWithMessage('Missing STR1 parameter');
+        <ST><![CDATA[IF NOT Parameters.TryGetKeyString('STR1',str1,feedback) THEN
+	Response.RejectWithMessage(feedback.FirstError.Message);
 	RETURN;
 END_IF
 
-IF NOT Parameters.TryGetParameter('STR2',str2) THEN
-	Response.RejectWithMessage('Missing STR2 parameter');
+IF NOT Parameters.TryGetKeyString('STR2',str2,feedback) THEN
+	Response.RejectWithMessage(feedback.FirstError.Message);
 	RETURN;
 END_IF
 

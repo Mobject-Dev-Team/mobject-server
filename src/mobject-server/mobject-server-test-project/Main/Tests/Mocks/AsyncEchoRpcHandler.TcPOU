@@ -41,10 +41,11 @@ END_IF]]></ST>
     <Method Name="Handle" Id="{85791512-73b6-4c83-9c38-6e85292f49d0}">
       <Declaration><![CDATA[METHOD Handle
 VAR_INPUT
-	Parameters : I_RpcParameters;
+	Parameters : I_Deserializer;
 	Response : I_SynchronousRpcResponse;
 END_VAR
 VAR
+	deserializerFeedback : DeserializerFeedback;
 	echo : T_MAXSTRING;
 END_VAR]]></Declaration>
       <Implementation>
@@ -53,7 +54,7 @@ END_VAR]]></Declaration>
 	RETURN;
 END_IF
 
-IF NOT Parameters.TryGetParameter('Echo',echo) THEN
+IF NOT Parameters.TryGetKeyString('Echo', echo, deserializerFeedback) THEN
 	Response.RejectWithMessage('Missing Echo parameter');
 	RETURN;
 END_IF

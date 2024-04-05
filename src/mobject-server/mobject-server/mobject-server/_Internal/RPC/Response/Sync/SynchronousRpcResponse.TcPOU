@@ -250,7 +250,7 @@ VAR
 	pJsonString : POINTER TO STRING;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[jsonSize := Serializer.GetSeralizedDataLength();
+        <ST><![CDATA[jsonSize := Serializer.GetSerializedDataLength();
 
 IF jsonSize = 0 THEN
 	serverResponse.Success();
@@ -258,7 +258,7 @@ END_IF
 
 pJsonString := __NEW(BYTE, jsonSize);
 
-IF NOT Serializer.TryGetSerialziedData(pJsonString, jsonSize) THEN
+IF NOT Serializer.TryGetSerializedData(pJsonString, jsonSize) THEN
 	serverResponse.Error('RPC Handler unable to get serialized data');
 	__DELETE(pJsonString);
 	RETURN;
