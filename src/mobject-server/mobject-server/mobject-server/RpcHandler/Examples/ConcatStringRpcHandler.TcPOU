@@ -18,15 +18,16 @@ VAR
 	str1 : T_MAXSTRING;
 	str2 : T_MAXSTRING;
 	result : T_MAXSTRING;
+	feedback : DeserializerFeedback;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF NOT Parameters.TryGetKeyString('STR1',str1) THEN
-	Response.RejectWithMessage('Missing STR1 parameter');
+        <ST><![CDATA[IF NOT Parameters.TryGetKeyString('STR1',str1,feedback) THEN
+	Response.RejectWithMessage(feedback.FirstError.Message);
 	RETURN;
 END_IF
 
-IF NOT Parameters.TryGetKeyString('STR2',str2) THEN
-	Response.RejectWithMessage('Missing STR2 parameter');
+IF NOT Parameters.TryGetKeyString('STR2',str2,feedback) THEN
+	Response.RejectWithMessage(feedback.FirstError.Message);
 	RETURN;
 END_IF
 
