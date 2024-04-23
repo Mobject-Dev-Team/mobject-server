@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.3.0-alpha
+
+- Updated to support mobject-json v1.4.0
+
 ## v0.2.0-alpha
 
 - Updated to support mobject-json v1.3.0
