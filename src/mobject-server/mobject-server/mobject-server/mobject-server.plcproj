@@ -18,7 +18,7 @@
     <LibraryReferences>{f27e56c4-cefb-463d-bf1f-aa19a3c312a6}</LibraryReferences>
     <Company>mobject</Company>
     <Released>false</Released>
-    <ProjectVersion>0.3.0</ProjectVersion>
+    <ProjectVersion>0.4.0</ProjectVersion>
     <Title>mobject-server</Title>
     <DefaultNamespace>mobject-server</DefaultNamespace>
     <Placeholder>mobject-server</Placeholder>

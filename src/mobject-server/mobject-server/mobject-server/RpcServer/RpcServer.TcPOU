@@ -86,9 +86,7 @@ VAR
 	serverResponse : ServerResponse(headerAccessor);
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[memset(ADR(HandleRequest),0,SIZEOF(HandleRequest));
-
-middlewareStack.Handle(request, serverResponse);
+        <ST><![CDATA[middlewareStack.Handle(request, serverResponse);
 
 IF NOT serverResponse.HeadersSent THEN
 	serverResponse.Error('Unhandled Request');

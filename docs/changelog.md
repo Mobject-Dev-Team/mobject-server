@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.4.0-alpha
+
+- Fixed incorrect clearing of response data.
+
 ## v0.3.0-alpha
 
 - Updated to support mobject-json v1.4.0

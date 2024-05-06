@@ -18,6 +18,9 @@ VAR
 	deserializerFeedback : DeserializerFeedback;
 	size : UDINT;
 	pBytes : POINTER TO BYTE;
+	currentPos : POINTER TO BYTE;
+	i : UDINT;
+	count : BYTE;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF NOT Parameters.TryGetKeyUdint('Size', size, deserializerFeedback) THEN
@@ -30,7 +33,11 @@ IF size = 0 THEN
 END_IF
 
 pBytes := __NEW(BYTE, size);
-memset(pBytes, 1, size);
+FOR i := 0 TO size -1 DO
+	currentPos := pBytes + i;
+	currentPos^ := count;
+	count := count + 1;
+END_FOR
 
 Response.CompleteWithBytesAsHex(pBytes, size);
 
