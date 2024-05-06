@@ -90,7 +90,8 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[THIS^.headerAccessor := HeaderAccessor;]]></ST>
+        <ST><![CDATA[THIS^.headerAccessor := HeaderAccessor;
+memset(ADR(responseData),0,SIZEOF(responseData));]]></ST>
       </Implementation>
     </Method>
     <Property Name="Header" Id="{98ed2eb0-ba57-0b8f-3346-ddef4d99496f}">
