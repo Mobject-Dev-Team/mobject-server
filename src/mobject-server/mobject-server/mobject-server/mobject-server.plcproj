@@ -18,7 +18,7 @@
     <LibraryReferences>{f27e56c4-cefb-463d-bf1f-aa19a3c312a6}</LibraryReferences>
     <Company>mobject</Company>
     <Released>false</Released>
-    <ProjectVersion>0.4.0</ProjectVersion>
+    <ProjectVersion>0.5.0</ProjectVersion>
     <Title>mobject-server</Title>
     <DefaultNamespace>mobject-server</DefaultNamespace>
     <Placeholder>mobject-server</Placeholder>
@@ -292,10 +292,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <LibraryReference Include="mobject-collections,1.1.0,mobject">
+    <LibraryReference Include="mobject-collections,1.2.0,mobject">
       <Namespace>mobject_collections</Namespace>
     </LibraryReference>
-    <LibraryReference Include="mobject-deserialization,0.1.0,mobject">
+    <LibraryReference Include="mobject-deserialization,0.2.0,mobject">
       <Namespace>mobject_deserialization</Namespace>
     </LibraryReference>
     <LibraryReference Include="mobject-disposable,1.0.0,mobject">
@@ -304,7 +304,7 @@
     <LibraryReference Include="mobject-enumerable,1.1.0,mobject">
       <Namespace>mobject_enumerable</Namespace>
     </LibraryReference>
-    <LibraryReference Include="mobject-json,1.4.0,mobject">
+    <LibraryReference Include="mobject-json,1.5.0,mobject">
       <Namespace>mobject_json</Namespace>
     </LibraryReference>
     <LibraryReference Include="mobject-serialization,0.4.0,mobject">
