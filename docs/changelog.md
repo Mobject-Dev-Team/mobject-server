@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.6.0-alpha
+
+- Updated to support mobject-json v1.6.0
+- Updated to support mobject-deserialization v0.3.0
+
 ## v0.5.0-alpha
 
 - Updated to support mobject-json v1.5.0
