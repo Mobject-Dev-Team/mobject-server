@@ -2,8 +2,12 @@
 
 ## v0.6.0-alpha
 
-- Updated to support mobject-json v1.6.0
+- Updated to support mobject-collections v1.3.0
 - Updated to support mobject-deserialization v0.3.0
+- Updated to support mobject-disposable v1.1.1
+- Updated to support mobject-enumerable v1.2.0
+- Updated to support mobject-json v1.6.0
+- Updated to support mobject-serialization v0.5.0
 
 ## v0.5.0-alpha
 
