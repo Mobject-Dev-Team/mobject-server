@@ -80,13 +80,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <LibraryReference Include="mobject-deserialization,0.2.0,mobject">
+    <LibraryReference Include="mobject-deserialization,0.3.0,mobject">
       <Namespace>mobject_deserialization</Namespace>
     </LibraryReference>
-    <LibraryReference Include="mobject-serialization,0.4.0,mobject">
+    <LibraryReference Include="mobject-serialization,0.5.0,mobject">
       <Namespace>mobject_serialization</Namespace>
     </LibraryReference>
-    <LibraryReference Include="mobject-server,0.5.0,mobject">
+    <LibraryReference Include="mobject-server,0.6.0,mobject">
       <Namespace>mobject_server</Namespace>
     </LibraryReference>
   </ItemGroup>
