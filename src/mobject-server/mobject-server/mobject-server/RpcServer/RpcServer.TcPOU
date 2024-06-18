@@ -38,8 +38,10 @@ VAR
 	asyncResponseMiddleware : AsyncResponseMiddleware(asyncResponseManager);
 	
 	// ability to support rpc
-	rpcHandlers : RpcHandlers;
-	rpcManager : RpcManager(rpcHandlers, asyncResponseManager, headerAccessor);
+	synchronousRpcHandlers : SynchronousRpcHandlers;
+	asynchronousRpcHandlers : AsynchronousRpcHandlers;
+	asyncRpcCallQueue : AsyncRpcCallQueue;
+	rpcManager : RpcManager(synchronousRpcHandlers, asynchronousRpcHandlers, asyncResponseManager, headerAccessor, asyncRpcCallQueue);
 	rpcMiddleware : RpcMiddleware(rpcManager);
 	
 END_VAR
@@ -55,7 +57,8 @@ END_VAR]]></Declaration>
 VAR_INPUT
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[sessionManager.CyclicCall();]]></ST>
+        <ST><![CDATA[sessionManager.CyclicCall();
+asyncRpcCallQueue.CyclicCall();]]></ST>
       </Implementation>
     </Method>
     <Method Name="FB_init" Id="{76a0002b-f61d-0a35-104c-169abb3c3728}" FolderPath="Constructor\">
@@ -95,15 +98,26 @@ END_IF
 serverResponse.TryGetData(HandleRequest);]]></ST>
       </Implementation>
     </Method>
-    <Method Name="RegisterRpcHandler" Id="{f2c983c5-0460-0ac4-0ab1-c7c405c22fdf}">
-      <Declaration><![CDATA[METHOD PUBLIC RegisterRpcHandler
+    <Method Name="RegisterAsynchronousRpcHandler" Id="{f2c983c5-0460-0ac4-0ab1-c7c405c22fdf}">
+      <Declaration><![CDATA[METHOD PUBLIC RegisterAsynchronousRpcHandler
 VAR_INPUT
 	MethodName : T_MAXSTRING;
-	Handler : I_RpcHandler;
+	Handler : I_AsynchronousRpcHandler;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[rpcHandlers.RegisterHandler(MethodName, Handler);]]></ST>
+        <ST><![CDATA[asynchronousRpcHandlers.RegisterHandler(MethodName, Handler);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="RegisterSynchronousRpcHandler" Id="{3f3f4dec-9dbc-41f8-98fa-f641cf39c9c1}">
+      <Declaration><![CDATA[METHOD PUBLIC RegisterSynchronousRpcHandler
+VAR_INPUT
+	MethodName : T_MAXSTRING;
+	Handler : I_SynchronousRpcHandler;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[synchronousRpcHandlers.RegisterHandler(MethodName, Handler);]]></ST>
       </Implementation>
     </Method>
     <Property Name="SessionCount" Id="{012b8c48-2d55-070c-2dc8-5f5a01686af8}">

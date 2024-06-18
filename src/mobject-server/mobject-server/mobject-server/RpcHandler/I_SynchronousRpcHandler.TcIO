@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
-  <Itf Name="I_RpcHandler" Id="{2a3870e6-6c22-0c53-3bfc-2541e1536c82}">
-    <Declaration><![CDATA[INTERFACE I_RpcHandler EXTENDS __SYSTEM.IQueryInterface 
+  <Itf Name="I_SynchronousRpcHandler" Id="{2a3870e6-6c22-0c53-3bfc-2541e1536c82}">
+    <Declaration><![CDATA[INTERFACE I_SynchronousRpcHandler EXTENDS __SYSTEM.IQueryInterface 
 ]]></Declaration>
     <Method Name="Handle" Id="{71f049d1-00ad-0d90-1574-4cd39735e8f5}">
       <Declaration><![CDATA[METHOD Handle

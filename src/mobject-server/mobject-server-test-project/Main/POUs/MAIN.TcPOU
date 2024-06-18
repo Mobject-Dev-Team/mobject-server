@@ -21,9 +21,9 @@ END_VAR
 
 IF NOT initialized THEN
 	initialized := TRUE;
-	server.RegisterRpcHandler('concat',concatStringRpcHandler);
-	server.RegisterRpcHandler('asyncEcho',asyncEchoRpcHandler);
-	server.RegisterRpcHandler('adjustableSizeReply',adjustableSizeReplyRpcHandler);
+	server.RegisterSynchronousRpcHandler('concat',concatStringRpcHandler);
+	server.RegisterSynchronousRpcHandler('asyncEcho',asyncEchoRpcHandler);
+	server.RegisterSynchronousRpcHandler('adjustableSizeReply',adjustableSizeReplyRpcHandler);
 END_IF
 
 server.CyclicCall();

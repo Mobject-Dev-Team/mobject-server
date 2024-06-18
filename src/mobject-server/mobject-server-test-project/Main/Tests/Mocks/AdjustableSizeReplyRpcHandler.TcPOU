@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <POU Name="AdjustableSizeReplyRpcHandler" Id="{9299e15a-1853-4d5c-887c-44fb5a606abe}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK AdjustableSizeReplyRpcHandler IMPLEMENTS I_RpcHandler
+    <Declaration><![CDATA[FUNCTION_BLOCK AdjustableSizeReplyRpcHandler IMPLEMENTS I_SynchronousRpcHandler
 VAR
 END_VAR
 ]]></Declaration>

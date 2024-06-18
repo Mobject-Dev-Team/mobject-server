@@ -1,33 +1,46 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
-  <POU Name="RpcHandlers" Id="{cdfb1c94-3217-037e-37e9-3e856bc4db90}" SpecialFunc="None">
+  <POU Name="SynchronousRpcHandlers" Id="{cdfb1c94-3217-037e-37e9-3e856bc4db90}" SpecialFunc="None">
     <Declaration><![CDATA[{attribute 'linkalways'} 
 {attribute 'no_explicit_call' := 'This FB is a CLASS and must be accessed using methods or properties'}
 {attribute 'enable_dynamic_creation'}
-FUNCTION_BLOCK RpcHandlers IMPLEMENTS I_RpcHandlers
+FUNCTION_BLOCK SynchronousRpcHandlers IMPLEMENTS I_SynchronousRpcHandlers
 VAR
 	handlers : Dictionary;
+	_hasHandlers : BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
+    <Property Name="HasHandlers" Id="{2605a19b-dc3f-44fb-9955-a556daab8d19}">
+      <Declaration><![CDATA[PROPERTY PUBLIC HasHandlers : BOOL]]></Declaration>
+      <Get Name="Get" Id="{19d45a51-bd11-4b50-8fa5-b20303b75f89}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[HasHandlers := _hasHandlers;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
     <Method Name="RegisterHandler" Id="{609e53c5-acdf-01aa-0656-3cf6fac1acc2}">
       <Declaration><![CDATA[METHOD PUBLIC RegisterHandler
 VAR_INPUT
 	MethodName : T_MAXSTRING;
-	Handler : I_RpcHandler;
+	Handler : I_SynchronousRpcHandler;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[handlers.AddOrUpdate(MethodName, Handler);]]></ST>
+        <ST><![CDATA[handlers.AddOrUpdate(MethodName, Handler);
+_hasHandlers := true;]]></ST>
       </Implementation>
     </Method>
     <Method Name="TryGetByMethodName" Id="{9f3d7a27-ca03-0efa-0266-b6d155dc3dde}">
       <Declaration><![CDATA[METHOD PUBLIC TryGetByMethodName : BOOL
 VAR_INPUT
 	MethodName : T_MAXSTRING;
-	Destination : REFERENCE TO I_RpcHandler;
+	Destination : REFERENCE TO I_SynchronousRpcHandler;
 END_VAR
 ]]></Declaration>
       <Implementation>

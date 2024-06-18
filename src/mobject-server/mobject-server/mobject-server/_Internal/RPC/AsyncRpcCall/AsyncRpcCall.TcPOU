@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="AsyncRpcCall" Id="{89c02723-921d-46d6-aea9-730ec92f3b92}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'linkalways'} 
+{attribute 'no_explicit_call' := 'This FB is a CLASS and must be accessed using methods or properties'}
+{attribute 'enable_dynamic_creation'}
+{attribute 'TcRpcEnable'}
+FUNCTION_BLOCK AsyncRpcCall EXTENDS Disposable IMPLEMENTS I_AsyncRpcCall
+VAR
+	parameters : I_Deserializer;
+	asynchronousRpcResponse : I_AsynchronousRpcResponse;
+	handler : I_AsynchronousRpcHandler;
+	called : BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Constructor" Id="{88e7e5b1-35d9-4269-bc67-6fcddd88eba2}" />
+    <Folder Name="Destructor" Id="{3e064506-1434-486a-9c55-a9ba0065a122}" />
+    <Method Name="Call" Id="{0a271513-3a44-40a3-b093-f54ea94adb21}">
+      <Declaration><![CDATA[METHOD PUBLIC Call
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF called THEN 
+	RETURN;
+END_IF
+
+handler.Handle(parameters, asynchronousRpcResponse);
+parameters.Dispose();
+called := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_exit" Id="{8ce13a0b-0786-4be7-880d-eca1e204917d}" FolderPath="Destructor\">
+      <Declaration><![CDATA[METHOD FB_exit : BOOL
+VAR_INPUT
+	bInCopyCode : BOOL; // if TRUE, the exit method is called for exiting an instance that is copied afterwards (online change).
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF bInCopyCode THEN
+	RETURN;
+END_IF
+
+IF called THEN
+	RETURN;
+END_IF
+
+parameters.Dispose();
+asynchronousRpcResponse.RejectWithMessage('RPC : Disposed');]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{8aae89c8-9a71-48d6-a72e-f77d3a8355ca}" FolderPath="Constructor\">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	Parameters : I_Deserializer;
+	AsynchronousRpcResponse : I_AsynchronousRpcResponse;
+	Handler : I_AsynchronousRpcHandler;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.parameters := Parameters;
+THIS^.asynchronousRpcResponse := AsynchronousRpcResponse;
+THIS^.handler := Handler;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>
