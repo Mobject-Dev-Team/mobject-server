@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="I_AsyncRpcCall" Id="{9081126a-e6e8-4e68-b982-e20ff71f1cb5}">
+    <Declaration><![CDATA[INTERFACE I_AsyncRpcCall EXTENDS I_Disposable
+]]></Declaration>
+    <Method Name="Call" Id="{ece72c8e-fd90-46a1-8855-728fd24ec460}">
+      <Declaration><![CDATA[METHOD PUBLIC Call
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

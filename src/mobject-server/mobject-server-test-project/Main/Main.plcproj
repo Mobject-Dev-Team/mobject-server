@@ -86,7 +86,7 @@
     <LibraryReference Include="mobject-serialization,0.5.0,mobject">
       <Namespace>mobject_serialization</Namespace>
     </LibraryReference>
-    <LibraryReference Include="mobject-server,0.6.0,mobject">
+    <LibraryReference Include="mobject-server,0.7.0,mobject">
       <Namespace>mobject_server</Namespace>
     </LibraryReference>
   </ItemGroup>

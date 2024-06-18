@@ -1,13 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
-  <Itf Name="I_RpcHandlers" Id="{80025cfc-f7e6-0fd1-30c9-e00b0ba7ba6b}">
-    <Declaration><![CDATA[INTERFACE I_RpcHandlers
+  <Itf Name="I_SynchronousRpcHandlers" Id="{80025cfc-f7e6-0fd1-30c9-e00b0ba7ba6b}">
+    <Declaration><![CDATA[INTERFACE I_SynchronousRpcHandlers
 ]]></Declaration>
+    <Property Name="HasHandlers" Id="{fa1fa595-533d-43ca-86a0-1cfbd9cf2b27}">
+      <Declaration><![CDATA[PROPERTY PUBLIC HasHandlers : BOOL]]></Declaration>
+      <Get Name="Get" Id="{c74cf47c-051a-480c-91dd-36c0a377744f}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
     <Method Name="RegisterHandler" Id="{4e04ee42-0430-098e-3f2e-50fec9957d1d}">
       <Declaration><![CDATA[METHOD PUBLIC RegisterHandler
 VAR_INPUT
 	MethodName : T_MAXSTRING;
-	Handler : I_RpcHandler;
+	Handler : I_SynchronousRpcHandler;
 END_VAR
 ]]></Declaration>
     </Method>
@@ -15,7 +21,7 @@ END_VAR
       <Declaration><![CDATA[METHOD PUBLIC TryGetByMethodName : BOOL
 VAR_INPUT
 	MethodName : T_MAXSTRING;
-	Destination : REFERENCE TO I_RpcHandler;
+	Destination : REFERENCE TO I_SynchronousRpcHandler;
 END_VAR
 ]]></Declaration>
     </Method>

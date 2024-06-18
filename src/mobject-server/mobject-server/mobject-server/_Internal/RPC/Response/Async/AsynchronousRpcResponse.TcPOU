@@ -24,7 +24,8 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[serializer.Reset();
 serializer.AddBase64(pBytes, nBytes);
-SendSuccessResponseUsingSeralizer(serializer);]]></ST>
+SendSuccessResponseUsingSeralizer(serializer);
+Dispose();]]></ST>
       </Implementation>
     </Method>
     <Method Name="CompleteWithBool" Id="{03675649-accc-04e9-2da8-03680431973d}">
@@ -35,7 +36,8 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[serializer.Reset();
 serializer.AddBool(Value);
-SendSuccessResponseUsingSeralizer(serializer);]]></ST>
+SendSuccessResponseUsingSeralizer(serializer);
+Dispose();]]></ST>
       </Implementation>
     </Method>
     <Method Name="CompleteWithBytesAsHex" Id="{0e924ee8-2901-0a41-1038-7a08d2d04dc8}">
@@ -47,7 +49,8 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[serializer.Reset();
 serializer.AddBytesAsHex(pBytes, nBytes);
-SendSuccessResponseUsingSeralizer(serializer);]]></ST>
+SendSuccessResponseUsingSeralizer(serializer);
+Dispose();]]></ST>
       </Implementation>
     </Method>
     <Method Name="CompleteWithDateTime" Id="{66722820-2bec-09e1-17fd-0d3849720f09}">
@@ -58,7 +61,8 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[serializer.Reset();
 serializer.AddDateTime(Value);
-SendSuccessResponseUsingSeralizer(serializer);]]></ST>
+SendSuccessResponseUsingSeralizer(serializer);
+Dispose();]]></ST>
       </Implementation>
     </Method>
     <Method Name="CompleteWithDcTime" Id="{ed003bbb-1d82-08f7-13b6-c47ca79659f2}">
@@ -69,7 +73,8 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[serializer.Reset();
 serializer.AddDcTime(Value);
-SendSuccessResponseUsingSeralizer(serializer);]]></ST>
+SendSuccessResponseUsingSeralizer(serializer);
+Dispose();]]></ST>
       </Implementation>
     </Method>
     <Method Name="CompleteWithDint" Id="{55b4b308-c994-0f75-0809-8874627e1804}">
@@ -80,7 +85,8 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[serializer.Reset();
 serializer.AddDint(Value);
-SendSuccessResponseUsingSeralizer(serializer);]]></ST>
+SendSuccessResponseUsingSeralizer(serializer);
+Dispose();]]></ST>
       </Implementation>
     </Method>
     <Method Name="CompleteWithFileTime" Id="{8f7432ef-e03d-0757-1fc5-843ead6e0d55}">
@@ -91,7 +97,8 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[serializer.Reset();
 serializer.AddFileTime(Value);
-SendSuccessResponseUsingSeralizer(serializer);]]></ST>
+SendSuccessResponseUsingSeralizer(serializer);
+Dispose();]]></ST>
       </Implementation>
     </Method>
     <Method Name="CompleteWithLint" Id="{8270a45c-7174-07b9-089d-071452b31a16}">
@@ -102,7 +109,8 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[serializer.Reset();
 serializer.AddLint(Value);
-SendSuccessResponseUsingSeralizer(serializer);]]></ST>
+SendSuccessResponseUsingSeralizer(serializer);
+Dispose();]]></ST>
       </Implementation>
     </Method>
     <Method Name="CompleteWithLreal" Id="{b2c386ca-16e9-014f-273d-d89cb7dc4da7}">
@@ -113,7 +121,8 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[serializer.Reset();
 serializer.AddLreal(Value);
-SendSuccessResponseUsingSeralizer(serializer);]]></ST>
+SendSuccessResponseUsingSeralizer(serializer);
+Dispose();]]></ST>
       </Implementation>
     </Method>
     <Method Name="CompleteWithNull" Id="{66be5414-3a0c-067c-201e-8738bed8c9e7}">
@@ -123,7 +132,8 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[serializer.Reset();
 serializer.AddNull();
-SendSuccessResponseUsingSeralizer(serializer);]]></ST>
+SendSuccessResponseUsingSeralizer(serializer);
+Dispose();]]></ST>
       </Implementation>
     </Method>
     <Method Name="CompleteWithObject" Id="{3b2b1b53-7b13-0dc9-382d-0a214fce3ac1}">
@@ -134,7 +144,8 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[serializer.Reset();
 Object.SerializeWith(serializer);
-SendSuccessResponseUsingSeralizer(serializer);]]></ST>
+SendSuccessResponseUsingSeralizer(serializer);
+Dispose();]]></ST>
       </Implementation>
     </Method>
     <Method Name="CompleteWithReal" Id="{2f7014bc-6071-0321-0bf0-5580f53d9f1d}">
@@ -145,7 +156,8 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[serializer.Reset();
 serializer.AddReal(Value);
-SendSuccessResponseUsingSeralizer(serializer);]]></ST>
+SendSuccessResponseUsingSeralizer(serializer);
+Dispose();]]></ST>
       </Implementation>
     </Method>
     <Method Name="CompleteWithSerializer" Id="{f319653b-7d22-0b9a-30ee-a0b7ebcd89cf}">
@@ -154,7 +166,8 @@ VAR_INPUT
 	Serializer : I_Serializer;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[SendSuccessResponseUsingSeralizer(Serializer);]]></ST>
+        <ST><![CDATA[SendSuccessResponseUsingSeralizer(Serializer);
+Dispose();]]></ST>
       </Implementation>
     </Method>
     <Method Name="CompleteWithString" Id="{8f97e800-7075-0a15-0179-160b709cba8d}">
@@ -165,7 +178,8 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[serializer.Reset();
 serializer.AddString(Value);
-SendSuccessResponseUsingSeralizer(serializer);]]></ST>
+SendSuccessResponseUsingSeralizer(serializer);
+Dispose();]]></ST>
       </Implementation>
     </Method>
     <Method Name="CompleteWithUdint" Id="{3c978e8b-e94e-0477-3b8e-52aa90f94da3}">
@@ -176,7 +190,8 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[serializer.Reset();
 serializer.AddUdint(Value);
-SendSuccessResponseUsingSeralizer(serializer);]]></ST>
+SendSuccessResponseUsingSeralizer(serializer);
+Dispose();]]></ST>
       </Implementation>
     </Method>
     <Method Name="CompleteWithUlint" Id="{1957eac4-6648-09eb-3d7b-a60ada0f64d3}">
@@ -187,7 +202,8 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[serializer.Reset();
 serializer.AddUlint(Value);
-SendSuccessResponseUsingSeralizer(serializer);]]></ST>
+SendSuccessResponseUsingSeralizer(serializer);
+Dispose();]]></ST>
       </Implementation>
     </Method>
     <Method Name="FB_exit" Id="{89c11be6-c0cc-025e-13ab-613071898be1}" FolderPath="Destructor\">
@@ -240,7 +256,11 @@ VAR
 	asyncResponse : I_AsyncResponseSessionData;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[asyncResponse.Error(Message);]]></ST>
+        <ST><![CDATA[IF asyncResponse <> 0 THEN
+	asyncResponse.Error(Message);
+END_IF
+
+Dispose();]]></ST>
       </Implementation>
     </Method>
     <Method Name="SendSuccessResponseUsingSeralizer" Id="{80cd1593-635a-0d11-10a8-a0b2bf9e5a53}" FolderPath="Protected\">

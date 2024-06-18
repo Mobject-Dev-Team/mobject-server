@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.7.0-alpha
+
+- Added Sync and Async rpc. Sync RPC can still be converted to Async, but all explicitly Async RPC handlers will be handled inside of the PLC cycle. SynchronousRpcHandlers should be used with caution, as any long running calls will cause PLC, NC and AUX task timing issues which are not possible to trace. If in doubt, only use AsyncRpc!
+
+!> This update contains the following breaking changes.
+
+- RpcServer.RegisterRpcHandler has been renamed RegisterAsyncRpcHandler
+- I_RpcHandler is now I_AsynchronousRpcHandler
+- I_SynchronousRpcHandler is now added
+
 ## v0.6.0-alpha
 
 - Updated to support mobject-collections v1.3.0

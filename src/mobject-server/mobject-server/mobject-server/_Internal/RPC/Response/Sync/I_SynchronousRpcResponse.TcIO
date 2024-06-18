@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <Itf Name="I_SynchronousRpcResponse" Id="{63fa636a-5607-05c1-072d-be3fc0846f33}">
-    <Declaration><![CDATA[INTERFACE I_SynchronousRpcResponse
+    <Declaration><![CDATA[INTERFACE I_SynchronousRpcResponse EXTENDS I_Disposable
 ]]></Declaration>
     <Method Name="CompleteWithBase64" Id="{75fc3e0f-2b6f-0cb7-3554-b25185fc6b15}">
       <Declaration><![CDATA[METHOD PUBLIC CompleteWithBase64

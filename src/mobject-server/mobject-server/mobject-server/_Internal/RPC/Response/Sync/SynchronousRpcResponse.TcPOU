@@ -4,11 +4,11 @@
     <Declaration><![CDATA[{attribute 'linkalways'} 
 {attribute 'no_explicit_call' := 'This FB is a CLASS and must be accessed using methods or properties'}
 {attribute 'enable_dynamic_creation'}
-FUNCTION_BLOCK SynchronousRpcResponse IMPLEMENTS I_SynchronousRpcResponse
+FUNCTION_BLOCK SynchronousRpcResponse EXTENDS Disposable IMPLEMENTS I_SynchronousRpcResponse
 VAR
 	serverResponse : I_ServerResponse;
 	serializer : I_Serializer;
-	asynchronousRpcResponseFactory : I_AsynchronousRpcResponseFactory;
+	asyncResponseManager : I_AsyncResponseManager;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -213,13 +213,13 @@ VAR_INPUT
 	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
 	ServerResponse : I_ServerResponse;
 	Serializer : I_Serializer;
-	AsynchronousRpcResponseFactory : I_AsynchronousRpcResponseFactory;
+	AsyncResponseManager : I_AsyncResponseManager;
 END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[THIS^.serverResponse := ServerResponse;
 THIS^.serializer := Serializer.Clone();
-THIS^.asynchronousRpcResponseFactory := AsynchronousRpcResponseFactory;]]></ST>
+THIS^.asyncResponseManager := AsyncResponseManager;]]></ST>
       </Implementation>
     </Method>
     <Method Name="GetSerializer" Id="{7cdc9c64-65d0-06aa-09f5-6fe47339ff43}">
@@ -272,6 +272,9 @@ __DELETE(pJsonString);]]></ST>
       <Declaration><![CDATA[METHOD PUBLIC TryMakeAsynchronous : BOOL
 VAR_INPUT
 	Destination : REFERENCE TO I_AsynchronousRpcResponse;
+END_VAR
+VAR
+	asynchronousRpcResponseFactory : AsynchronousRpcResponseFactory(serverResponse, serializer, asyncResponseManager);
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[TryMakeAsynchronous := asynchronousRpcResponseFactory.TryCreate(Destination);]]></ST>

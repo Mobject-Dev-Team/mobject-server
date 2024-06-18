@@ -3,29 +3,223 @@
   <POU Name="RpcManager" Id="{308b5439-3f52-0c22-3a38-2a4336aefe7b}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK RpcManager IMPLEMENTS I_RpcManager
 VAR
-	rpcHandlers : I_RpcHandlers;
+	syncRpcHandlers : I_SynchronousRpcHandlers;
+	asyncRpcHandlers : I_AsynchronousRpcHandlers;
 	asyncResponseManager : I_AsyncResponseManager;
 	headerAccessor : I_RpcHeaderAccessor;
+	asyncRpcCallQueue : I_AsyncRpcCallQueue;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
     <Folder Name="Constructor" Id="{0ade8a4f-3476-019d-0aba-82e2bb43a90e}" />
+    <Folder Name="Protected" Id="{fab3162a-e063-4acd-95f5-ec6e3d87a5b3}" />
     <Method Name="FB_init" Id="{02d294c0-1ef3-0764-007b-c1c7ca225b00}" FolderPath="Constructor\">
       <Declaration><![CDATA[METHOD FB_init : BOOL
 VAR_INPUT
 	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
 	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
-	RpcHandlers : I_RpcHandlers;
+	SyncRpcHandlers : I_SynchronousRpcHandlers;
+	AsyncRpcHandlers : I_AsynchronousRpcHandlers;
 	AsyncResponseManager : I_AsyncResponseManager;
 	HeaderAccessor : I_RpcHeaderAccessor;
+	AsyncRpcCallQueue : I_AsyncRpcCallQueue;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[THIS^.rpcHandlers := RpcHandlers;
+        <ST><![CDATA[THIS^.syncRpcHandlers := SyncRpcHandlers;
+THIS^.asyncRpcHandlers := AsyncRpcHandlers;
 THIS^.asyncResponseManager := AsyncResponseManager;
-THIS^.headerAccessor := HeaderAccessor;]]></ST>
+THIS^.headerAccessor := HeaderAccessor;
+THIS^.asyncRpcCallQueue := asyncRpcCallQueue;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="HandleAsyncRpcRequest" Id="{562f6f63-856d-4ff4-b0d7-f252939359d1}" FolderPath="Protected\">
+      <Declaration><![CDATA[METHOD PROTECTED HandleAsyncRpcRequest
+VAR_INPUT
+	Request : I_Request;
+	Response : I_ServerResponse;
+	Handler : I_AsynchronousRpcHandler;
+END_VAR
+VAR
+	deserializer : I_Deserializer;
+	serializer : I_Serializer;
+	asynchronousRpcResponse : I_AsynchronousRpcResponse;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT TryCreateSerializer(Request, serializer) THEN
+	Response.Error('RPC : Missing or unsupported accept type in header');
+	RETURN;
+END_IF
+
+IF NOT TryCreateDeserializer(Request, deserializer) THEN
+	Response.Error('RPC : Missing or unsupported content type in header');
+	serializer.Dispose();
+	RETURN;
+END_IF
+
+IF NOT TryCreateAsynchronousRpcResponse(Response, serializer, asynchronousRpcResponse) THEN
+	Response.Error('RPC : Unable to create asynchronous response for handler');
+	serializer.Dispose();
+	deserializer.Dispose();
+END_IF
+
+IF NOT asyncRpcCallQueue.TryAddRpcCall(deserializer, asynchronousRpcResponse, Handler) THEN
+	serializer.Dispose();
+	deserializer.Dispose();
+	asynchronousRpcResponse.RejectWithMessage('RPC : Unable to create rpc call');
+END_IF
+
+// we can dispose of the serializer at this stage as it was only used as a prototype.
+// this is because when the asynchronousRpcResponse is created then it clones it's serializer. 
+serializer.Dispose(); ]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="HandleSyncRpcRequest" Id="{c4943403-c364-48b4-88ea-745865db1799}" FolderPath="Protected\">
+      <Declaration><![CDATA[METHOD PROTECTED HandleSyncRpcRequest
+VAR_INPUT
+	Request : I_Request;
+	Response : I_ServerResponse;
+	Handler : I_SynchronousRpcHandler;
+END_VAR
+VAR
+	deserializer : I_Deserializer;
+	serializer : I_Serializer;
+	synchronousRpcResponse : I_SynchronousRpcResponse;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT TryCreateSerializer(Request, serializer) THEN
+	Response.Error('RPC : Missing or unsupported accept type in header');
+	RETURN;
+END_IF
+
+IF NOT TryCreateDeserializer(Request, deserializer) THEN
+	Response.Error('RPC : Missing or unsupported content type in header');
+	serializer.Dispose();
+	RETURN;
+END_IF
+
+IF NOT TryCreateSynchronousRpcResponse(Response, serializer, synchronousRpcResponse) THEN
+	Response.Error('RPC : Unable to create synchronous response for handler');
+	serializer.Dispose();
+	deserializer.Dispose();
+END_IF
+
+Handler.Handle(deserializer, synchronousRpcResponse);
+
+synchronousRpcResponse.Dispose();
+deserializer.Dispose();
+serializer.Dispose();
+
+IF NOT Response.HeadersSent THEN
+	Response.Error('RPC : Handler did not return a valid response');
+	RETURN;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TryCreateAsynchronousRpcResponse" Id="{1b643550-ad2d-40c5-9a58-e6764736bfa0}" FolderPath="Protected\">
+      <Declaration><![CDATA[METHOD PROTECTED TryCreateAsynchronousRpcResponse : BOOL
+VAR_INPUT
+	Response : I_ServerResponse;
+	ResponseSerializer : I_Serializer;
+	Destination : REFERENCE TO I_AsynchronousRpcResponse;
+END_VAR
+VAR
+	asynchronousRpcResponseFactory : AsynchronousRpcResponseFactory(Response, ResponseSerializer, asyncResponseManager);
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF Response = 0 THEN 
+	RETURN;
+END_IF
+
+IF ResponseSerializer = 0 THEN
+	RETURN;
+END_IF
+
+TryCreateAsynchronousRpcResponse := asynchronousRpcResponseFactory.TryCreate(Destination);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TryCreateDeserializer" Id="{dedcba2e-7a09-4036-89b7-5f55359564d4}" FolderPath="Protected\">
+      <Declaration><![CDATA[METHOD PROTECTED TryCreateDeserializer : BOOL
+VAR_INPUT
+	Request : I_Request;
+	Destination : REFERENCE TO I_Deserializer;
+END_VAR
+VAR
+	contentType : T_MAXSTRING;
+	pJsonDeserializer : POINTER TO JsonDeserializer;
+	pJson : POINTER TO STRING;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT(headerAccessor.TryGetContentTypeFromRequest(Request, contentType)) THEN
+	// unlike TryCreateSerializer, a content type must be included.  Therefore if it 
+	// is missing a fault will be raised and the request will be rejected.
+	RETURN;
+END_IF
+
+IF contentType = headerAccessor.ContentType_Json THEN
+	pJsonDeserializer := __NEW(JsonDeserializer);
+	pJson := request.PayloadAddress;
+	pJsonDeserializer^.TryLoad(pJson^);
+	
+	Destination := pJsonDeserializer^;
+	TryCreateDeserializer := TRUE;
+	RETURN;
+END_IF
+
+// add other supported formats here...]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TryCreateSerializer" Id="{afb070c4-4677-4a46-8796-2375baadff3a}" FolderPath="Protected\">
+      <Declaration><![CDATA[METHOD PROTECTED TryCreateSerializer : BOOL
+VAR_INPUT
+	Request : I_Request;
+	Destination : REFERENCE TO I_Serializer;
+END_VAR
+VAR
+	acceptType : T_MAXSTRING;
+	pJsonSerializer : POINTER TO JsonSerializer;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT(headerAccessor.TryGetAcceptResponseFormatFromRequest(Request, acceptType)) THEN
+	// if no header is provided for the accept type, then the line below selects the default return type. 
+	// change this line to change the default.
+	acceptType := headerAccessor.ContentType_Json;
+END_IF
+
+IF acceptType = headerAccessor.ContentType_Json THEN
+	pJsonSerializer := __NEW(JsonSerializer);
+	Destination := pJsonSerializer^;
+	TryCreateSerializer := TRUE;
+	RETURN;
+END_IF
+
+// add other supported formats here...]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TryCreateSynchronousRpcResponse" Id="{c96fe62f-2f56-4271-b9bf-4d2d13323aff}" FolderPath="Protected\">
+      <Declaration><![CDATA[METHOD PROTECTED TryCreateSynchronousRpcResponse : BOOL
+VAR_INPUT
+	Response : I_ServerResponse;
+	ResponseSerializer : I_Serializer;
+	Destination : REFERENCE TO I_SynchronousRpcResponse;
+END_VAR
+VAR
+	pSynchronousRpcResponse : POINTER TO SynchronousRpcResponse;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF Response = 0 THEN 
+	RETURN;
+END_IF
+
+IF ResponseSerializer = 0 THEN
+	RETURN;
+END_IF
+
+pSynchronousRpcResponse := __NEW(SynchronousRpcResponse(ServerResponse := Response, Serializer := ResponseSerializer, AsyncResponseManager := THIS^.asyncResponseManager));
+Destination := pSynchronousRpcResponse^;
+TryCreateSynchronousRpcResponse := TRUE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="TryHandleIncomingRequest" Id="{b9b37eb6-3223-0f27-2d3b-8d09875b1965}">
@@ -36,18 +230,9 @@ VAR_INPUT
 END_VAR
 VAR
 	requestType : T_MAXSTRING;
-	contentType : T_MAXSTRING;
-	acceptType : T_MAXSTRING;
 	methodName : T_MAXSTRING;
-	rpcHandler : I_RpcHandler;
-
-	// currently we only support json, however, this can become a factory in the future when used with contentType and acceptType.
-	pJson : POINTER TO STRING;
-	jsonDeserializer : JsonDeserializer;
-	jsonSerializer : JsonSerializer;
-	
-	asyncRpcResponseFactory : AsynchronousRpcResponseFactory(ServerResponse := Response, Serializer := jsonSerializer, AsyncResponseManager := THIS^.asyncResponseManager);
-	rpcSynchronousResponse : SynchronousRpcResponse(ServerResponse := Response, Serializer := jsonSerializer, AsynchronousRpcResponseFactory := asyncRpcResponseFactory);
+	asyncRpcHandler : I_AsynchronousRpcHandler;
+	syncRpcHandler : I_SynchronousRpcHandler;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF NOT headerAccessor.TryGetTypeFromRequest(Request, requestType) THEN
@@ -58,40 +243,22 @@ IF requestType <> 'RPC 1.0' THEN
 	RETURN;
 END_IF
 
-IF NOT(headerAccessor.TryGetContentTypeFromRequest(Request, contentType)) OR_ELSE NOT(contentType = headerAccessor.ContentType_Json) THEN
-	Response.Error('RPC : Missing or unsupported content type in header');
-	TryHandleIncomingRequest := TRUE;
-	RETURN;
-END_IF
-
-IF (headerAccessor.TryGetAcceptResponseFormatFromRequest(Request, acceptType)) AND_THEN NOT(acceptType = headerAccessor.ContentType_Json) THEN
-	Response.Error('RPC : Unsupported accept type in header');
-	TryHandleIncomingRequest := TRUE;
-	RETURN;
-END_IF
-
 IF NOT headerAccessor.TryGetMethodNameFromRequest(Request, methodName) THEN
 	Response.Error('RPC : Missing RPC method name');
 	TryHandleIncomingRequest := TRUE;
 	RETURN;
 END_IF
 
-IF NOT rpcHandlers.TryGetByMethodName(methodName, rpcHandler) THEN
-	RETURN;
-END_IF
-
-pJson := request.PayloadAddress;
-jsonDeserializer.TryLoad(pJson^);
-
-rpcHandler.Handle(jsonDeserializer, rpcSynchronousResponse);
-
-IF NOT Response.HeadersSent THEN
-	Response.Error('RPC : Handler did not return a valid response');
+IF asyncRpcHandlers.hasHandlers AND_THEN asyncRpcHandlers.TryGetByMethodName(methodName, asyncRpcHandler) THEN
+	HandleAsyncRpcRequest(Request, Response, asyncRpcHandler);
 	TryHandleIncomingRequest := TRUE;
 	RETURN;
 END_IF
 
-TryHandleIncomingRequest := TRUE;]]></ST>
+IF syncRpcHandlers.hasHandlers AND_THEN syncRpcHandlers.TryGetByMethodName(methodName, syncRpcHandler) THEN
+	HandleSyncRpcRequest(Request, Response, syncRpcHandler);
+	TryHandleIncomingRequest := TRUE;
+END_IF]]></ST>
       </Implementation>
     </Method>
   </POU>

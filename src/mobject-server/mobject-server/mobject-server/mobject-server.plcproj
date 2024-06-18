@@ -18,7 +18,7 @@
     <LibraryReferences>{f27e56c4-cefb-463d-bf1f-aa19a3c312a6}</LibraryReferences>
     <Company>mobject</Company>
     <Released>false</Released>
-    <ProjectVersion>0.6.0</ProjectVersion>
+    <ProjectVersion>0.7.0</ProjectVersion>
     <Title>mobject-server</Title>
     <DefaultNamespace>mobject-server</DefaultNamespace>
     <Placeholder>mobject-server</Placeholder>
@@ -75,6 +75,8 @@
     <Folder Include="_Internal\RPC\HeaderAccessor" />
     <Folder Include="_Internal\RPC\Manager" />
     <Folder Include="_Internal\RPC\Middleware" />
+    <Folder Include="_Internal\RPC\AsyncRpcCall" />
+    <Folder Include="_Internal\RPC\AsyncRpcCallQueue" />
     <Folder Include="_Internal\RPC\Response" />
     <Folder Include="_Internal\RPC\Response\Async" />
     <Folder Include="_Internal\RPC\Response\Factory" />
@@ -104,7 +106,13 @@
     <Compile Include="RpcHandler\Examples\ConcatStringRpcHandler.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="RpcHandler\I_RpcHandler.TcIO">
+    <Compile Include="RpcHandler\Examples\AsyncConcatStringRpcHandler.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RpcHandler\I_SynchronousRpcHandler.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RpcHandler\I_AsynchronousRpcHandler.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="RpcServer\I_RpcServer.TcIO">
@@ -206,10 +214,28 @@
     <Compile Include="_Internal\ResponseId\SequentialResponseIdGenerator.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="_Internal\RPC\Handlers\I_RpcHandlers.TcIO">
+    <Compile Include="_Internal\RPC\AsyncRpcCallQueue\AsyncRpcCallQueue.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="_Internal\RPC\Handlers\RpcHandlers.TcPOU">
+    <Compile Include="_Internal\RPC\AsyncRpcCallQueue\I_AsyncRpcCallQueue.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="_Internal\RPC\AsyncRpcCall\AsyncRpcCall.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="_Internal\RPC\AsyncRpcCall\I_AsyncRpcCall.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="_Internal\RPC\Handlers\I_SynchronousRpcHandlers.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="_Internal\RPC\Handlers\I_AsynchronousRpcHandlers.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="_Internal\RPC\Handlers\SynchronousRpcHandlers.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="_Internal\RPC\Handlers\AsynchronousRpcHandlers.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="_Internal\RPC\HeaderAccessor\I_RpcHeaderAccessor.TcIO">

@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="I_AsyncRpcCallQueue" Id="{882bffff-5be5-4fb8-a5ce-d3269b93febb}">
+    <Declaration><![CDATA[INTERFACE I_AsyncRpcCallQueue
+]]></Declaration>
+    <Method Name="TryAddRpcCall" Id="{a7a4536c-a633-4dfa-b13e-c1da3d8f20a4}">
+      <Declaration><![CDATA[METHOD PUBLIC TryAddRpcCall : BOOL
+VAR_INPUT
+	CallingParameters : I_Deserializer;
+	CallingAsynchronousRpcResponse : I_AsynchronousRpcResponse;
+	CallingHandler : I_AsynchronousRpcHandler;
+END_VAR]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>
