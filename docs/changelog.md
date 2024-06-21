@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.8.0-alpha
+
+- Updated to support mobject-core v0.1.0, removed all previous mobject libs
+
 ## v0.7.0-alpha
 
 - Added Sync and Async rpc. Sync RPC can still be converted to Async, but all explicitly Async RPC handlers will be handled inside of the PLC cycle. SynchronousRpcHandlers should be used with caution, as any long running calls will cause PLC, NC and AUX task timing issues which are not possible to trace. If in doubt, only use AsyncRpc!
