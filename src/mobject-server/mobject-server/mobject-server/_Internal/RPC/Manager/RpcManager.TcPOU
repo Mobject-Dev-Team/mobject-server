@@ -63,12 +63,14 @@ IF NOT TryCreateAsynchronousRpcResponse(Response, serializer, asynchronousRpcRes
 	Response.Error('RPC : Unable to create asynchronous response for handler');
 	serializer.Dispose();
 	deserializer.Dispose();
+	RETURN;
 END_IF
 
 IF NOT asyncRpcCallQueue.TryAddRpcCall(deserializer, asynchronousRpcResponse, Handler) THEN
 	serializer.Dispose();
 	deserializer.Dispose();
 	asynchronousRpcResponse.RejectWithMessage('RPC : Unable to create rpc call');
+	RETURN;
 END_IF
 
 // we can dispose of the serializer at this stage as it was only used as a prototype.
@@ -104,6 +106,7 @@ IF NOT TryCreateSynchronousRpcResponse(Response, serializer, synchronousRpcRespo
 	Response.Error('RPC : Unable to create synchronous response for handler');
 	serializer.Dispose();
 	deserializer.Dispose();
+	RETURN;
 END_IF
 
 Handler.Handle(deserializer, synchronousRpcResponse);
@@ -258,6 +261,7 @@ END_IF
 IF syncRpcHandlers.hasHandlers AND_THEN syncRpcHandlers.TryGetByMethodName(methodName, syncRpcHandler) THEN
 	HandleSyncRpcRequest(Request, Response, syncRpcHandler);
 	TryHandleIncomingRequest := TRUE;
+	RETURN;
 END_IF]]></ST>
       </Implementation>
     </Method>

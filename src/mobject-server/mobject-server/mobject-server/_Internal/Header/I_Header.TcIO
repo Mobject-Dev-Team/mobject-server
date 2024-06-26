@@ -6,7 +6,7 @@
     <Method Name="ToString" Id="{566f8047-311a-029d-33db-a82b9e876b85}">
       <Declaration><![CDATA[METHOD PUBLIC ToString
 VAR_INPUT
-	Destination : REFERENCE TO STRING(Constants.HEADER_STRING_SIZE);
+	Destination : REFERENCE TO STRING(ServerConfiguration.HEADER_STRING_SIZE);
 END_VAR
 ]]></Declaration>
     </Method>

@@ -32,7 +32,7 @@ jsonParser.NewDocument();]]></ST>
 VAR_INPUT
 	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
 	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
-	InitialHeader : REFERENCE TO STRING(Constants.HEADER_STRING_SIZE);
+	InitialHeader : REFERENCE TO STRING(ServerConfiguration.HEADER_STRING_SIZE);
 END_VAR
 VAR
 	root : SJsonValue;
@@ -49,7 +49,7 @@ END_IF]]></ST>
     <Method Name="ToString" Id="{647264cb-c142-0148-3d06-acd54a80dfea}">
       <Declaration><![CDATA[METHOD PUBLIC ToString
 VAR_INPUT
-	Destination : REFERENCE TO STRING(Constants.HEADER_STRING_SIZE);
+	Destination : REFERENCE TO STRING(ServerConfiguration.HEADER_STRING_SIZE);
 END_VAR
 ]]></Declaration>
       <Implementation>
