@@ -86,10 +86,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <LibraryReference Include="mobject-core,0.1.0,mobject">
+    <LibraryReference Include="mobject-core,0.2.0,mobject">
       <Namespace>mobject_core</Namespace>
     </LibraryReference>
-    <LibraryReference Include="mobject-server,0.8.0,mobject">
+    <LibraryReference Include="mobject-server,0.9.0,mobject">
       <Namespace>mobject_server</Namespace>
     </LibraryReference>
   </ItemGroup>

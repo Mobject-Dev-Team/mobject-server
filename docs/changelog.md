@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.9.0-alpha
+
+- Updated to support mobject-core v0.2.0
+- Swapped GVL to Parameters
+
 ## v0.8.0-alpha
 
 - Updated to support mobject-core v0.1.0, removed all previous mobject libs

@@ -18,7 +18,7 @@
     <LibraryReferences>{f27e56c4-cefb-463d-bf1f-aa19a3c312a6}</LibraryReferences>
     <Company>mobject</Company>
     <Released>false</Released>
-    <ProjectVersion>0.8.0</ProjectVersion>
+    <ProjectVersion>0.9.0</ProjectVersion>
     <Title>mobject-server</Title>
     <DefaultNamespace>mobject-server</DefaultNamespace>
     <Placeholder>mobject-server</Placeholder>
@@ -96,7 +96,7 @@
     <Folder Include="_Internal\TimeStamp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GVLs\Constants.TcGVL">
+    <Compile Include="GVLs\ServerConfiguration.TcGVL">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
@@ -337,7 +337,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <LibraryReference Include="mobject-core,0.1.0,mobject">
+    <LibraryReference Include="mobject-core,0.2.0,mobject">
       <Namespace>mobject_core</Namespace>
     </LibraryReference>
   </ItemGroup>

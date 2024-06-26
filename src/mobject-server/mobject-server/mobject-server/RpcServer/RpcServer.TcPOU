@@ -11,7 +11,7 @@ VAR
 	headerAccessor : HeaderAccessor;
 	
 	// Payload size may be changed using the constants
-	payloadStringSizeIncludingNull : UDINT := Constants.PAYLOAD_STRING_SIZE + 1;
+	payloadStringSizeIncludingNull : UDINT := ServerConfiguration.PAYLOAD_STRING_SIZE + 1;
 	
 	// the middleware stack allows us to construct our server in any way needed.
 	// by default we will support sessions, async polling and chunked requests/
@@ -80,8 +80,8 @@ MiddlewareStack.Use(rpcMiddleware);]]></ST>
       <Declaration><![CDATA[{attribute 'TcRpcEnable'}
 METHOD PUBLIC HandleRequest : ResponseData;
 VAR_INPUT
-	SerializedHeader : STRING(Constants.HEADER_STRING_SIZE);
-	SerializedPayload : STRING(Constants.PAYLOAD_STRING_SIZE);
+	SerializedHeader : STRING(ServerConfiguration.HEADER_STRING_SIZE);
+	SerializedPayload : STRING(ServerConfiguration.PAYLOAD_STRING_SIZE);
 END_VAR
 VAR
 	header : Header(SerializedHeader);
