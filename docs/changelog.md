@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.10.0-alpha
+
+- Updated to support mobject-core v0.3.0
+- Refactored I_RpcApi and RpcServer to better support registration and use of APIs
+
 ## v0.9.0-alpha
 
 - Updated to support mobject-core v0.2.0
