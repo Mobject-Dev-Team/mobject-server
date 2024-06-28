@@ -4,7 +4,7 @@
     <Declaration><![CDATA[{attribute 'linkalways'} 
 {attribute 'no_explicit_call' := 'This FB is a CLASS and must be accessed using methods or properties'}
 {attribute 'enable_dynamic_creation'}
-FUNCTION_BLOCK AsynchronousRpcHandlers IMPLEMENTS I_AsynchronousRpcHandlers
+FUNCTION_BLOCK AsynchronousRpcHandlers IMPLEMENTS I_AsynchronousRpcHandlers, I_HostAsynchronousRpcHandlers
 VAR
 	handlers : Dictionary;
 	_hasHandlers : BOOL;

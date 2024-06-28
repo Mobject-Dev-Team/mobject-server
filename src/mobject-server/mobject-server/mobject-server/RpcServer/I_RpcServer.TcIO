@@ -3,6 +3,13 @@
   <Itf Name="I_RpcServer" Id="{3249790d-2361-4909-9f7a-771c2ba70619}">
     <Declaration><![CDATA[INTERFACE I_RpcServer
 ]]></Declaration>
+    <Method Name="RegisterApi" Id="{1683fa06-5bc8-42bf-97be-84865033b985}">
+      <Declaration><![CDATA[METHOD PUBLIC RegisterApi
+VAR_INPUT
+	RpcApi : I_RpcApi;
+END_VAR
+]]></Declaration>
+    </Method>
     <Method Name="RegisterAsynchronousRpcHandler" Id="{c7ede9aa-6e51-466a-80ea-5a4569d1c9eb}">
       <Declaration><![CDATA[METHOD PUBLIC RegisterAsynchronousRpcHandler
 VAR_INPUT

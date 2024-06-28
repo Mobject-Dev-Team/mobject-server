@@ -44,6 +44,9 @@ VAR
 	rpcManager : RpcManager(synchronousRpcHandlers, asynchronousRpcHandlers, asyncResponseManager, headerAccessor, asyncRpcCallQueue);
 	rpcMiddleware : RpcMiddleware(rpcManager);
 	
+	// registered apis (used for cyclic calling)
+	registeredRpcApis : RegisteredRpcApis;
+	
 END_VAR
 VAR CONSTANT
 	INACTIVE_SESSION_MAX_AGE : TIME := T#10S;
@@ -58,7 +61,8 @@ VAR_INPUT
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[sessionManager.CyclicCall();
-asyncRpcCallQueue.CyclicCall();]]></ST>
+asyncRpcCallQueue.CyclicCall();
+registeredRpcApis.CyclicCall();]]></ST>
       </Implementation>
     </Method>
     <Method Name="FB_init" Id="{76a0002b-f61d-0a35-104c-169abb3c3728}" FolderPath="Constructor\">
@@ -96,6 +100,18 @@ IF NOT serverResponse.HeadersSent THEN
 END_IF
 
 serverResponse.TryGetData(HandleRequest);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="RegisterApi" Id="{562149a8-e0a7-4c1c-80dd-b24f63a0d991}">
+      <Declaration><![CDATA[METHOD PUBLIC RegisterApi
+VAR_INPUT
+	RpcApi : I_RpcApi;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[RpcApi.RegisterSynchronousRpcHandlersWith(synchronousRpcHandlers);
+RpcApi.RegisterAsynchronousRpcHandlersWith(asynchronousRpcHandlers);
+registeredRpcApis.RegisterRpcApi(RpcApi);]]></ST>
       </Implementation>
     </Method>
     <Method Name="RegisterAsynchronousRpcHandler" Id="{f2c983c5-0460-0ac4-0ab1-c7c405c22fdf}">
