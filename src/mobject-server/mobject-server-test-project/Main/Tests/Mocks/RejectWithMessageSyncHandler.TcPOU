@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="RejectWithMessageSyncHandler" Id="{4abf70fc-ce4e-4c80-b47e-9d4c86f97df6}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK RejectWithMessageSyncHandler IMPLEMENTS I_SynchronousRpcHandler
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Handle" Id="{716ba058-8390-49db-b2a1-86a7673c1055}">
+      <Declaration><![CDATA[METHOD Handle
+VAR_INPUT
+	Parameters : I_Deserializer;
+	Response : I_SynchronousRpcResponse;
+END_VAR
+VAR
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Response.RejectWithMessage('This is the reject message');]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

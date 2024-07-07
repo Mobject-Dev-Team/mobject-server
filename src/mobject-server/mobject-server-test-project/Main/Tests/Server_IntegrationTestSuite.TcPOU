@@ -6,7 +6,7 @@ VAR
 	// variables for TestAsyncEchoRpcCallAndResponse
 	testAsyncEchoRpcCallAndResponseSetup : BOOL;
 	testAsyncEchoRpcCallAndResponseServer : RpcServer;
-	testAsyncEchoRpcCallAndResponseAsyncEchoRpcHandler : AsyncEchoRpcHandler;
+	testAsyncEchoRpcCallAndResponseAsyncEchoRpcHandler : SyncToAsyncEchoRpcHandler;
 	testAsyncEchoRpcCallAndResponseOutput : ResponseData;
 	
 	// variables for TestConcatRpcCallAndResponse
@@ -14,13 +14,22 @@ VAR
 	
 	// variables for TestAsyncConcatRpcCallAndResponse
 	testAsyncConcatRpcCallAndResponseOutput : ResponseData;
+	
+	// variables for TestAsyncRejectMessage
+	testAsyncRejectMessageOutput : ResponseData;
+	
+	// variables for TestSyncRejectMessage
+	testSyncRejectMessageOutput : ResponseData;
+	
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//TestSyncToAsyncEchoRpcCallAndResponse();
+      <ST><![CDATA[TestSyncToAsyncEchoRpcCallAndResponse();
 TestConcatRpcCallAndResponse();
 TestConcatRpcCallAndResponseWithChunkedRequest();
-TestAsyncConcatRpcCallAndResponse();]]></ST>
+TestAsyncConcatRpcCallAndResponse();
+TestAsyncRejectMessage();
+TestSyncRejectMessage();]]></ST>
     </Implementation>
     <Method Name="TestAsyncConcatRpcCallAndResponse" Id="{3ebcb01b-3f02-4f13-b0d6-0a1300d01a9a}">
       <Declaration><![CDATA[METHOD TestAsyncConcatRpcCallAndResponse
@@ -46,6 +55,49 @@ actual := testAsyncConcatRpcCallAndResponseOutput.Payload;
 
 AssertEquals(
 	Expected := expected, 
+	Actual := actual,
+	Message := 'Did not produce the expected result'
+);
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TestAsyncRejectMessage" Id="{64e4932a-5d9d-48db-ae04-33e9d08fcebc}">
+      <Declaration><![CDATA[METHOD TestAsyncRejectMessage
+VAR
+	server : RpcServer;
+	rejectWithMessageAsyncHandler : RejectWithMessageAsyncHandler;
+	header : T_MAXSTRING := '{"Type":"RPC 1.0","Method-Name":"reject","Content-Type":"application/json"}';
+    payload : T_MAXSTRING := '';
+	followupHeader : T_MAXSTRING := '{"Response-Id":"1","Session-Id":"1"}';
+	followupPayload : T_MAXSTRING := '';
+	expectedFirstReply : T_MAXSTRING := '{"Session-Id":"1","Status":"Pending","Response-Id":"1"}';
+	expectedSecondReply : T_MAXSTRING := '{"Session-Id":"1","Status":"Error","Message":"This is the reject message"}';
+	actual : T_MAXSTRING;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('TestAsyncRejectMessage');
+
+server.RegisterAsynchronousRpcHandler('reject',rejectWithMessageAsyncHandler);
+
+testAsyncRejectMessageOutput := server.HandleRequest(header,payload);
+actual := testAsyncRejectMessageOutput.Header;
+
+AssertEquals(
+	Expected := expectedFirstReply, 
+	Actual := actual,
+	Message := 'Did not reply that the request was being processed'
+);
+
+server.CyclicCall();
+
+
+testAsyncRejectMessageOutput := server.HandleRequest(followupHeader,followupPayload);
+actual := testAsyncRejectMessageOutput.Header;
+
+
+AssertEquals(
+	Expected := expectedSecondReply, 
 	Actual := actual,
 	Message := 'Did not produce the expected result'
 );
@@ -106,6 +158,33 @@ END_VAR]]></Declaration>
 //);
 
 //TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TestSyncRejectMessage" Id="{c2d41257-7d05-4c12-8fc5-b0b2729e9e29}">
+      <Declaration><![CDATA[METHOD TestSyncRejectMessage
+VAR
+	server : RpcServer;
+	rejectWithMessageSyncHandler : RejectWithMessageSyncHandler;
+	header : T_MAXSTRING := '{"Type":"RPC 1.0","Method-Name":"reject","Content-Type":"application/json"}';
+    payload : T_MAXSTRING := '';
+	expected : T_MAXSTRING := '{"Session-Id":"1","Status":"Error","Message":"This is the reject message"}';
+	actual : T_MAXSTRING;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('TestSyncRejectMessage');
+
+server.RegisterSynchronousRpcHandler('reject',rejectWithMessageSyncHandler);
+
+testSyncRejectMessageOutput := server.HandleRequest(header,payload);
+actual := testAsyncRejectMessageOutput.Header;
+
+AssertEquals(
+	Expected := expected, 
+	Actual := actual,
+	Message := 'Did not produce the expected result'
+);
+
+TEST_FINISHED();]]></ST>
       </Implementation>
     </Method>
     <Method Name="TestSyncToAsyncEchoRpcCallAndResponse" Id="{73b639ff-8394-44c2-a577-ad68a5ad6e49}">

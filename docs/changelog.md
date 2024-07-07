@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.11.0-alpha
+
+- Bugfix, async reject with message was not correctly called and resulted in client timeout.
+
 ## v0.10.0-alpha
 
 - Updated to support mobject-core v0.3.0

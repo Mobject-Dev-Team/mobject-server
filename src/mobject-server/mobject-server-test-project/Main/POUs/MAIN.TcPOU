@@ -9,9 +9,9 @@ VAR
 	initialized : BOOL;
 	server : RpcServer;
 	concatStringRpcHandler : ConcatStringRpcHandler;	
-	asyncEchoRpcHandler : AsyncEchoRpcHandler;
+	syncToAsyncEchoRpcHandler : SyncToAsyncEchoRpcHandler;
 	adjustableSizeReplyRpcHandler : AdjustableSizeReplyRpcHandler;
-
+	
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -22,14 +22,14 @@ END_VAR
 IF NOT initialized THEN
 	initialized := TRUE;
 	server.RegisterSynchronousRpcHandler('concat',concatStringRpcHandler);
-	server.RegisterSynchronousRpcHandler('asyncEcho',asyncEchoRpcHandler);
+	server.RegisterSynchronousRpcHandler('asyncEcho',syncToAsyncEchoRpcHandler);
 	server.RegisterSynchronousRpcHandler('adjustableSizeReply',adjustableSizeReplyRpcHandler);
 END_IF
 
 server.CyclicCall();
 
 // this has timers inside, so must be cyclic called.
-asyncEchoRpcHandler.CyclicCall();]]></ST>
+syncToAsyncEchoRpcHandler.CyclicCall();]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
