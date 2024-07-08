@@ -251,9 +251,6 @@ END_VAR
       <Declaration><![CDATA[METHOD PUBLIC RejectWithMessage
 VAR_INPUT
 	Message : T_MAXSTRING;
-END_VAR
-VAR
-	asyncResponse : I_AsyncResponseSessionData;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF asyncResponse <> 0 THEN

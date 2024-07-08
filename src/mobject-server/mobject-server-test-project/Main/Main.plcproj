@@ -32,7 +32,13 @@
     <Compile Include="Tests\Mocks\AdjustableSizeReplyRpcHandler.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tests\Mocks\AsyncEchoRpcHandler.TcPOU">
+    <Compile Include="Tests\Mocks\RejectWithMessageSyncHandler.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tests\Mocks\SyncToAsyncEchoRpcHandler.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tests\Mocks\RejectWithMessageAsyncHandler.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tests\Server_IntegrationTestSuite.TcPOU">
@@ -89,7 +95,7 @@
     <LibraryReference Include="mobject-core,0.3.0,mobject">
       <Namespace>mobject_core</Namespace>
     </LibraryReference>
-    <LibraryReference Include="mobject-server,0.10.0,mobject">
+    <LibraryReference Include="mobject-server,0.11.0,mobject">
       <Namespace>mobject_server</Namespace>
     </LibraryReference>
   </ItemGroup>
