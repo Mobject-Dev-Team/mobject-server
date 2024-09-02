@@ -30,7 +30,7 @@
     <HmiCommunicationRouterPort>10108</HmiCommunicationRouterPort>
     <HmiCommunicationServerAuthPort>13002</HmiCommunicationServerAuthPort>
     <HmiInitial>1.12.760.44</HmiInitial>
-    <HmiRecent>1.12.760.59</HmiRecent>
+    <HmiRecent>1.12.762.42</HmiRecent>
     <HmiServerNodeAdvancedView>True</HmiServerNodeAdvancedView>
   </PropertyGroup>
   <PropertyGroup>
@@ -142,7 +142,10 @@
     <Content Include="Imports\payload64kb.json">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="Scripts\mobject-client.js">
+    <Content Include="Scripts\TcHmiRpcClient.bundle.js">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Scripts\TcHmiRpcClient.bundle.js.LICENSE.txt">
       <SubType>Content</SubType>
     </Content>
     <Content Include="Server\ADS\ADS.Config.default.json">

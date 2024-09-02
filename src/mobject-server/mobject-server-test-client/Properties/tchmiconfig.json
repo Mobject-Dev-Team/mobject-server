@@ -52,7 +52,7 @@
       "type": "Stylesheet"
     },
     {
-      "name": "Scripts/mobject-client.js",
+      "name": "Scripts/TcHmiRpcClient.bundle.js",
       "description": "",
       "type": "JavaScript"
     }
