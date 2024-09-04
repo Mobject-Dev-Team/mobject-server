@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.12.0-alpha
+
+- Removed ability for client to re-trigger chunked request with malformed header
+
 ## v0.11.0-alpha
 
 - Bugfix, async reject with message was not correctly called and resulted in client timeout.
