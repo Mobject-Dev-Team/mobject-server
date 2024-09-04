@@ -95,7 +95,7 @@
     <LibraryReference Include="mobject-core,0.3.0,mobject">
       <Namespace>mobject_core</Namespace>
     </LibraryReference>
-    <LibraryReference Include="mobject-server,0.11.0,mobject">
+    <LibraryReference Include="mobject-server,0.12.0,mobject">
       <Namespace>mobject_server</Namespace>
     </LibraryReference>
   </ItemGroup>

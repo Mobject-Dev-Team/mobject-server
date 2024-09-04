@@ -73,10 +73,22 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[MiddlewareStack.Use(sessionsMiddleware);
-MiddlewareStack.Use(chunkedRequestsMiddleware);
+        <ST><![CDATA[// must be above any middleware which requires storing of session data. 
+// best practice is to put at the top
+MiddlewareStack.Use(sessionsMiddleware);
+
+// must be above any middleware which could send a response larger than the max payload.
+// once this is in place then middleware can send as large as they like (up to router memory max)
 MiddlewareStack.Use(chunkedResponsesMiddleware);
+
+// must be above any middleware which needs to support async responses
 MiddlewareStack.Use(AsyncResponseMiddleware);
+
+// chunked request must be after chunked response to prevent incorrectly starting a new request
+// if the client askes for a response without removing the last request header.
+MiddlewareStack.Use(chunkedRequestsMiddleware); 
+
+// rpc middlware.  All other middleware can go under here.
 MiddlewareStack.Use(rpcMiddleware);]]></ST>
       </Implementation>
     </Method>
