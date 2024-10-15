@@ -30,7 +30,7 @@
     <HmiCommunicationRouterPort>10108</HmiCommunicationRouterPort>
     <HmiCommunicationServerAuthPort>13002</HmiCommunicationServerAuthPort>
     <HmiInitial>1.12.760.44</HmiInitial>
-    <HmiRecent>1.12.762.42</HmiRecent>
+    <HmiRecent>1.12.762.44</HmiRecent>
     <HmiServerNodeAdvancedView>True</HmiServerNodeAdvancedView>
   </PropertyGroup>
   <PropertyGroup>
