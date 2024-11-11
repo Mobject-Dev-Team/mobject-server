@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # TcXaeShell Solution File, Format Version 11.00
 VisualStudioVersion = 15.0.33403.129
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{B1E792BE-AA5F-4E3C-8C82-674BF9C0715B}") = "mobject-server-test-project", "mobject-server-test-project\mobject-server-test-project.tsproj", "{B425412A-AF9A-485F-BDFA-ACF120B21B18}"
+Project("{B1E792BE-AA5F-4E3C-8C82-674BF9C0715B}") = "libTest", "libTest\libTest.tsproj", "{B425412A-AF9A-485F-BDFA-ACF120B21B18}"
 EndProject
 Project("{FE7A1B72-C5B7-4D7C-BB7D-76384D4DE8E1}") = "mobject-server-test-client", "mobject-server-test-client\mobject-server-test-client.hmiproj", "{C91AB744-426A-4BD3-AEB0-FC39CF163342}"
 EndProject
-Project("{DFBE7525-6864-4E62-8B2E-D530D69D9D96}") = "mobject-server", "mobject-server\mobject-server.tspproj", "{709C05C4-779F-4BB5-9106-0756AA3812C6}"
+Project("{DFBE7525-6864-4E62-8B2E-D530D69D9D96}") = "lib", "lib\lib.tspproj", "{709C05C4-779F-4BB5-9106-0756AA3812C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
