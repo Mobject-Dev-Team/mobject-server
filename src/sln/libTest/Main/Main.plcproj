@@ -62,10 +62,62 @@
     <PlaceholderReference Include="Tc2_System">
       <DefaultResolution>Tc2_System, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc2_System</Namespace>
+      <Parameters>
+        <Parameter ListName="PARAM" xmlns="">
+          <Key>TABLE_UPPER_BOUND</Key>
+          <Value>15</Value>
+        </Parameter>
+        <Parameter ListName="PARAM" xmlns="">
+          <Key>STRING_LENGTH_EXP</Key>
+          <Value>255</Value>
+        </Parameter>
+        <Parameter ListName="PARAM" xmlns="">
+          <Key>STRING_LENGTH_ADDRESS</Key>
+          <Value>20</Value>
+        </Parameter>
+        <Parameter ListName="PARAM" xmlns="">
+          <Key>STRING_LENGTH_COMMENT</Key>
+          <Value>255</Value>
+        </Parameter>
+        <Parameter ListName="PARAM" xmlns="">
+          <Key>STRING_LENGTH_OUTSTRING</Key>
+          <Value>255</Value>
+        </Parameter>
+        <Parameter ListName="PARAM" xmlns="">
+          <Key>TABLE_SHOW_VALID_ITEMS</Key>
+          <Value>FALSE</Value>
+        </Parameter>
+      </Parameters>
     </PlaceholderReference>
     <PlaceholderReference Include="Tc2_Utilities">
       <DefaultResolution>Tc2_Utilities, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc2_Utilities</Namespace>
+      <Parameters>
+        <Parameter ListName="PARAMETERLIST" xmlns="">
+          <Key>NMAXLICENSES</Key>
+          <Value>50</Value>
+        </Parameter>
+        <Parameter ListName="PARAMETERLIST" xmlns="">
+          <Key>NMAXLICENSEDEVICES</Key>
+          <Value>16</Value>
+        </Parameter>
+        <Parameter ListName="PARAMETERLIST" xmlns="">
+          <Key>NMAXCPUCOUNT</Key>
+          <Value>64</Value>
+        </Parameter>
+        <Parameter ListName="PARAMETERLIST" xmlns="">
+          <Key>CMAXCHARACTERS</Key>
+          <Value>16#FFFFFFF0</Value>
+        </Parameter>
+        <Parameter ListName="PARAMETERLIST" xmlns="">
+          <Key>NMAXFILESONDONGLE</Key>
+          <Value>20</Value>
+        </Parameter>
+        <Parameter ListName="PARAMETERLIST" xmlns="">
+          <Key>CMAXCSVFIELDVALUESIZE</Key>
+          <Value>255</Value>
+        </Parameter>
+      </Parameters>
     </PlaceholderReference>
     <PlaceholderReference Include="Tc3_JsonXml">
       <DefaultResolution>Tc3_JsonXml, * (Beckhoff Automation GmbH)</DefaultResolution>
@@ -79,9 +131,41 @@
       <DefaultResolution>TcUnit, * (www.tcunit.org)</DefaultResolution>
       <Namespace>TcUnit</Namespace>
       <Parameters>
-        <Parameter ListName="GVL_PARAM_TCUNIT" xmlns="">
+        <Parameter ListName="GVL_PARAM_TCUNIT">
           <Key>LOGEXTENDEDRESULTS</Key>
           <Value>FALSE</Value>
+        </Parameter>
+        <Parameter ListName="GVL_PARAM_TCUNIT">
+          <Key>MAXNUMBEROFTESTSUITES</Key>
+          <Value>1000</Value>
+        </Parameter>
+        <Parameter ListName="GVL_PARAM_TCUNIT">
+          <Key>MAXNUMBEROFTESTSFOREACHTESTSUITE</Key>
+          <Value>100</Value>
+        </Parameter>
+        <Parameter ListName="GVL_PARAM_TCUNIT">
+          <Key>MAXNUMBEROFASSERTSFOREACHTESTSUITE</Key>
+          <Value>1000</Value>
+        </Parameter>
+        <Parameter ListName="GVL_PARAM_TCUNIT">
+          <Key>XUNITENABLEPUBLISH</Key>
+          <Value>FALSE</Value>
+        </Parameter>
+        <Parameter ListName="GVL_PARAM_TCUNIT">
+          <Key>XUNITBUFFERSIZE</Key>
+          <Value>65535</Value>
+        </Parameter>
+        <Parameter ListName="GVL_PARAM_TCUNIT">
+          <Key>XUNITFILEPATH</Key>
+          <Value>'C:\tcunit_xunit_testresults.xml'</Value>
+        </Parameter>
+        <Parameter ListName="GVL_PARAM_TCUNIT">
+          <Key>ADSLOGMESSAGEFIFORINGBUFFERSIZE</Key>
+          <Value>2000</Value>
+        </Parameter>
+        <Parameter ListName="GVL_PARAM_TCUNIT">
+          <Key>TIMEBETWEENTESTSUITESEXECUTION</Key>
+          <Value>TIME#0ms</Value>
         </Parameter>
       </Parameters>
     </PlaceholderReference>
@@ -92,11 +176,21 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <LibraryReference Include="mobject-core,0.4.0,mobject">
+    <LibraryReference Include="mobject-core,0.5.0,mobject">
       <Namespace>mobject_core</Namespace>
     </LibraryReference>
-    <LibraryReference Include="mobject-server,0.14.0,mobject">
+    <LibraryReference Include="mobject-server,0.15.0,mobject">
       <Namespace>mobject_server</Namespace>
+      <Parameters>
+        <Parameter ListName="SERVERCONFIGURATION" xmlns="">
+          <Key>HEADER_STRING_SIZE</Key>
+          <Value>1024</Value>
+        </Parameter>
+        <Parameter ListName="SERVERCONFIGURATION" xmlns="">
+          <Key>PAYLOAD_STRING_SIZE</Key>
+          <Value>8000</Value>
+        </Parameter>
+      </Parameters>
     </LibraryReference>
   </ItemGroup>
   <ProjectExtensions>
