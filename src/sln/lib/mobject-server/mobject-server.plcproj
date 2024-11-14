@@ -18,7 +18,7 @@
     <LibraryReferences>{f27e56c4-cefb-463d-bf1f-aa19a3c312a6}</LibraryReferences>
     <Company>mobject</Company>
     <Released>false</Released>
-    <ProjectVersion>0.15.0</ProjectVersion>
+    <ProjectVersion>0.16.0</ProjectVersion>
     <Title>mobject-server</Title>
     <DefaultNamespace>mobject-server</DefaultNamespace>
     <Placeholder>mobject-server</Placeholder>
@@ -399,7 +399,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <LibraryReference Include="mobject-core,0.5.0,mobject">
+    <LibraryReference Include="mobject-core,0.6.0,mobject">
       <Namespace>mobject_core</Namespace>
     </LibraryReference>
   </ItemGroup>

@@ -176,10 +176,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <LibraryReference Include="mobject-core,0.5.0,mobject">
+    <LibraryReference Include="mobject-core,0.6.0,mobject">
       <Namespace>mobject_core</Namespace>
     </LibraryReference>
-    <LibraryReference Include="mobject-server,0.15.0,mobject">
+    <LibraryReference Include="mobject-server,0.16.0,mobject">
       <Namespace>mobject_server</Namespace>
       <Parameters>
         <Parameter ListName="SERVERCONFIGURATION" xmlns="">
