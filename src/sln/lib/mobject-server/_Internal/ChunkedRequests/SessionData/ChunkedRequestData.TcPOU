@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
   <POU Name="ChunkedRequestData" Id="{7f5881bf-8a05-0b27-0aed-d7991d25f607}" SpecialFunc="None">
     <Declaration><![CDATA[{attribute 'linkalways'} 
 {attribute 'no_explicit_call' := 'This FB is a CLASS and must be accessed using methods or properties'}
@@ -110,7 +110,7 @@ END_VAR
       <Declaration><![CDATA[METHOD PUBLIC TryAddChunkedPayload : BOOL;
 VAR_INPUT
 	PayloadAddress : POINTER TO STRING;
-	PayloadSize : DINT;
+	PayloadSize : UDINT;
 	ChunkSequence : DINT;
 END_VAR
 VAR
@@ -122,7 +122,7 @@ END_VAR]]></Declaration>
 	RETURN;
 END_IF
 
-IF DINT_TO_UDINT(PayloadSize) > maximumChunkSizeInBytes THEN
+IF PayloadSize > maximumChunkSizeInBytes THEN
 	RETURN;
 END_IF
 
