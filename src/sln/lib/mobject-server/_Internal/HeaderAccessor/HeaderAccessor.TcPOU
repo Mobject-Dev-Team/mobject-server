@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
   <POU Name="HeaderAccessor" Id="{d021ecca-620e-0860-1f0e-52fe0a5ee06d}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK HeaderAccessor IMPLEMENTS I_SessionHeaderAccessor, I_ServerResponseHeaderAccessor, I_AsyncResponseHeaderAccessor, I_ChunkedResponseHeaderAccessor, I_ChunkedRequestsHeaderAccessor, I_RpcHeaderAccessor]]></Declaration>
     <Implementation>
@@ -16,14 +16,6 @@ END_VAR
           <ST><![CDATA[ContentType_Json := 'application/json';]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{5cbbc11a-31e4-02bd-1ad2-f9b841dfdce5}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
-        </Implementation>
-      </Set>
     </Property>
     <Property Name="HeaderKey_Accept" Id="{cdb44211-93bd-0f8d-1b06-b5325aeaf814}" FolderPath="Constants\">
       <Declaration><![CDATA[PROPERTY PUBLIC HeaderKey_Accept : T_MAXSTRING]]></Declaration>
@@ -35,14 +27,6 @@ END_VAR
           <ST><![CDATA[HeaderKey_Accept := 'Accept';]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{9bc3dce6-b10c-0765-3319-c2b8e0ef6622}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
-        </Implementation>
-      </Set>
     </Property>
     <Property Name="HeaderKey_ChunkSequence" Id="{cbb5c4dc-ca92-0d2b-23d0-f8f1537dec2c}" FolderPath="Constants\">
       <Declaration><![CDATA[PROPERTY PUBLIC HeaderKey_ChunkSequence : T_MAXSTRING]]></Declaration>
@@ -54,14 +38,6 @@ END_VAR
           <ST><![CDATA[HeaderKey_ChunkSequence := 'Chunk-Sequence';]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{440a2bfb-4bf4-078b-1a7e-1853c3a6371c}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
-        </Implementation>
-      </Set>
     </Property>
     <Property Name="HeaderKey_ChunkTotal" Id="{83952441-c48b-0d75-1a3b-e1717e4fd1ce}" FolderPath="Constants\">
       <Declaration><![CDATA[PROPERTY PUBLIC HeaderKey_ChunkTotal : T_MAXSTRING]]></Declaration>
@@ -73,14 +49,6 @@ END_VAR
           <ST><![CDATA[HeaderKey_ChunkTotal := 'Chunk-Total';]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{e653b3ac-d97f-0539-291c-cc7d9f7e90ae}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
-        </Implementation>
-      </Set>
     </Property>
     <Property Name="HeaderKey_ContentType" Id="{cd3b755d-cded-06de-3f03-14b6492ae3df}" FolderPath="Constants\">
       <Declaration><![CDATA[PROPERTY PUBLIC HeaderKey_ContentType : T_MAXSTRING]]></Declaration>
@@ -92,14 +60,6 @@ END_VAR
           <ST><![CDATA[HeaderKey_ContentType := 'Content-Type';]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{022b838f-f467-0a71-1484-fc92af4447ed}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
-        </Implementation>
-      </Set>
     </Property>
     <Property Name="HeaderKey_HasMoreChunks" Id="{32886e17-e83b-0acf-0d65-b901dca4cc0a}" FolderPath="Constants\">
       <Declaration><![CDATA[PROPERTY PUBLIC HeaderKey_HasMoreChunks : T_MAXSTRING]]></Declaration>
@@ -111,14 +71,6 @@ END_VAR
           <ST><![CDATA[HeaderKey_HasMoreChunks := 'Has-More-Chunks';]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{e863302a-d02d-010b-32a6-1f03a320c8ec}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
-        </Implementation>
-      </Set>
     </Property>
     <Property Name="HeaderKey_Message" Id="{c473bf28-9c3d-0d16-0730-d54e3bf39f8a}" FolderPath="Constants\">
       <Declaration><![CDATA[PROPERTY PUBLIC HeaderKey_Message : T_MAXSTRING]]></Declaration>
@@ -130,14 +82,6 @@ END_VAR
           <ST><![CDATA[HeaderKey_Message := 'Message';]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{7f96ed3a-60de-03ab-3166-d587d6bc4f20}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
-        </Implementation>
-      </Set>
     </Property>
     <Property Name="HeaderKey_MethodName" Id="{00602141-973f-03c4-2a5d-e21d85a5c963}" FolderPath="Constants\">
       <Declaration><![CDATA[PROPERTY PUBLIC HeaderKey_MethodName : T_MAXSTRING]]></Declaration>
@@ -149,14 +93,6 @@ END_VAR
           <ST><![CDATA[HeaderKey_MethodName := 'Method-Name';]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{7bc61509-8a8b-09a0-2dcb-c4c69c33ac86}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
-        </Implementation>
-      </Set>
     </Property>
     <Property Name="HeaderKey_RequestId" Id="{3c14d5b4-65fe-01b8-3a84-e04618d2f82e}" FolderPath="Constants\">
       <Declaration><![CDATA[PROPERTY PUBLIC HeaderKey_RequestId : T_MAXSTRING]]></Declaration>
@@ -168,14 +104,6 @@ END_VAR
           <ST><![CDATA[HeaderKey_RequestId := 'Request-Id';]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{7a430bc1-a68c-05be-25df-9eff8917a589}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
-        </Implementation>
-      </Set>
     </Property>
     <Property Name="HeaderKey_ResponseId" Id="{8002bcb8-12b6-04d7-14a2-97a5663f42e6}" FolderPath="Constants\">
       <Declaration><![CDATA[PROPERTY PUBLIC HeaderKey_ResponseId : T_MAXSTRING]]></Declaration>
@@ -187,14 +115,6 @@ END_VAR
           <ST><![CDATA[HeaderKey_ResponseId := 'Response-Id';]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{55f22f0b-b730-024b-002e-707e95438068}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
-        </Implementation>
-      </Set>
     </Property>
     <Property Name="HeaderKey_RetryDelay" Id="{27dbf177-e933-076f-2c08-641432c640be}" FolderPath="Constants\">
       <Declaration><![CDATA[PROPERTY PUBLIC HeaderKey_RetryDelay : T_MAXSTRING]]></Declaration>
@@ -206,14 +126,6 @@ END_VAR
           <ST><![CDATA[HeaderKey_RetryDelay := 'Retry-Delay';]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{998c132b-fbda-0019-2da4-0704f1b7ee71}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
-        </Implementation>
-      </Set>
     </Property>
     <Property Name="HeaderKey_SessionId" Id="{2c9bc0fe-e5ae-0d0b-1e19-b0923fe7d0c0}" FolderPath="Constants\">
       <Declaration><![CDATA[PROPERTY PUBLIC HeaderKey_SessionId : T_MAXSTRING]]></Declaration>
@@ -225,14 +137,6 @@ END_VAR
           <ST><![CDATA[HeaderKey_SessionId := 'Session-Id';]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{b1dfe323-8c33-042d-307d-a23dfedc2e23}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
-        </Implementation>
-      </Set>
     </Property>
     <Property Name="HeaderKey_Status" Id="{c0677b16-13ec-080c-1091-87890690a3d5}" FolderPath="Constants\">
       <Declaration><![CDATA[PROPERTY PUBLIC HeaderKey_Status : T_MAXSTRING]]></Declaration>
@@ -244,14 +148,6 @@ END_VAR
           <ST><![CDATA[HeaderKey_Status := 'Status';]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{c8e39bc2-fc42-038e-1e37-7539009582f9}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
-        </Implementation>
-      </Set>
     </Property>
     <Property Name="HeaderKey_Type" Id="{5009e799-257b-05d8-254d-0bfa93574a47}" FolderPath="Constants\">
       <Declaration><![CDATA[PROPERTY PUBLIC HeaderKey_Type : T_MAXSTRING]]></Declaration>
@@ -263,14 +159,6 @@ END_VAR
           <ST><![CDATA[HeaderKey_Type := 'Type';]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{3c46c3a5-a7e4-0ffb-26f0-ed7a24af0298}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
-        </Implementation>
-      </Set>
     </Property>
     <Property Name="StatusValue_Accepted" Id="{90344a30-da2c-072e-2a3e-8edbeda51004}" FolderPath="Constants\">
       <Declaration><![CDATA[PROPERTY PUBLIC StatusValue_Accepted : T_MAXSTRING]]></Declaration>
@@ -282,14 +170,6 @@ END_VAR
           <ST><![CDATA[StatusValue_Accepted := 'Accepted';]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{dca621b1-b891-076e-2347-785bede225e1}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
-        </Implementation>
-      </Set>
     </Property>
     <Property Name="StatusValue_Busy" Id="{cbba375a-45b6-0fe7-3f86-dbc983603351}" FolderPath="Constants\">
       <Declaration><![CDATA[PROPERTY PUBLIC StatusValue_Busy : T_MAXSTRING]]></Declaration>
@@ -301,14 +181,6 @@ END_VAR
           <ST><![CDATA[StatusValue_Busy := 'Busy';]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{37e246ab-4016-0d34-02f9-56584992e291}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
-        </Implementation>
-      </Set>
     </Property>
     <Property Name="StatusValue_Error" Id="{92fb372a-c766-04b2-082d-628e79b08852}" FolderPath="Constants\">
       <Declaration><![CDATA[PROPERTY PUBLIC StatusValue_Error : T_MAXSTRING]]></Declaration>
@@ -320,14 +192,6 @@ END_VAR
           <ST><![CDATA[StatusValue_Error := 'Error';]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{2c7709cd-31c8-040e-18da-6b2573063905}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
-        </Implementation>
-      </Set>
     </Property>
     <Property Name="StatusValue_Pending" Id="{bc06f6e0-91f6-08e7-147d-cbe398ddb90f}" FolderPath="Constants\">
       <Declaration><![CDATA[PROPERTY PUBLIC StatusValue_Pending : T_MAXSTRING]]></Declaration>
@@ -339,14 +203,6 @@ END_VAR
           <ST><![CDATA[StatusValue_Pending := 'Pending';]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{a34251a3-710e-04f2-036d-40b9330c565a}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
-        </Implementation>
-      </Set>
     </Property>
     <Property Name="StatusValue_Success" Id="{c0ce3bcd-3fbf-0dc7-1772-cdaf9d48bdcc}" FolderPath="Constants\">
       <Declaration><![CDATA[PROPERTY PUBLIC StatusValue_Success : T_MAXSTRING]]></Declaration>
@@ -358,14 +214,6 @@ END_VAR
           <ST><![CDATA[StatusValue_Success := 'Success';]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{de68ca73-b860-0f11-0964-cc05b5a25b1f}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[// must keep so that it works with ANY]]></ST>
-        </Implementation>
-      </Set>
     </Property>
     <Method Name="TryGetAcceptResponseFormatFromRequest" Id="{661b798b-5f89-0689-3016-67b00e4cfb9b}">
       <Declaration><![CDATA[METHOD PUBLIC TryGetAcceptResponseFormatFromRequest : BOOL
@@ -540,9 +388,12 @@ END_VAR
 VAR_INPUT
 	Response : I_ServerResponse;
 END_VAR
-]]></Declaration>
+VAR
+	status : T_MAXSTRING; // this was needed to fix the 4026 error with using ANY and properties
+END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[Response.Header.TryWriteField(HeaderKey_Status,StatusValue_Accepted);]]></ST>
+        <ST><![CDATA[status := StatusValue_Accepted;
+Response.Header.TryWriteField(HeaderKey_Status, status);]]></ST>
       </Implementation>
     </Method>
     <Method Name="UpdateResponseWithBusy" Id="{4987f0f3-6fc2-05c5-3890-68e51493446a}">
@@ -550,9 +401,12 @@ END_VAR
 VAR_INPUT
 	Response : I_ServerResponse;
 END_VAR
-]]></Declaration>
+VAR
+	status : T_MAXSTRING; // this was needed to fix the 4026 error with using ANY and properties
+END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[Response.Header.TryWriteField(HeaderKey_Status,StatusValue_Busy);]]></ST>
+        <ST><![CDATA[status := StatusValue_Busy;
+Response.Header.TryWriteField(HeaderKey_Status, status);]]></ST>
       </Implementation>
     </Method>
     <Method Name="UpdateResponseWithError" Id="{2e898d81-f520-029c-17f5-197a713d6b2e}">
@@ -561,10 +415,13 @@ VAR_INPUT
 	Response : I_ServerResponse;
 	Message : T_MAXSTRING;
 END_VAR
-]]></Declaration>
+VAR
+	status : T_MAXSTRING; // this was needed to fix the 4026 error with using ANY and properties
+END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[Response.Header.TryWriteField(HeaderKey_Status,StatusValue_Error);
-Response.Header.TryWriteField(HeaderKey_Message,Message);]]></ST>
+        <ST><![CDATA[status := StatusValue_Error;
+Response.Header.TryWriteField(HeaderKey_Status, status);
+Response.Header.TryWriteField(HeaderKey_Message, Message);]]></ST>
       </Implementation>
     </Method>
     <Method Name="UpdateResponseWithHasMoreChunks" Id="{d85749f5-b28e-02dd-3ee1-61d49f38421c}">
@@ -590,9 +447,11 @@ VAR_INPUT
 END_VAR
 VAR
 	retryDelayInMsString : T_MAXSTRING;
+	status : T_MAXSTRING; // this was needed to fix the 4026 error with using ANY and properties
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[Response.Header.TryWriteField(HeaderKey_Status,StatusValue_Pending);
+        <ST><![CDATA[status := StatusValue_Pending;
+Response.Header.TryWriteField(HeaderKey_Status, status);
 Response.Header.TryWriteField(HeaderKey_ResponseId, ResponseId);
 
 IF RetryDelayInMs > 0 THEN
@@ -616,9 +475,13 @@ END_VAR
       <Declaration><![CDATA[METHOD PUBLIC UpdateResponseWithSuccess
 VAR_INPUT
 	Response : I_ServerResponse;
+END_VAR
+VAR
+	status : T_MAXSTRING; // this was needed to fix the 4026 error with using ANY and properties
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[Response.Header.TryWriteField(HeaderKey_Status,StatusValue_Success);]]></ST>
+        <ST><![CDATA[status := StatusValue_Success;
+Response.Header.TryWriteField(HeaderKey_Status, status);]]></ST>
       </Implementation>
     </Method>
   </POU>
