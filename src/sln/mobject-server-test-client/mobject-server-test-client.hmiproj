@@ -27,7 +27,7 @@
     <HmiViewportUserScaleable>Default</HmiViewportUserScaleable>
     <HmiPostProcessing>True</HmiPostProcessing>
     <Name>mobject-server-test-client</Name>
-    <HmiCommunicationRouterPort>10108</HmiCommunicationRouterPort>
+    <HmiCommunicationRouterPort>10109</HmiCommunicationRouterPort>
     <HmiCommunicationServerAuthPort>13002</HmiCommunicationServerAuthPort>
     <HmiInitial>1.12.760.44</HmiInitial>
     <HmiRecent>1.12.762.44</HmiRecent>
