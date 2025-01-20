@@ -4,6 +4,7 @@
 
 - Updated to support mobject-core v0.6.0
 - Corrected datatype on PayloadSize in TryAddChunkedPayload to UDINT (from DINT)
+- Added methods to get max header and payload sizes
 
 ## v0.15.0-alpha
 

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
   <POU Name="RpcServer" Id="{d0c543ee-285c-0d92-3327-6786bf152970}" SpecialFunc="None">
     <Declaration><![CDATA[{attribute 'linkalways'} 
 {attribute 'no_explicit_call' := 'This FB is a CLASS and must be accessed using methods or properties'}
@@ -90,6 +90,26 @@ MiddlewareStack.Use(chunkedRequestsMiddleware);
 
 // rpc middlware.  All other middleware can go under here.
 MiddlewareStack.Use(rpcMiddleware);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetConfiguredHeaderSize" Id="{6ec46c07-af62-45cb-8950-e1622e515276}">
+      <Declaration><![CDATA[{attribute 'TcRpcEnable'}
+METHOD PUBLIC GetConfiguredHeaderSize : UDINT
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetConfiguredHeaderSize := ServerConfiguration.HEADER_STRING_SIZE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetConfiguredPayloadSize" Id="{e1c9457d-31b2-495c-9c99-495bff1d6616}">
+      <Declaration><![CDATA[{attribute 'TcRpcEnable'}
+METHOD PUBLIC GetConfiguredPayloadSize : UDINT
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetConfiguredPayloadSize := ServerConfiguration.PAYLOAD_STRING_SIZE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="HandleRequest" Id="{be6d2e0b-d137-0db3-37e1-f18d6e642bd1}">

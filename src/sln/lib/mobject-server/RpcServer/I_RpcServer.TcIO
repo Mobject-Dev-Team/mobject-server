@@ -1,8 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
   <Itf Name="I_RpcServer" Id="{3249790d-2361-4909-9f7a-771c2ba70619}">
     <Declaration><![CDATA[INTERFACE I_RpcServer
 ]]></Declaration>
+    <Method Name="GetConfiguredHeaderSize" Id="{52438743-34c7-4348-a43a-8f0da9e009a4}">
+      <Declaration><![CDATA[METHOD PUBLIC GetConfiguredHeaderSize : UDINT
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="GetConfiguredPayloadSize" Id="{9c82b554-227f-4316-99a8-63da45a2124e}">
+      <Declaration><![CDATA[METHOD PUBLIC GetConfiguredPayloadSize : UDINT
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="HandleRequest" Id="{030ecb1b-b923-49ad-bdf9-2ab33a6cffbf}">
+      <Declaration><![CDATA[{attribute 'TcRpcEnable'}
+METHOD PUBLIC HandleRequest : ResponseData;
+VAR_INPUT
+	SerializedHeader : STRING(ServerConfiguration.HEADER_STRING_SIZE);
+	SerializedPayload : STRING(ServerConfiguration.PAYLOAD_STRING_SIZE);
+END_VAR]]></Declaration>
+    </Method>
     <Method Name="RegisterApi" Id="{1683fa06-5bc8-42bf-97be-84865033b985}">
       <Declaration><![CDATA[METHOD PUBLIC RegisterApi
 VAR_INPUT
