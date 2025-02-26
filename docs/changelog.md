@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.17.0-alpha
+
+- Updated to support mobject-core v0.7.0
+
 ## v0.16.0-alpha
 
 - Updated to support mobject-core v0.6.0
